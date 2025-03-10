@@ -3294,6 +3294,52 @@ f5P
 *** IN-PROGRESS The Weil Pairing
 p 69
 * SCRAPBOOK
+** ElGamal on the Grumpkin curve
+#+BEGIN_SRC sage :session . :exports both
+import random
+r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+Fr = GF(r)
+
+a=0
+b=17
+E = EllipticCurve(Fr, [a, b])
+
+def random_bits(length):
+    return [random.randint(0, 1) for _ in range(length)]
+
+L = 200
+def encode(m):
+    nonce = random_bits(253 - L)
+    while True:
+        message_plus_nonce = m + nonce
+        print(f"random nonce: {nonce}")
+        #print(f"m+n: {message_plus_nonce}")
+        k = int(''.join(str(bit) for bit in message_plus_nonce), 2)
+        x = Fr(k)
+        rhs = x^3 + a*x + b
+        if rhs.is_square():
+            y = rhs.sqrt()
+            return E(x, y)
+        else:
+            nonce = random_bits(253 - L)
+
+def decode(M):
+    x = M[0]
+    bit_array = list(map(int, bin(x)[2:]))
+    return bit_array[:-(253-L)]
+
+m = [1, 0, 1]
+M = encode(m)
+M
+decode(M)
+#+END_SRC
+
+#+RESULTS:
+: random nonce: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0]
+: (51584007524590018 : 10487450881637005580147123596093103510748896222176370078465958439394141006108 : 1)
+: [1, 0, 1]
+
+** Deterministically generate 32 byte ids such that has(id) is an x-coordinate of a Grumpkin curve
 #+BEGIN_SRC sage :session . :exports both
 r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
 Fr = GF(r)
@@ -3308,8 +3354,6 @@ E.order() == p
 
 #+RESULTS:
 : True
-
-
 
 #+BEGIN_SRC sage :session . :exports both
 import random
