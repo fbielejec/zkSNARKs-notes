@@ -7,24 +7,6 @@
 #+STARTUP: latexpreview
 #+STARTUP: overview
 
-* IN-PROGRESS Curated List Of Resources
-- https://zkiap.com/
-- elliptic curve arithmetic https://www.hyperelliptic.org/EFD/g1p/auto-shortw-projective.html
-- Field extension towers
-  - https://blog.lambdaclass.com/how-we-implemented-the-bn254-ate-pairing-in-lambdaworks/
-  - https://hackmd.io/@Wimet/ry7z1Xj-2?ref=blog.lambdaclass.com#Tower-of-Extension-Fields
-  - https://hackmd.io/@benjaminion/bls12-381?ref=blog.lambdaclass.com#Field-extensions
-- HALO2
-  - [ ] lookups: https://hackmd.io/@sin7y/ryDJ-YxqY
-    - Range Checks: https://plonkbook.org/docs/gadgets/lookup1/
-  - [ ] https://zkhack.dev/zkhackV/puzzleV1.html
-  - [X] https://drive.google.com/file/d/1xcvkutDIsm7VC3KtMjFT3YKahHh-JBHN/view?pli=1
-  - [ ] https://halo2.zksecurity.xyz/
-  - [ ] https://hackmd.io/@3o3SyLkdRHyclM6GoUbn6g/HJVND3_nj
-  - [ ] https://hackmd.io/@axiom/HyoXzD7Zh
-  - [ ] https://diligence.consensys.io/blog/2023/07/endeavors-into-the-zero-knowledge-halo2-proving-system/
-- common bugs & vulnerabilities
-  - https://bugs.zksecurity.xyz/
 * Prerequisites
 ** Coprime numbers
 Coprime numbers are pairs of numbers that do not have any common factor other than 1.
@@ -226,13 +208,18 @@ ZZ(64)^ZZ(137-1) % ZZ(137) == ZZ(1) % ZZ(137)
 : 1
 : True
 
-** Lagrange's theorem
-If H is a subgroup of any finite group G, then |H| is a divisor of |G|,
-i.e. the order (number of elements) of every subgroup H divides the order of group G:
+** IN-PROGRESS Lagrange's theorem
+If $H$ is a subgroup of any finite group $G$, then the sub-groups *order* (the number of elements) $|H|$ is a divisor of $|G|$,
+i.e. the order (number of elements) of every subgroup $H$ divides the order of group $G$:
 
-${\displaystyle \left|G\right|=\left[G:H\right]\cdot \left|H\right|.}$
+\[
+\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]
+\]
 
-This variant holds even if G is infinite, provided that |G|, |H|, |G:H| are interpreted as cardinal numbers.
+*** IN-PROGRESS Lagrange's theorem for Elliptic Curves
+For an elliptic curve $E$ defined over a finite field $F_p$ the set of points on the curve, including the point at infinity $\mathcal{O}$ forms a *finite abelian group*.
+# Points
+
 
 ** algebraic closure
 - https://en.wikipedia.org/wiki/Algebraic_closure
@@ -3293,6 +3280,25 @@ f5P
 
 *** IN-PROGRESS The Weil Pairing
 p 69
+* IN-PROGRESS Curated List Of Resources
+- https://zkiap.com/
+- elliptic curve arithmetic https://www.hyperelliptic.org/EFD/g1p/auto-shortw-projective.html
+- Field extension towers
+  - https://blog.lambdaclass.com/how-we-implemented-the-bn254-ate-pairing-in-lambdaworks/
+  - https://hackmd.io/@Wimet/ry7z1Xj-2?ref=blog.lambdaclass.com#Tower-of-Extension-Fields
+  - https://hackmd.io/@benjaminion/bls12-381?ref=blog.lambdaclass.com#Field-extensions
+- HALO2
+  - [ ] lookups: https://hackmd.io/@sin7y/ryDJ-YxqY
+    - Range Checks: https://plonkbook.org/docs/gadgets/lookup1/
+  - [ ] https://zkhack.dev/zkhackV/puzzleV1.html
+  - [X] https://drive.google.com/file/d/1xcvkutDIsm7VC3KtMjFT3YKahHh-JBHN/view?pli=1
+  - [ ] https://halo2.zksecurity.xyz/
+  - [ ] https://hackmd.io/@3o3SyLkdRHyclM6GoUbn6g/HJVND3_nj
+  - [ ] https://hackmd.io/@axiom/HyoXzD7Zh
+  - [ ] https://diligence.consensys.io/blog/2023/07/endeavors-into-the-zero-knowledge-halo2-proving-system/
+- common bugs & vulnerabilities
+  - https://bugs.zksecurity.xyz/
+
 * SCRAPBOOK
 ** ElGamal on the Grumpkin curve
 #+BEGIN_SRC sage :session . :exports both
