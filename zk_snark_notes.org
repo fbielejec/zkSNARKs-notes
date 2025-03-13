@@ -231,12 +231,33 @@ i.e. the order (number of elements) of every subgroup $H$ divides the order of g
   - this is becasue $r$ is the groups order and multiplying any group element by the order yields the identity element.
   - scalar multiplication is periodic with period $r$: $n\cdot P = (n \hspace{.5em} \text{mod} \hspace{.5em} r) \cdot P$
 
+---
+*NOTE*
+Assume $E$ is finite and cyclic.
+Not every point $P$ generates the whole group $E$: only the points with order $k=r$ do.
+
+For example for $E$ with order 6 and a generator $G$ the group is:
+
+\[
+E = \{ \mathcal{O}, G, 2G, 3G, 4G, 5G \}
+\]
+
+their orders are:
+- For $G$ $k=6$ since $6 \cdot G=\mathcal{O}$
+- For $2G$ $k=3$ since $3 \cdot 2G=\mathcal{O}$
+- For $3G$ $k=2$ since $2 \cdot 3G=\mathcal{O}$
+- For $4G$ $k=3$ since $3*4G=12 \hspace{.5em} \text{mod} \hspace{.5em} 6 \cdot G= \mathcal{O}$
+- For $5G$ $k=6 since $6*5G=30 \hspace{.5em} \text{mod} \hspace{.5em} 6 \cdot G= \mathcal{O}$
+
+Hence only $G$ and $5G$ are the entire groups generators.
+
+---
+
 *** Example: Lagrange's theorem for ECs
 #+BEGIN_SRC sage :session . :exports both
 q=5
 Fq=GF(q)
 E=EllipticCurve(Fq,[1,1])
-
 
 r = E.order()
 P = E.random_point()
