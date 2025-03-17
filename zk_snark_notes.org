@@ -6,6 +6,7 @@
 #+LANGUAGE: en
 #+STARTUP: latexpreview
 #+STARTUP: overview
+#+latex_class_options: [12pt]
 
 * Prerequisites
 ** Coprime numbers
@@ -2316,7 +2317,7 @@ print('G2 =', G2)
 : [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
 : True
 : Full r-torsion group: [(0 : 1 : 0), (1 : x : 1), (1 : 4*x : 1), (2 : 1 : 1), (2 : 4 : 1), (2*x + 1 : x + 1 : 1), (2*x + 1 : 4*x + 4 : 1), (3*x + 1 : x + 4 : 1), (3*x + 1 : 4*x + 1 : 1)]
-: G1 = [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
+: G1= [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
 : G2 = [(0 : 1 : 0), (1 : x : 1), (1 : 4*x : 1)]
 
 *** Additional: pairings in ZK example 1
@@ -2587,7 +2588,6 @@ Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
 #+end_example
 
 ** IN-PROGRESS The Weil Pairing
-p 107
 *** DONE Prerequisites: Meromorphic function
 Let \( E \) be an elliptic curve defined over a field \( K \). A meromorphic function \( f: E \to K \) is a function that can be expressed as:
 
@@ -2687,7 +2687,7 @@ The sum function simply uses the group law on $E$ to add up the points:
 \]
 
 *Definition: poles and zeros of a function divisor on an elliptic curve*
-A function $f$ is said to have a zero at a point $P$ if it takes the value 0 at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
+A function $f$ is said to have a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
 However, we need more refined information, namely the order of the zero or pole.
 Let $P$ be a point on $E$.
 It can be shown that there is a function $u_P$ called a *uniformizer* at $P$ such that:
@@ -2864,7 +2864,7 @@ For any $m\in\mathbb{Z}$ and $P\in E$ it follows that there exists a function $f
 Thus if $P\in E[r]$:, then $f_{r,P}$ has a divisor:
 
 \[
-(f){r,P})=r(P)-r(\mathcal{O})
+(f_{r,P})=r(P)-r(\mathcal{O})
 \]
 
 ---
@@ -3339,8 +3339,27 @@ f5P
 : 5*x^2 + x*y + 3*x - y + 5
 
 *** IN-PROGRESS The Weil Pairing
-p 69
+For a point $P \in E[r]$ the function $f_{r,P}$ with divisor $r(P)-r(\mathcal{O})$ is at the heart of both the Weil and Tate pairing definitions.
+
+=Definition: The Weil pairing=
+Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supportes such that $D_P~(P)-(\mathcal{O})$ and $D_Q~(Q)-(\mathcal{O})$. There exist funcitions f and g such that 
+
+---
+*NOTE*
+Two divisors are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0.
+
+We write $D_P \sim$ D_Q$.
+
+---
+
 * IN-PROGRESS Curated List Of Resources
+- pairings
+  - https://hackmd.io/@brozorec/pairings-for-the-rest-of-us-1
+  - https://hackmd.io/@brozorec/pairings-for-the-rest-of-us-2
+- starks
+  - https://aszepieniec.github.io/stark-anatomy/
+- ZK
+  https://rdi.berkeley.edu/zk-learning/
 - https://zkiap.com/
 - elliptic curve arithmetic https://www.hyperelliptic.org/EFD/g1p/auto-shortw-projective.html
 - Field extension towers
