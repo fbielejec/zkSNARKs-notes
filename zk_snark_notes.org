@@ -1165,10 +1165,13 @@ Elliptic Curve defined by y^2 = x^3 + 905*x + 100 over Finite Field of size 1021
 True
 #+end_example
 
-** Embedding degree <<EmbeddingDegree>>
+** IN-PROGRESS Embedding degree <<EmbeddingDegree>>
 =Algebraic Definition=
 The embedding degree \(k\) of an elliptic curve is the smallest positive integer such that the group of \(r\)-torsion points of the elliptic curve \(E\) (i.e., the points \(P \in E\) such that \(rP = \mathcal{O}\)) is contained within the finite field \(\mathbb{F}_{q^k}\), where \(r\) is a prime number dividing the order of the elliptic curve.
+
 In other words, \(k\) is the smallest integer for which the curve has enough points to map every possible interaction of its points into the finite field.
+
+In yet another words, \(k\) is the smallest integer for which the field $F_{q^k}$ contains all of the $r$-th roots of unity.
 
 *Relation to the (full) [[rTorsion][r-torsion]].*
 Embedding degree $k$ is the smallest integer such that:
@@ -1183,7 +1186,7 @@ $E(F_{p^k})[r]=E(\overline{F_p})[r]$
 ---
 
 =Mathematical definition=
-Let $F$ be a finite field of order $|F| = q$, $E(F)$ an elliptic curve over $F$ of order $\# E(F)=n$ and let $r$ be a prime factor of $n$ ($r$ divides $n$).
+Let $F$ be a finite field of order $|F| = q$, $E(F)$ an elliptic curve over $F$ of order $\# E(F)=n$ and let $r$ be a prime factor of $n$ ($r$ divides $n$, i.e. $n$ is the cofactor).
 The embedding degree of $E(F)$ with respect to $r$ is the smallest integer $k$ such that the following equation holds:
 
 \[
@@ -1191,6 +1194,12 @@ r \hspace{.5em} | \hspace{.5em} q^k -1$
 \]
 
 ($r$ divides $q^k -1$).
+
+Another formulation of the above:
+
+\[
+q^k \equiv 1 \hspace{.5em} | \hspace{.5em} \(\text{mod} \hspace{.5em} r\)
+\]
 
 We write $k(r)$ for the embedding degree of $E(F)$ with respect to $r$.
 
@@ -1201,6 +1210,9 @@ and that any factor $r$ of the curve's order $n$, since $k = r - 1$, is always a
 This implies that the remainder of the integer division of $q^{r-1} - 1$ by $r$ is $0$.
 ---
 
+# TODO: example that illustrates how k is the smallest integer for which the field F_q^k contains all r-th roots of unity
+# - find the embedding degree
+# - find all roots of unity in the extension fields with extension < r
 ** Elliptic Curves over prime field extensions
 *** IN-PROGRESS Prime field extensions <<PrimeFieldExtension>>
 ---
@@ -2794,7 +2806,7 @@ Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
 A *divisor of a function* \( f \) on an elliptic curve \( E \) is a formal sum of the points on the elliptic curve, weighted by the orders of the function \( f \) at those points. In more formal terms, if \( P \) denotes a point(s) on \( E \), the divisor associated with \( f \) can be expressed as:
 
 \[
-\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) P
+\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P
 \]
 
 where $\text{ord}_P(g)$ is the number of zeroes or poles at $P$ (and is negative if it represents the number of poles at $P$) .
@@ -3342,15 +3354,43 @@ f5P
 For a point $P \in E[r]$ the function $f_{r,P}$ with divisor $r(P)-r(\mathcal{O})$ is at the heart of both the Weil and Tate pairing definitions.
 
 =Definition: The Weil pairing=
-Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supportes such that $D_P~(P)-(\mathcal{O})$ and $D_Q~(Q)-(\mathcal{O})$. There exist funcitions f and g such that 
+Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions f and g such that $(f)=rD_P$ and $(g)=rD_Q$. The Weil pairing $w_r$ is a map:
+
+\[
+w_r: E(F_{q^k})[r] \times E(F_{q^k})[r] \rightarrow \mu_r
+\]
+
+defined as:
+
+\[
+w_r(P,Q)=\frac{f(D_Q)}{g(D_P)}
+\]
+
+where $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
 
 ---
 *NOTE*
-Two divisors are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0.
+Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
 
-We write $D_P \sim$ D_Q$.
+We write $D_P \sim D_Q$.
 
 ---
+*** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+E=EllipticCurve(Fq, [0,-1])
+
+E.order()
+# E is supersingular:
+E.order() == q+1
+
+
+#+END_SRC
+
+#+RESULTS:
+: 24
+: True
 
 * IN-PROGRESS Curated List Of Resources
 - pairings
