@@ -27,11 +27,25 @@
   - [[#example][Example]]
 - [[#lagranges-theorem-for-elliptic-curves][Lagrange's theorem for Elliptic Curves]]
   - [[#example-lagranges-theorem-for-ecs][Example: Lagrange's theorem for ECs]]
-  - [[#the-exponential-map][The exponential map]]
+- [[#the-exponential-map][The exponential map]]
 - [[#elliptic-curve-scalar-multiplication][Elliptic Curve scalar multiplication]]
 - [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
   - [[#example][Example]]
-  - [[#additional-materials][Additional materials]]
+- [[#elliptic-curve-discrete-logarithm-problem-ecdlp][Elliptic Curve Discrete Logarithm Problem (ECDLP)]]
+  - [[#example-1][Example 1]]
+  - [[#example-222-pairings-for-beginners][Example 2.2.2 Pairings for beginners]]
+- [[#elliptic-curves-over-prime-field-extensions][Elliptic Curves over prime field extensions]]
+  - [[#prime-field-extensions][Prime field extensions]]
+  - [[#example-extending-f_5-to-f_52][Example: Extending $F_5$ to $F_{5^2}$]]
+  - [[#example-constructing-the-extension-field-f_4f_22][Example: Constructing the extension field $F_4=F_{2^2}$]]
+  - [[#example-constructing-the-extension-field-f_32][Example: Constructing the extension field $F_{3^2}$.]]
+  - [[#extending-elliptic-curves-to-prime-field-extensions][Extending elliptic curves to prime field extensions]]
+    - [[#field-extension-towers-1][Field extension towers 1]]
+    - [[#field-extension-towers-2][Field extension towers 2]]
+    - [[#field-extension-towers-3][Field extension towers 3]]
+    - [[#example-extending-f_97-to-f_9712-using-a-tower-of-extensions][Example: extending $F_{97}$ to $F_{{97}^{12}}$ using a tower of extensions]]
+    - [[#example-extending-f_3-to-f_36-using-a-tower-of-extensions][Example: extending F_3 to F_{3^6} using a tower of extensions]]
+- [[#additional-materials][Additional materials]]
 :END:
 
 * Affine Short Weierstrass form
@@ -544,7 +558,7 @@ print(f"r | k: {r.divides(k)}")
 : r | k: True
 : (0 : 1 : 1)
 : (0 : 1 : 1)
-** TODO The exponential map
+* TODO The exponential map
 - [ ] 39
 * Elliptic Curve scalar multiplication
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $P$ a generator of $E(F)$.
@@ -598,6 +612,7 @@ $E_P = \{ [X : Y : Z] \in P \hspace{.5em} | \hspace{.5em} Y^2 \cdot Z = X^3 + a 
 #+BEGIN_SRC sage :session . :exports both
 F13 = GF(13)
 E_F13 = EllipticCurve(F13, [F13(0), F13(5)])
+E_F13
 E_F13.order()
 
 # there are 16 classes (X : Y : Z) \in P^2(F_13)
@@ -607,6 +622,7 @@ for p in E_F13:
 
 #+RESULTS:
 #+begin_example
+Elliptic Curve defined by y^2 = x^3 + 5 over Finite Field of size 13
 16
 (0 : 1 : 0)
 (2 : 0 : 1)
@@ -629,21 +645,511 @@ for p in E_F13:
 The substitutions from the example above (x = X/Z, y = Y/Z) are the most simple (and standard) way to obtain projective coordinates,
 but we are not restricted to this choice of substitution.
 
+Elliptic Curve Discrete Logarithm Problem (ECDLP)
+=Discrete Logarithm Problem (DLP)=
+Let $G$ be a finite cyclic group of order $r$ and let $g$ be a generator of $G$.
+
+There exists an exponential map:
+$g^{(\cdot)}: Z_r \rightarrow G; x \mapsto g^x$
+
+that maps the residue classes from modulo $r$ arithmetic onto the group in 1:1 correspondence.
+The DLP is the task of finding an inverse to this map, that is a solution $x \in Z_r$ to the following equation for some given $h,g\in G$:
+
+\begin{equation*}
+h=g^x
+\end{equation*}
+
+There are groups in which the DLP is assumed infisible to solve and they are called *DL-secure* groups.
+
 =Example=
+If the group is $Z_{5}^{*}$, and the generator is 2, then the discrete logarithm of 1 to the base 2 is 4 because $2^4 \equiv 1 \medspace \text{mod} \medspace 5$.
+
+Extending this, a DLP can be constructed with elliptic curves.
+By selecting a point on an elliptic curve group, one can double it to obtain the point 2P. After that, one can add the point P to the point 2P to obtain the point 3P. The determination of a point nP in this manner is referred to as Scalar Multiplication of a point.
+
+* Elliptic Curve Discrete Logarithm Problem (ECDLP)
+Given points $P$ and $Q$ in the group, find a number $k$ such that $Pk = Q$
+** Example 1
+Consider $y^2 = x^3 + 9x + 17$ over $F_{23}$.
+What is the discrete logarithm $k$ of $Q = (4,5)$ to the base $P = (16,5)$?
+Brute-force way to find $k$ is to compute scalar multiples of $P$ until $Q$ is found:
+
 #+BEGIN_SRC sage :session . :exports both
-F41 = GF(41)
-F41
-
-P.<x,y,z> = ProjectiveSpace(F41, 2)
-
-E = Curve([x^3*z + 4*x*z^3 - z^4], P);
-E
+G = GF(23)
+E = EllipticCurve(G,[0,0,0,9,17])
+P = E(16,5)
+Q = E(4,5)
+for k in range(1,20):
+  if ((k * P) == Q): print(k)
 #+END_SRC
 
 #+RESULTS:
-: Finite Field of size 41
-: Projective Plane Curve over Finite Field of size 41 defined by x^3*z + 4*x*z^3 - z^4
+: 9
 
-** IN-PROGRESS Additional materials
+---
+*NOTE*
+
+See also this visualization:
+https://andrea.corbellini.name/ecc/interactive/modk-mul.html
+
+---
+
+** Example 2.2.2 Pairings for beginners
+Suppose we are presented with an instance of the ECDLP: we are given $Q = (612, 827)$, and we seek to find $k$ such that $[k]P = Q$
+Instead of a brute-force attack we can map the instance into each prime order subgroup by multiplying by the appropriate cofactor, and then solve for $k_j \equiv k \pmod{j}, j \in \{2, 3, 7, 23\}$.
+
+#+BEGIN_SRC sage :session . :exports both
+F1021 = GF(1021)
+E_F1021 = EllipticCurve(F1021, [905, 100])
+E_F1021
+
+E_order = E_F1021.order()
+E_order
+E_order.factor()
+
+#P=E_F1021.gens()[0]
+P=E_F1021(1006,416)
+P.order()
+Q=E_F1021(612,827)
+
+# j = 2
+P_j = (E_order / 2) * P
+Q_j = (E_order / 2) * Q
+for k in range(0,2):
+  if ((k * P_j) == Q_j): print(k)
+
+# j = 3
+P_j = (E_order / 3) * P
+Q_j = (E_order / 3) * Q
+for k in range(0,3):
+  if ((k * P_j) == Q_j): print(k)
+
+# j = 7
+P_j = (E_order / 7) * P
+Q_j = (E_order / 7) * Q
+for k in range(0,7):
+  if ((k * P_j) == Q_j): print(k)
+
+# j = 23
+P_j = (E_order / 23) * P
+Q_j = (E_order / 23) * Q
+for k in range(0,23):
+  if ((k * P_j) == Q_j): print(k)
+
+# Now, we can use the Chinese Remainder Theorem to solve
+# k = 1 mod 2
+# k = 0 mod 3
+# k = 1 mod 7
+# k = 20 mod 23
+k = CRT([1, 0, 1, 20], [2, 3, 7, 23])
+k
+
+# which solves original DLP problem:
+k * P == Q
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Elliptic Curve defined by y^2 = x^3 + 905*x + 100 over Finite Field of size 1021
+966
+2 * 3 * 7 * 23
+966
+1
+0
+1
+20
+687
+True
+#+end_example
+
+* TODO Elliptic Curves over prime field extensions
+** IN-PROGRESS Prime field extensions
+---
+*NOTES*
+
+- $F_p[x]$ is a ring of polynomials with coefficients in $F_p$.
+- An *irreducible polynomial* is a polynomial that cannot be factored into the product of two non-constant polynomials.
+---
+
+Given some prime $p \in P$ a natural number $m \in N$ and an irreducible polynomial $P \in F_p[x]$
+of degree $m$ with coefficients from the prime field $F_p$ a prime field extension $(F_{p^m}, +, \cdot)$ is defined as follows:
+
+- The set $F_{p^m}$ of the prime field extension is given by the set of all polynomials with degree less than $m$:
+
+$F_{p^m} := \{ a_{m-1}x^{m-1} + a_{m-2} x^{m-2} + \ldots + a_1 x + a_0 \hspace{.5em} | \hspace{.5em} a_i \in F_p \}$
+
+- The addition law $+$ is given by the addition of polynomials.
+- The multiplication $\cdot$ law of the prime field extension is given by first multiplying the two polynomials, then dividing the result by the irreducible polynomial P and keeping the remainder.
+- The neutral element of the additive group  $(F_{p^m}, +)$ is the zero polynomial $0$.
+- The neutral element of the multiplicative group  $(F_{p^m}^{*}, \cdot)$ is the unit polynomial $1$.
+- The multiplicative inverse can be computed by the Extended Euclidean Algorithm
+
+---
+*NOTE*
+
+- $F_{p^m}$ is of characteristic $p$, since the multiplicative neutral element $1$ is equivalent to the multiplicative element 1 from the underlying prime field, and hence $\sum_{j=0}^{p} 1=0$.
+- $F_{p^m}$ is finite and contains $p^m$ many elements, since elements are polynomials of degree $<m$, and every coefficient $a_j$ can have $p$ many different values.
+- It can be shown that $F_{p^m}$ is the set of all remainders when dividing *all* polynomials $Q \in F_p[x]$ by an irreducible polynomial $P$ of degree $m$. This is analogous to how $F_p$ is the set of all remainders when dividing integers by $p$.
+
+---
+
+** DONE Example: Extending $F_5$ to $F_{5^2}$
+Steps to Construct $\mathbb{F}_{5^2}$:
+
+*Step 1*: Choose an Irreducible Polynomial
+- Find an irreducible polynomial of degree 2 over $\mathbb{F}_{5}$. For example, $f(x) = x^2 + 2$.
+- $f(x)$ is such that it's root is $\alpha$ in the extension field $\mathbb{F}_{5^2}$:
+
+$f(\alpha) = \alpha^2 + 2 = 0 \quad (\text{in}  \mathbb{F}_{11^2})$
+
+*Step 2*: Construct the Field
+- The extension field \(\mathbb{F}_{5^2}\) consists of all polynomials with coefficients in \(\mathbb{F}_{5}\), modulo \( f(x) \).
+- Elements of the extension field are congruence classes of polynomials with degrees less than \( f(x) \). This is similar to how numbers in modular arithmetic are representatives from 0 to \( n-1 \) for mod \( n \).
+- Therefore, elements of \(\mathbb{F}_{5^2}\) can be expressed as \( a_1x + a_0 \), where \( a_1, a_0 \in \mathbb{F}_{5} \).
+- $F_5^2=F_5(\alpha)$ with $\alpha^2+2=0$
+
+*Step 3*: Arithmetic in \(\mathbb{F}_{5^2}\)
+- Addition and subtraction are performed by adding or subtracting corresponding coefficients and reducing modulo 5.
+- Multiplication is carried out by multiplying the polynomials and reducing modulo both 5 and the irreducible polynomial  f(x) \).
+
+#+BEGIN_SRC sage :session . :exports both
+F5=GF(5)
+
+# ring of polynomials in F5
+F5x.<x> = F5[]
+
+# polynomial irreducible in F5 of degree m = 2
+P_MOD_2 = F5x(x^2+2)
+P_MOD_2.is_irreducible()
+
+# define the extension field.
+# a is the root of the irreducible polynomial
+F5_2a.<a> = GF(5^2, name = 'a', modulus=P_MOD_2)
+# this is 5^2 as expected
+F5_2a.order()
+
+# entire extended field (5^2 points)
+[p for p in F5_2a]
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+True
+25
+[0,
+ a + 4,
+ 3*a + 4,
+ a,
+ 4*a + 3,
+ 4*a + 4,
+ 3,
+ 3*a + 2,
+ 4*a + 2,
+ 3*a,
+ 2*a + 4,
+ 2*a + 2,
+ 4,
+ 4*a + 1,
+ 2*a + 1,
+ 4*a,
+ a + 2,
+ a + 1,
+ 2,
+ 2*a + 3,
+ a + 3,
+ 2*a,
+ 3*a + 1,
+ 3*a + 3,
+ 1]
+#+end_example
+
+** IN-PROGRESS Example: Constructing the extension field $F_4=F_{2^2}$
+1. Choose the prime $p=2$
+   - the characteristic of the field is 2.
+2. Determine the field size
+   - the field size is $p^2=4$
+3. Find an irreducible polynomial over $F_2$.
+   - Consider $P(x) = x^2+x+1$. This polynomial is irreducible over $F_2$ meaning it has no roots in $F_2$ and hence it cannot be factored into polynomials of a lower degree over $F_2$. The easiest way to check that is to evaluate P(x) in all the elements of $F_2$:
+     - $P(0)=1  \quad \text{mod 2}$
+     - $P(1)=1 \quad \text{mod 2}$
+   - $x$ denotes a root of $P$ in $F_4=F_{2^2}$. This implies that $x^2+x+1=0 \Longleftrightarrow x^2=1+x$ in $F_4$.
+4. Construct the field $F_4=F_2[x], \hspace{.5em} x^2+x+1 =0$. The set $F_{2^2}$ contains all polynomials of degree lower than $2$ with coefficients in $F_2$. These elements are:
+   - $\left{ 0, 1, x, x + 1 \right}$
+   - $x$ is the generator of the field extension and all elements can be expressed in terms of $x$.
+5. TODO Addition in the field:
+6. TODO Multiplication in the field:
+
+#+BEGIN_SRC sage :session . :exports both
+# a finite field
+F2 = GF(2)
+# define a ring of polynomials with coefficients in F2:
+F2x.<x> = F2[]
+
+P=F2x(x^2+x+1)
+P.is_irreducible()
+
+print('1) ---')
+
+# Constructing $F_{2^2}$ by dividing all $Q \in F_2[x]$ by an irreducible P
+F2_2.<x> = F2x.quotient(P)
+F2_2
+for i in F2_2: print(i)
+
+print('2) ---')
+
+F2_2.<x> = GF(2^2, name='x', modulus=P)
+F2_2
+for i in F2_2: print(i)
+
+print('3) ---')
+
+# below are not all of the F2[x] polynomials, but enough to arrive at all of the extension field elements:
+F2x(x^3).quo_rem(P)[1]
+F2x(x^2).quo_rem(P)[1]
+F2x(x).quo_rem(P)[1]
+F2x(0).quo_rem(P)[1]
+F2x(1).quo_rem(P)[1]
+
+print('4) ---')
+# x is the root of the polynomial P in the field F_{2^2}=F_4
+P(x)
+
+print('5) ---')
+# x, the root of the polynomial P, is the generator of the multiplicative group from the extension field
+x
+x^2
+x^3
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+True
+1) ---
+Univariate Quotient Polynomial Ring in x over Finite Field of size 2 with modulus x^2 + x + 1
+0
+1
+x
+x + 1
+2) ---
+Finite Field in x of size 2^2
+0
+x
+x + 1
+1
+3) ---
+1
+x + 1
+x
+0
+1
+4) ---
+0
+5) ---
+x
+x + 1
+1
+#+end_example
+** IN-PROGRESS Example: Constructing the extension field $F_{3^2}$.
+We start by choosing an irreducible polynomial of degree 2 with coefficients in $F_3$.
+We try $P(t)=t^2+1$.
+
+The fastest way to show that $P$ is irreducible is to just insert all elements from $F_3$ and see if the result is ever zero:
+$P(0) = 0^2 + 1 = 1$
+$P(1) = 1^2 + 1 = 2$
+$P(2) = 2^2 + 1 = 1 + 1 = 2$
+
+This implies that $P$ is irreducible, since all factors must be of the form $(t - a)$ for $a$ being a root of $P$.
+The set $F_{3^2}$ contains all polynomials of degrees lower than 2, with coefficients in $F_{3}$:
+
+$F_{3^2} = \{ 0, 1, 2, t, t + 1, t + 2, 2t, 2t + 1, 2t + 2 \}$
+
+It has exactly $3^2$ elements.
+
+=addition=
+Addition is defined as addition of polynomials, for example:
+
+$(t + 2) + (2t + 2) = (1 + 2)t + (2 + 2) = 1$
+
+=multiplication=
+TODO
+
+** Extending elliptic curves to prime field extensions
+
+=p 101=
+Suppose that $p$ is a prime number, and $F_p$ its associated prime field. We know from [[PrimeFieldExtension][Prime Field Extension]]
+that the fields $F_{p^m}$ are extensions of $F_p$ in the sense that $F_p$ is a subfield of $F_{p^m}$.
+
+This implies that we can extend the affine plane that an elliptic curve is defined on by changing the base field to any extension field.
+
+Let $E(F) = \{(x, y) \in F \times F \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + a · x + b\}$
+
+be an affine Short Weierstrass curve, with parameters $a$ and $b$ taken from $F$.
+If $F'$ is an extension field of $F$, then we extend the domain of the curve by defining $E(F')$ as follows:
+
+$E(F') = \{(x, y) \in F' \times F' \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + ax + b\}$
+
+We did not change the defining parameters, but we consider curve points from the affine plane over the extension field now.
+
+=Example 90=
+Consider prime field $F_5$ together with an elliptic curve $E_{1,1}(F_5)$.
+We extend the definition of $E_{1,1}(F_5)$ to an elliptic curve over $F_{5^2}$ and compute it's set of points:
+
+$E_{1,1}(F_{5^2}) = \{(x,y) \in F_{5^2} \times F_{5^2}\ \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + 1 + 1}$.
+
+Since $F_{5^2}$ contains 25 points, we would have to try $25\cdot25=625$ pairs. Using Sage:
+
+#+BEGIN_SRC sage :session . :exports both
+F5=GF(5)
+
+# ring of polynomials in F5
+F5x.<x> = F5[]
+
+# polynomial irreducible in F5 of degree m = 2
+P_MOD_2 = F5x(x^2+2)
+P_MOD_2.is_irreducible()
+
+# define the extension field.
+# a is the root of the irreducible polynomial
+F5_2a.<a> = GF(5^2, name='a', modulus=P_MOD_2)
+
+# define the elliptic curve in the extension field
+E_F5_2=EllipticCurve(F5_2a, [1,1])
+E_F5_2
+
+E_F5_2.order()
+
+E_F5_2.points()
+
+#+END_SRC
+
+#+RESULTS:
+: True
+: Elliptic Curve defined by y^2 = x^3 + x + 1 over Finite Field in a of size 5^2
+: 27
+: [(0 : 1 : 0), (0 : 1 : 1), (0 : 4 : 1), (1 : a : 1), (1 : 4*a : 1), (2 : 1 : 1), (2 : 4 : 1), (3 : 1 : 1), (3 : 4 : 1), (4 : 2 : 1), (4 : 3 : 1), (a + 3 : 2*a + 4 : 1), (a + 3 : 3*a + 1 : 1), (2*a + 1 : a + 1 : 1), (2*a + 1 : 4*a + 4 : 1), (2*a + 2 : a : 1), (2*a + 2 : 4*a : 1), (2*a + 3 : 2 : 1), (2*a + 3 : 3 : 1), (3*a + 1 : a + 4 : 1), (3*a + 1 : 4*a + 1 : 1), (3*a + 2 : a : 1), (3*a + 2 : 4*a : 1), (3*a + 3 : 2 : 1), (3*a + 3 : 3 : 1), (4*a + 3 : 2*a + 1 : 1), (4*a + 3 : 3*a + 4 : 1)]
+
+*** TODO Field extension towers 1
+- [ ] https://blog.lambdaclass.com/how-we-implemented-the-bn254-ate-pairing-in-lambdaworks/
+*** IN-PROGRESS Field extension towers 2
+- [ ] https://hackmd.io/@jpw/bn254#Field-extension-towers
+
+Extending $F_p$ for p = 21888242871839275222246405745257275088696311157297823662689037894645226208583 to $F_{p^{12}}$
+
+# p = 36u^4 + 36u^3 + 24u^2 + 6u + 1, with u = v^3 and v = 1868033, BN curve: y^2 = x^3 + 3 over F_p
+
+#+BEGIN_SRC sage :session . :exports both
+# Prime field for BN254
+n = 1868033
+o = n**3
+p = 36*o**4 + 36*o**3 + 24*o**2 + 6*o + 1
+#p = 21888242871839275222246405745257275088696311157297823662689037894645226208583
+Fp = GF(p)
+
+## First extension: Fp^2 = Fp[u]/(u^2 + 1)
+
+R.<x> = PolynomialRing(Fp)
+alpha_poly = R(x^2 + 1)
+# irreducible polynomial in Fp
+alpha_poly.is_irreducible()
+# --- NOTE --- #
+# u^2 + 1 is an irreducible polynomial in Fp
+#
+# which is the same as saying that -1 is a quadratic non-residue in Fp (there is no u such that u^2 = -1 in Fp)
+#
+# (p-1)/2 numbers in GF(p) are quadratic residues so:
+# q is a quadratic residue mod p if and only if q^{(p-1)/2} = 1 mod p.
+#
+# pow(a,b,c) returns a^b mod c
+# --- END: NOTE --- #
+print(f"-1 is a quadratic residue in F_{p}: {pow(-1, Integer((p-1)/2), p) == 1}")
+Fp2 = Fp.extension(alpha_poly, 'u')
+u = Fp2.gen()
+
+## Second extension: Fp^6 = Fp^2[v] / (v^3 - zeta)
+
+R2.<y> = PolynomialRing(Fp2)
+zeta = 9 + u
+beta_poly = R2(y^3 - zeta)
+# --- NOTE
+# zeta is not a quadratic residue in Fp^2 and not a cubic residue in Fp^2
+#
+# this condition on zeta is equivalent to saying that the polynomial (X^6 - zeta) is irreducible over Fp^2[X]
+#
+# --- END: NOTE
+print(f"{zeta} is a quadratic residue in F_{p}: {pow(zeta, Integer((p-1)/2), p) == 1}")
+
+# TODO: wtf?
+R2(y^6 - zeta).is_irreducible()
+
+Fp6 = Fp2.extension(beta_poly, 'v')
+v = Fp6.gen()
+
+## Final extension: Fp^12
+
+R3.<z> = PolynomialRing(Fp6)
+eta = v + 1  # Arbitrary choice, should be handled as needed
+gamma_poly = R3(z^2 - eta)
+Fp12 = Fp6.extension(gamma_poly, 'w')
+w = Fp12.gen()
+
+w^12 - 18*w^6 + 82
+#+END_SRC
+
+#+RESULTS:
+: True
+: -1 is a quadratic residue in F_65000549695646603732796438742359905742825358107623003571877145026864184071783: False
+: u + 9 is a quadratic residue in F_65000549695646603732796438742359905742825358107623003571877145026864184071783: False
+: False
+: (6*u + 15)*v^2 + (15*u + 87)*v + 20*u + 163
+
+*** TODO Field extension towers 3
+- [ ] https://hackmd.io/@benjaminion/bls12-381?ref=blog.lambdaclass.com#Field-extensions
+*** TODO Example: extending $F_{97}$ to $F_{{97}^{12}}$ using a tower of extensions
+- p101 PairingsForBeginners
+*** IN-PROGRESS Example: extending F_3 to F_{3^6} using a tower of extensions
+#+BEGIN_SRC sage :session . :exports both
+q = 3
+Fq = GF(q)
+Fq
+
+# First extension: F_{q^2}
+
+# ring of polynomials with an indeterminate x
+Rx.<x> = PolynomialRing(Fq)
+# indeterminate x is the ring generator
+Rx.gen()
+
+# irreducible polynomial over Fq
+alpha_poly = Rx(x^2 + 1)
+alpha_poly.is_irreducible()
+Fq2 = Fq.extension(modulus = alpha_poly, name = 'x')
+# x is the generator of Fq2
+x = Fq2.gen()
+
+# all the elements of the field can be expressed in terms of alpha
+[p for p in Fq2]
+# modulus polynomial is such that alpha is it's root in Fq2
+alpha_poly(alpha) == Fq2(0)
+
+# Second extension: F_{q^6} over F_{q^2}
+Ry.<y> = PolynomialRing(Fq2)
+Ry
+
+# TODO : irreducible polynomial over Fq2
+beta_poly = Ry(y^3 - y + 1)
+beta_poly.is_irreducible()
+Fq6 = Fq2.extension(beta_poly, 'y')
+y = Fq6.gen()
+
+# Show elements of the final field extension
+example_elem = y^5 + x * y^2 + x
+print(f"Example element in F_{q^6}: {example_elem}")
+
+#+END_SRC
+
+#+RESULTS:
+
+
+* IN-PROGRESS Additional materials
 - [ ] cofactor clearing: https://loup-vaillant.fr/tutorials/cofactor
 - [X] https://www.youtube.com/watch?v=9TFEBuANioo
