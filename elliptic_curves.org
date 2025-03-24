@@ -1287,7 +1287,7 @@ Any full r-torsion group contains $r + 1$ cyclic subgroups (for prime $r$) of or
 
 ---
 
-To find the full \( r \)-torsion points:
+To find the full $r$-torsion group:
 
 1. *Identify the base curve and field:*
    - Start with an elliptic curve $E$ defined over the base field $\mathbb{F}_q$.
