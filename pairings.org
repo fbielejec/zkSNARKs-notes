@@ -918,7 +918,7 @@ Then using divisors, we can say all this concisely:
 
 $\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
 
-** IN-PROGRESS Example: Principal divisor (divisor of a function)
+** Example: Principal divisor (divisor of a function)
 
 $E: \hspace{.5em} y^2 = (x - e_1) \times (x - e_2) \times (x - e_3)$
 
@@ -955,7 +955,7 @@ where:
 - Each point addition can be associated with a divisor. For instance, when you compute $R = P + Q$, this addition can be represented as a divisor:
 $D = P + Q - R$
 
-** Example 3.1.1 Pairings For Beginners
+** IN-PROGRESS Example 3.1.1 Pairings For Beginners
 #+begin_src sage :session . :exports both
 F = FiniteField(103)
 E = EllipticCurve(F, [20, 20])
@@ -1045,28 +1045,28 @@ P=E(10,7)
 : 5
 : (0 : 1 : 0)
 
-We will build $f_{5,P}$ by using $f_{m+1,P}=f_{m,P} \cdot \frac{\ell_{[m]P,P}}{v_{[m+1]P}}$
+We will build $f_{5,P}$ using $f_{m+1,P}=f_{m,P} \cdot \frac{\ell_{[m]P,P}}{v_{[m+1]P}}$
 
 ---
+
 *NOTE*
+
 The divisor:
 
-\[
-(\frac{\ell_{[m]P,P}}{v[m+1],P})=(\ell_{[m]P,P}) - (v_{[m+1]P})=(P) + ([m]P) - ([m+1]P) - (\mathcal{O})
-\]
+$(\frac{\ell_{[m]P,P}}{v[m+1],P})=(\ell_{[m]P,P}) - (v_{[m+1]P})=(P) + ([m]P) - ([m+1]P) - (\mathcal{O})$
 
 ---
 
 1) m = 1
 We compute the function:
 
-\[
-f_{1+1,P}=f_{1,P} \cdot \frac{\ell_{P,P}}{v[2]P}
-\]
+$f_{1+1,P}=f_{1,P} \cdot \frac{\ell_{P,P}}{v[2]P}$
 
 with divisor $(f_{2,P})=2(P)-([2]P)-(\mathcal{O})$.
+
 Note that $(f_{1,P})$ is the zero divisor.
-$\ell_{P,P}$ is the tangent line at $P=(10,7)$. Let's find it's equation:
+$\ell_{P,P}$ is the tangent line at $P=(10,7)$.
+Let's find it's equation:
 
 Diff both sides of E with respect to x:
 # #+BEGIN_SRC maxima :exports both :results output replace
@@ -1074,13 +1074,9 @@ Diff both sides of E with respect to x:
 # print(diff(y(x),x));
 # #+END_SRC
 
-\[
-2y \frac{dy}{dx}=3x^2+17
-\]
+$2y \frac{dy}{dx}=3x^2+17$
 
-\[
-\frac{dy}{dx}=\frac{3x^2+17}{2y}
-\]
+$\frac{dy}{dx}=\frac{3x^2+17}{2y}$
 
 Evaluate at $P=(10,7)$ mod 23 to get the slope of the tangent line:
 
@@ -1109,26 +1105,26 @@ Fq(-21*10+7)
 
 Thus the tangent line at P is:
 
-\[
-\ell: y=21x+4
-\]
+$\ell: y=21x+4$
 
 Now to get the vertical line passing through $[2]P$:
 
 ---
+
 *NOTE*
+
 A vertical line on an elliptic curve is a line of the form:
 
-\[
-x=c
-\]
-where $c$ is a constant.
+$x=c$
+
+where:
+- $c$ is a constant.
+
 This line passes through all points on the curve with x-coordinate equal to $c$.
 For a given point $P=(x_1,y_1)$ the vertical line passing through P is simply:
 
-\[
-x=x_1
-\]
+$x=x_1$
+
 ---
 
 #+BEGIN_SRC sage :session . :exports both
@@ -1153,10 +1149,9 @@ Fq(-16)
 : 7
 : 7
 
-A vertical line passing through $[2]P$ is:
-\[
-v :x=7
-\]
+Hence a vertical line passing through $[2]P$ is:
+
+$v :x=7$
 
 We can get the same results using closed-form formulas for the group law:
 
@@ -1219,19 +1214,20 @@ Fxy(x + 16)
 
 Finally we get:
 
-\[
-f_{2,P}=\frac{y + 2*x - 4}{x - 7}
-\]
+$f_{2,P}=\frac{y + 2*x - 4}{x - 7}$
 
 2) m = 2
 
 We compute the function:
 
-\[
-f_{3,P}=f_{2,P} \cdot \frac{\ell_{[2]P,P}}{v_{[3]P}}
-\]
-with divisor $(f_{3,P})=3(P)-([3]P)-2(\mathcal{O})$,
-where $\ell_{[2]P,P}$ is the chord line through $P$ and $[2]P$ and $v_{[3]P}$ is the vertical line going through $[3]P$.
+$f_{3,P}=f_{2,P} \cdot \frac{\ell_{[2]P,P}}{v_{[3]P}}$
+
+with the divisor:
+
+$(f_{3,P})=3(P)-([3]P)-2(\mathcal{O})$,
+
+where:
+- $\ell_{[2]P,P}$ is the chord line through $P$ and $[2]P$ and $v_{[3]P}$ is the vertical line going through $[3]P$.
 
 #+BEGIN_SRC sage :session . :exports both
 q=23
@@ -1259,17 +1255,13 @@ fADD(P,2*P)
 
 Hence:
 
-\[
-f_{3,P}=\frac{y + 2*x - 4}{x - 7} \cdot \frac{x+y+6}{x-7}
-\]
+$f_{3,P}=\frac{y + 2*x - 4}{x - 7} \cdot \frac{x+y+6}{x-7}$
 
 3) m = 3
 
 We compute the function
 
-\[
-f_{4,P}=f_{3,P} \cdot \frac{\ell_{[3]P,P}}{v_{[4]P}}
-\]
+$f_{4,P}=f_{3,P} \cdot \frac{\ell_{[3]P,P}}{v_{[4]P}}$
 
 with divisor $(f_{4,P})=4(P)-(4P)-3(\mathcal{O})$.
 
@@ -1301,16 +1293,13 @@ fADD(P,3*P)
 
 The last function we need has a divisor:
 
-\[
-(P)+(4P)-(5P)-(\mathcal{O})
-\]
+$(P)+(4P)-(5P)-(\mathcal{O})$
 
-which would be the quotient of lines defining the group-law addition of $P$ and $4P$, but since $P$ has order 5 $P=-4P$
-so this function actually has a divisor $(P)+(-P)-2(\mathcal{O})$ and the last update is simply the vertical line at $P$:
+which would be the quotient of lines defining the group-law addition of $P$ and $4P$, but since $P$ has order 5: $P=-4P$
 
-\[
-v:x=10
-\]
+So this function actually has a divisor $(P)+(-P)-2(\mathcal{O})$ and the last update is simply the vertical line at $P$:
+
+$v:x=10$
 
 Combining these results:
 
@@ -1352,7 +1341,7 @@ f5P = f4P * Fxy(x-10)
 f5P
 #f5P.factor()
 
-# solution from the book
+# WTF? not quite the same a the solution from the book which is:
 (x+22)*y + 5*x^2 + 3*x + 5
 #+END_SRC
 
