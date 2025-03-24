@@ -4,10 +4,9 @@
 * Contents
 :PROPERTIES:
 :STARTUP: showall
-:TOC:      :include all
+:TOC:      :include all :ignore this
 :END:
 :CONTENTS:
-- [[#contents][Contents]]
 - [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
 - [[#roots-of-unity][Roots of unity]]
   - [[#n-th-roots-of-unity][n-th Roots of Unity]]

@@ -4,10 +4,9 @@
 * Contents
 :PROPERTIES:
 :STARTUP: showall
-:TOC:      :include all
+:TOC:      :include all :ignore this :depth 2
 :END:
 :CONTENTS:
-- [[#contents][Contents]]
 - [[#billinear-map][Billinear map]]
 - [[#pairing][Pairing]]
   - [[#example-billinearity-of-a-pairing][Example: billinearity of a pairing]]
@@ -39,10 +38,6 @@
   - [[#example-311-pairings-for-beginners][Example 3.1.1 Pairings For Beginners]]
   - [[#example-divisors][Example: divisors]]
   - [[#example-501][Example 5.0.1]]
-    - [[#m--1][m = 1]]
-    - [[#m--3][m = 3]]
-    - [[#m--4][m = 4]]
-    - [[#combining-the-results][Combining the results:]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
 - [[#teaser-pairings-in-zk][Teaser: pairings in ZK]]
@@ -1221,7 +1216,7 @@ Finally we get:
 
 $f_{2,P}=\frac{y + 2*x - 4}{x - 7}$
 
-=m = 2=
+*** =m = 2=
 We compute the function:
 
 $f_{3,P}=f_{2,P} \cdot \frac{\ell_{[2]P,P}}{v_{[3]P}}$
