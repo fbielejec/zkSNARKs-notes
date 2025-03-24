@@ -29,8 +29,8 @@
   - [[#example-lagranges-theorem-for-ecs][Example: Lagrange's theorem for ECs]]
   - [[#the-exponential-map][The exponential map]]
 - [[#elliptic-curve-scalar-multiplication][Elliptic Curve scalar multiplication]]
-  - [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
-    - [[#example][Example]]
+- [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
+  - [[#example][Example]]
   - [[#additional-materials][Additional materials]]
 :END:
 
@@ -556,7 +556,7 @@ where:
 $[0]P=\mathcal{O}$ and $[m]P=P+P+...+P$ is the $m$-fold sum of $P$ with itself.
 
 Therefore, elliptic curve scalar multiplication is an instantiation of the general [[*The exponential map][exponential map]] using additive instead of multiplicative notation.
-** Projective Short Weierstrass form
+* Projective Short Weierstrass form
 ---
 
 *NOTE: Notation*
@@ -594,7 +594,7 @@ The way we define the collection of points in projective space is to homogenise 
 
 $E_P = \{ [X : Y : Z] \in P \hspace{.5em} | \hspace{.5em} Y^2 \cdot Z = X^3 + a \cdot X \cdot Z^2 + b \cdot Z^3 \}$
 
-*** Example
+** Example
 #+BEGIN_SRC sage :session . :exports both
 F13 = GF(13)
 E_F13 = EllipticCurve(F13, [F13(0), F13(5)])
