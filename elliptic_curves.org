@@ -45,7 +45,8 @@
   - [[#example-extending-f_97-to-f_9712-using-a-tower-of-extensions][Example: extending $F_{97}$ to $F_{{97}^{12}}$ using a tower of extensions]]
   - [[#example-extending-f_3-to-f_36-using-a-tower-of-extensions][Example: extending $F_3$ to F_{3^6} using a tower of extensions]]
 - [[#r-torsion-point][r-torsion point]]
-- [[#r-torsion-group-ef_qr-full-r-torsion][r-torsion group $E(F_q)[r] (full r-torsion)$]]
+- [[#r-torsion-group-ef_qr][r-torsion group $E(F_q)[r]$]]
+  - [[#example][Example]]
 - [[#full-r-torsion-group-er][Full r-torsion group $E[r]$]]
   - [[#example-91-moonmath-finding-full-r-torsion-group][Example 91 MoonMath: Finding full r-torsion group]]
   - [[#example-411-pairings-for-beginners-finding-r-torsion-group][Example 4.1.1 Pairings For Beginners: Finding r-torsion group]]
@@ -1147,8 +1148,9 @@ Fq
 #print(f"Example element in F_{q^6}: {example_elem}")
 #+END_SRC
 
-* IN-PROGRESS r-torsion point
+* r-torsion point
 =Definition=
+
 A point $P$ on an elliptic curve $E(F_q)$ is called an *r-torsion point* if it satisfies:
 $rP=\mathcal{O}$,
 
@@ -1159,8 +1161,9 @@ where:
 - $\mathcal{O}$ is the identity element (the [[*Point at infinity][Point at infinity]]).
 
 In other words, P has finite order $r$ or less.
-* IN-PROGRESS r-torsion group $E(F_q)[r] (full r-torsion)$
+* IN-PROGRESS r-torsion group $E(F_q)[r]$
 =Definition=
+
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $r$ a factor of $n$.
 The $r$-torsion group of the elliptic curve $E(F)$ is defined as the set:
 
@@ -1170,14 +1173,17 @@ where $[r]P$ is the [[*Elliptic Curve scalar multiplication][Elliptic Curve scal
 
 In another words the r-torsion group of an elliptic curve $E(F_q)$, where $F_q$ is a finite field with q elements is the set of all the points on the elliptic curve that have an order dividing $r$.
 
-=Example:  E/F_101: y^2 = x^3 + x + 1=
+** Example  
+Let's consider: 
+
+$E(F_101): \hspace{.5em} y^2 = x^3 + x + 1$
+
 - Group order is 105
 - By the Lagrange's theorem the points (and subgroups) over the base field will have their order in {1, 3, 5, 7, 15, 21, 35, 105}.
 - To get a point of order r | 105, we simply multiply group generator G by the appropriate cofactor, which is: h = #E / r.
 - a point is "killed" (sent to infinity) when it is multiplied by it's order r * (#E / r) * P = inf (unofficial notation)
 - Any point over the full closure $E(\bar {F_q})$ that is killed by r is said to be in the r-torsion.
 
-=Example=
 #+BEGIN_SRC sage :session . :exports both
 F101 = GF(101)
 E_F101 = EllipticCurve(F101, [F101(1), F101(1)])
