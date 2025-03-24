@@ -35,7 +35,7 @@
   - [[#principal-divisors-properties][Principal divisors: properties]]
   - [[#example-principal-divisor-divisor-of-a-function][Example: Principal divisor (divisor of a function)]]
   - [[#example-principal-divisor][Example: Principal divisor]]
-- [[#connection-between-point-addition-on-an-elliptic-curve-and-divisors][Connection between point addition on an elliptic curve and divisors]]
+  - [[#connection-between-point-addition-on-an-elliptic-curve-and-divisors][Connection between point addition on an elliptic curve and divisors]]
   - [[#example-311-pairings-for-beginners][Example 3.1.1 Pairings For Beginners]]
   - [[#example-divisors][Example: divisors]]
   - [[#example-501][Example 5.0.1]]
@@ -408,7 +408,7 @@ Hence it is also reffered to as the *trace zero* subgroup.
 
 ---
 
-If $E(F)$ is an elliptc curve and $r$ is the largest prime factor of the curves order we call $\mathbb{G}_1[r]$ and $\mathbb{G}_2[r]$ *pairing groups* (also written $\mathbb{G}_1$ and $\mathbb{G}_2$).
+If $E(F)$ is an elliptic curve and $r$ is the largest prime factor of the curves order we call $\mathbb{G}_1[r]$ and $\mathbb{G}_2[r]$ *pairing groups* (also written $\mathbb{G}_1$ and $\mathbb{G}_2$).
 
 ** Example: G1 and G2 pairing groups
 #+BEGIN_SRC sage :session . :exports both
@@ -465,7 +465,7 @@ print('G1=', G1)
 G2 = []
 for P in full_torsion_group:
   PiP = E_F5_2([a.frobenius() for a in P]) # \pi(P)
-  pP = 5*P # [5]P
+  pP = q*P # [5]P
   if pP == PiP: # \pi(P) = [r]P
     G2.append(P)
 
@@ -947,7 +947,7 @@ where:
 - $P_1$ is the point associated with the zero and
 - $P_2$ with the pole of the function.
 
-* Connection between point addition on an elliptic curve and divisors
+** Connection between point addition on an elliptic curve and divisors
 - The *chord and tangent rule* for elliptic curves (see [[file:elliptic_curves.org::*EC group law][EC group law]]) states that given two points $P$ and $Q$ on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as $R$.
 
 - The process involves drawing a line that intersects the curve at three points: $P$, $Q$, and $R$, where $R$ is the point of addition $P + Q$. The coordinates of $R$ can be obtained through geometric operations defined on the elliptic curve.
@@ -1018,7 +1018,7 @@ print(f"Divisor D representing the addition: {D}")
 : Point P: (0 : 1 : 1), Point Q: (2 : 2 : 1), Result R: (0 : 6 : 1)
 : Divisor D representing the addition: (0 : 1 : 0)
 
-** DONE Example 5.0.1
+** IN-PROGRESS Example 5.0.1
 - p67 PairingsForBeginners
 
 #+BEGIN_SRC sage :session . :exports both
@@ -1057,7 +1057,8 @@ $(\frac{\ell_{[m]P,P}}{v[m+1],P})=(\ell_{[m]P,P}) - (v_{[m+1]P})=(P) + ([m]P) - 
 
 ---
 
-1) m = 1
+=m = 1=
+
 We compute the function:
 
 $f_{1+1,P}=f_{1,P} \cdot \frac{\ell_{P,P}}{v[2]P}$
@@ -1216,7 +1217,7 @@ Finally we get:
 
 $f_{2,P}=\frac{y + 2*x - 4}{x - 7}$
 
-2) m = 2
+=m = 2=
 
 We compute the function:
 
@@ -1257,7 +1258,7 @@ Hence:
 
 $f_{3,P}=\frac{y + 2*x - 4}{x - 7} \cdot \frac{x+y+6}{x-7}$
 
-3) m = 3
+=m = 3=
 
 We compute the function
 
@@ -1289,7 +1290,7 @@ fADD(P,3*P)
 #+RESULTS:
 : (2*x + y - 4)/(x - 10)
 
-4) m = 4
+=m = 4=
 
 The last function we need has a divisor:
 
