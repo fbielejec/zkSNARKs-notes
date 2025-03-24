@@ -32,6 +32,7 @@
   - [[#example-order-of-vanishing-of-a-function-at-a-point][Example: order of vanishing of a function at a point]]
   - [[#example-washington-111][Example (washington, 11.1)]]
   - [[#function-divisor-principal-divisor][Function divisor (principal divisor)]]
+  - [[#principality-of-a-divisor][Principality of a divisor]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -740,7 +741,7 @@ where:
 
 A *divisor* $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
 
-$\text{D} = \sum_{P \in E} n_p (P)#
+$\text{D} = \sum_{P \in E} n_p (P)$
 
 where all but finitely many $n_p\in \mathbb{Z}$ are zero.
 
@@ -778,7 +779,7 @@ The order of a function $f$ at a point $P$, denoted as $\text{ord}_P(f)$, measur
 It can be classified as:
 
 1. *Zero of Order $ k $*:
-If $ f $ has a zero at $ P $ of order $ k $, then:
+If $f$ has a zero at $P$ of order $k$, then:
 
 $f(P) = 0$
 
@@ -791,7 +792,7 @@ where :
 - $g(P) \neq 0$.
 
 2. *Pole of Order $ m $*:
-If $ f $ has a pole at $ P $ of order $ m $, then:
+If $f$ has a pole at $P$ of order $m$, then:
 
 $\lim_{P \to P_0} f(P) = \infty$
 
@@ -872,80 +873,28 @@ again $y$ being the uniformizer.
 ** IN-PROGRESS Function divisor (principal divisor)
 =Definition=
 
-A *divisor of a function* $f$ on an elliptic curve $E$ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $f$ at those points. 
+A *divisor of a function* $f$ on an elliptic curve $E$ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $f$ at those points.
 In more formal terms, if $P$ denotes a point(s) on $E$, the divisor associated with $f$ can be expressed as:
 
 $\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P$
 
-where $\text{ord}_P(g)$ is the number of zeroes or poles at $P$ (and is negative if it represents the number of poles at $P$) .
+where:
+- $\text{ord}_P(g)$ is the number of zeroes or poles at $P$ (it is negative if it represents the number of poles at $P$) .
+
 A divisor is considered a *principal divisor* if it represents the zeroes and poles of some rational function (every rational function has as many zeroes as poles).
 
-IN-PROGRESS
+** IN-PROGRESS Principality of a divisor
+- PairingsForBeginners p67
 
-*Example (washington, 11.4): Finding a function with a given divisor*
-
----
-*NOTE*
-
-Suppose $P1$, $P2$, $P3$ are three points on $E$ that lie on the line $ax + by + c = 0$.
-Then the function:
-
-\[
-f (x, y) = ax + by + c
-\]
-
-has zeros at $P1$, $P2$, $P3$.
-
-If $b \neq 0$ then $f$ has a triple pole at $\infty$. Therefore:
-
-\[
-\text{div}(ax + by + c) = (P1) + (P2) + (P3) - 3(\infty)
-\]
-
-The line through $P_3=(x_3,y_3)$ and $-P_3$ is $x-x_3=0$.
-The divisor of the function $x-x_3$ is:
-
-\[
-\text{div}(x-x_3)=(P_3)+(-P_3)-2 (\infty)
-\]
-
-Therefore:
-
-\[
-\text{div} (\frac{ax+by+c}{x-x_3})=\text{div}(ax+by+c)-\text{div}(x-x_3)=(P_1)+(P_2)-(-P_3)-(\infty)
-\]
-
----
-
-#+BEGIN_SRC sage :session . :exports both
-F = FiniteField(11)
-E = EllipticCurve(F, [4, 0])
-
-P1=E(0,0); P2=E(2,4); P3=E(4,5); P4=E(6,3); P5=E(0)
-D = E.divisor([(1,P1), (1,P2), (1,P3), (1,P4), (-4,P5)]); D
-
-P1+P2+P3+P4+P5 == E(0)
-
-#+END_SRC
-
-#+RESULTS:
-: (x, y) + (x - 2*z, y - 4*z) + (x - 4*z, y - 5*z) + (x + 5*z, y - 3*z) - 4*(x, z)
-: True
-
-=Principality of a divisor (p67)=
 A divisor $D=\sum_{P}n_{P}P$ is *principal* (i.e. it is the divisor of a function) if and only if $\sum_{P}n_{P}=0$ and $\sum_{P}[n_{P}]P=\mathcal{O}$ on $E$.
+
 For any $m\in\mathbb{Z}$ and $P\in E$ it follows that there exists a function $f_{m,P}$ with divisor:
 
-
-\[
-(f_{m,P})=m(P) - ([m]P)-(m-1)(\mathcal{O})
-\]
+$(f_{m,P})=m(P) - ([m]P)-(m-1)(\mathcal{O})$
 
 Thus if $P\in E[r]$:, then $f_{r,P}$ has a divisor:
 
-\[
-(f_{r,P})=r(P)-r(\mathcal{O})
-\]
+$(f_{r,P})=r(P)-r(\mathcal{O})$
 
 ---
 *NOTE*
