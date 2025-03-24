@@ -812,7 +812,7 @@ $f(\alpha) = \alpha^2 + 2 = 0 \quad (\text{in} \quad  \mathbb{F}_{11^2})$
 
 *Step 3*: Arithmetic in $\mathbb{F}_{5^2}$
 - Addition and subtraction are performed by adding or subtracting corresponding coefficients and reducing modulo 5.
-- Multiplication is carried out by multiplying the polynomials and reducing modulo both 5 and the irreducible polynomial  f(x) \).
+- Multiplication is carried out by multiplying the polynomials and reducing modulo both 5 and the irreducible polynomial $f(x)$.
 
 #+BEGIN_SRC sage :session . :exports both
 F5=GF(5)
@@ -876,7 +876,7 @@ True
      - $P(1)=1 \quad \text{mod 2}$
    - $x$ denotes a root of $P$ in $F_4=F_{2^2}$. This implies that $x^2+x+1=0 \Longleftrightarrow x^2=1+x$ in $F_4$.
 4. Construct the field $F_4=F_2[x], \hspace{.5em} x^2+x+1 =0$. The set $F_{2^2}$ contains all polynomials of degree lower than $2$ with coefficients in $F_2$. These elements are:
-   - $\left{ 0, 1, x, x + 1 \right}$
+   - ${ 0, 1, x, x + 1$
    - $x$ is the generator of the field extension and all elements can be expressed in terms of $x$.
 5. TODO Addition in the field:
 6. TODO Multiplication in the field:
