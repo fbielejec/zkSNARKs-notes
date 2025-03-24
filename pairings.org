@@ -25,9 +25,10 @@
 - [[#example-431-twisted-elliptic-curves][Example 4.3.1: Twisted Elliptic Curves]]
 - [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
 - [[#prerequisites-meromorphic-function-multiplicity-at-a-point][Prerequisites: Meromorphic function multiplicity at a point]]
-- [[#divisors-12][Divisors [1/2]​]]
-  - [[#order-of-zeros-and-poles-of-a-function-divisor-on-an-elliptic-curve][Order of zeros and poles of a function divisor on an elliptic curve]]
-    - [[#example-washington-111][Example (washington, 11.1)]]
+- [[#divisors-11][Divisors [1/1]​]]
+  - [[#order-of-a-function-at-a-point-order-of-vanishing][Order of a function at a point (order of vanishing)]]
+  - [[#example-order-of-vanishing-of-a-function-at-a-point][Example: order of vanishing of a function at a point]]
+  - [[#example-washington-111][Example (washington, 11.1)]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -729,7 +730,7 @@ where:
 2. *Pole Example*:
    - Consider $ g(X, Y) = \frac{1}{(X-a)^k} $ for some $k>0$. This function has a pole at $P$ of multiplicity $k$: $ \text{ord}_P(g) = -k $,
 
-* IN-PROGRESS Divisors [1/2]
+* IN-PROGRESS Divisors [1/1]
 =Definition: divisor=
 
 A *divisor* $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
@@ -764,9 +765,43 @@ The sum function simply uses the group law on $E$ to add up the points:
 
 $\text{sum}(\sum_{j} a_j (P_j))=\sum_{j} a_j [P_j ]$
 
-** IN-PROGRESS Order of zeros and poles of a function divisor on an elliptic curve
+** Order of a function at a point (order of vanishing)
 
-=Definition=
+=Definition: The order of vanishing of the function $f$ at a point $P$ on an elliptic curve $E$=
+
+The order of a function $f$ at a point $P$, denoted as $\text{ord}_P(f)$, measures the behavior of the function at that point.
+It can be classified as:
+
+1. *Zero of Order $ k $*:
+If $ f $ has a zero at $ P $ of order $ k $, then:
+
+$f(P) = 0$
+
+and $f$ can be locally expressed around $P$ as:
+
+$f(x, y) = (x - x_P)^k g(x, y)$
+
+where :
+- $g$ is a regular function (i.e., holomorphic) and
+- $g(P) \neq 0$.
+
+2. *Pole of Order $ m $*:
+If $ f $ has a pole at $ P $ of order $ m $, then:
+
+$\lim_{P \to P_0} f(P) = \infty$
+
+and $f$ can be expressed as:
+
+$f(x, y) = \frac{(x - x_P)^{-m}}{h(x, y)}$
+
+where:
+- $h$ is a regular function with $h(P) \neq 0$.
+
+3. *Regular at $P$*:
+If $f$ is regular (non-zero) at $P$, then:
+$\text{ord}_P(f) = 0$
+
+=Definition: Uniformizer=
 
 A function $f$ is said to have a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
 
@@ -785,69 +820,16 @@ We define the order of $f$ at $P$ by:
 
 $ord_P(f)=r$
 
-*** Example (washington, 11.1)
-Let $E: \hspace{0.5em} y^2 = X^3-x$.
+** Example: order of vanishing of a function at a point
 
-We know that on E:
-
-$\frac{x}{y}=\frac{y}{x^2-1}$
-
-- What is the order of $f(x,y)=x$ in $P=(0,0)$ (a zero)?
-
-$ord_{(0,0)}(x)=ord_{(0,0)}(y^2{\frac{1}{x^2-1}})=2$
-
-Because $u(P) = y$ is $0$ at $P=(0,0)$, hence it is a uniformizer at $(0,0)$ and $g(x,y)=1/(x^2-1)$ is nonzero and finite at $(0,0)$.
-
-- What is the order of $f(x,y)=\frac{x}{y}$ in $P=(0,0)$ (a zero)?
-
-\[
-ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1
-\]
-
-again $y$ being the uniformizer.
-
-=Definition: The order of function $ f $ at a point $ P $ on an elliptic curve $ E $=
-The order of a function $ f $ at a point $ P $, denoted as $ \text{ord}_P(f) $, measures the behavior of the function at that point. It can be classified as:
-
-1. *Zero of Order $ k $*:
-   - If $ f $ has a zero at $ P $ of order $ k $, then:
-   \[
-   f(P) = 0
-   \]
-   and $ f $ can be locally expressed around $ P $ as:
-   \[
-   f(x, y) = (x - x_P)^k g(x, y)
-   \]
-   where $ g $ is a regular function (i.e., holomorphic) and $ g(P) \neq 0 $.
-
-2. *Pole of Order $ m $*:
-   - If $ f $ has a pole at $ P $ of order $ m $, then:
-   \[
-   \lim_{P \to P_0} f(P) = \infty
-   \]
-   and $ f $ can be expressed as:
-   \[
-   f(x, y) = \frac{(x - x_P)^{-m}}{h(x, y)}
-   \]
-   where $ h $ is a regular function with $ h(P) \neq 0 $.
-
-3. *Regular at $ P $*:
-   - If $ f $ is regular (non-zero) at $ P $, then:
-   \[
-   \text{ord}_P(f) = 0
-   \]
-
-*Example: order of vanishing of a function at a point*
-\[
-E/F: y^2=x^3 + Ax +B= (x-e_1)(x-e_2)(x-e_3), \hspace{.5em} e_i \in F
-\]
+$E/F: y^2=x^3 + Ax +B= (x-e_1)(x-e_2)(x-e_3), \hspace{.5em} e_i \in F$
 
 Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
+
 - What is the order of vanishing of $f$ at $P_i$, i.e. what is $\text{ord}_{P_i}(f)$?
 
-\[
-\text{ord}_{P_i}(x-e_i)=2
-\]
+$\text{ord}_{P_i}(x-e_i)=2$
+
 
 \[
 \text{ord}_{P_i}(Y)=1
@@ -863,6 +845,26 @@ Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
 \]
 
 # for derivation by taylor expansion in the projective coordinates see: https://youtu.be/2t13YpFZwn8?t=884
+
+** Example (washington, 11.1)
+Let $E: \hspace{0.5em} y^2 = X^3-x$.
+
+We know that on E:
+
+$\frac{x}{y}=\frac{y}{x^2-1}$
+
+- What is the order of $f(x,y)=x$ in $P=(0,0)$ (a zero)?
+
+$ord_{(0,0)}(x)=ord_{(0,0)}(y^2{\frac{1}{x^2-1}})=2$
+
+Because $u(P) = y$ is $0$ at $P=(0,0)$, hence it is a uniformizer at $(0,0)$ and $g(x,y)=1/(x^2-1)$ is nonzero and finite at $(0,0)$.
+
+- What is the order of $f(x,y)=\frac{x}{y}$ in $P=(0,0)$ (a zero)?
+
+$ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1$
+
+again $y$ being the uniformizer.
+
 
 =Definition: function divisor (principal divisor)=
 A *divisor of a function* $ f $ on an elliptic curve $ E $ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $ f $ at those points. In more formal terms, if $ P $ denotes a point(s) on $ E $, the divisor associated with $ f $ can be expressed as:
