@@ -22,29 +22,28 @@ Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said
 $a - b = k \times m$
 Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted
 $a \equiv b \quad \text{(mod m)}$
-* TODO <<EuclideanAlgorithm>>Euclidean Algorithm (and the Extended Euclidean Algorithm) 
+* TODO Euclidean Algorithm
 * Modular inverse
-A modular multiplicative inverse of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
+A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
 
-$ax \equiv 1 \pmod{m}$
+\[
+ax \equiv 1 \pmod{m}
+\]
 
-[---
+---
 *NOTE*
 
 $ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
 
-A modular multiplicative inverse of a modulo \( m \) can be found by using the [[EuclideanAlgorithm][Extended Euclidean Algorithm]].
+A modular multiplicative inverse of a modulo \( m \) can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
 
-]
+---
 
 ** Example
 Let $m = 5$ and $a = 2$.
 $gcd(2,5) = 1$ so there exists a multiplicative inverse.
 Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
 * Chinese Remainder Theorem
-:PROPERTIES:
-:CATEGORY: Definitions
-:END:
 *Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors share a common factor other than 1).
 
 Suppose we have a system of simultaneous congruences:
@@ -67,13 +66,11 @@ $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
 ** Example
-:PROPERTIES:
-:CATEGORY: Example
-:END:
-$x \equiv 2 \pmod{3}$
-$x \equiv 3 \pmod{5}$
-$x \equiv 2 \pmod{7}$
-
+\[
+x \equiv 2 \pmod{3}
+x \equiv 3 \pmod{5}
+x \equiv 2 \pmod{7}
+\]
 1. Compute the product $M=m_1m_2,\ldots,m_k$
 
 $M=3\cdot5\cdot7=105$
