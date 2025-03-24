@@ -26,9 +26,7 @@ $a \equiv b \quad \text{(mod m)}$
 * Modular inverse
 A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
 
-\[
-ax \equiv 1 \pmod{m}
-\]
+\( ax \equiv 1 \pmod{m} \)
 
 ---
 *NOTE*
@@ -66,11 +64,14 @@ $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
 ** Example
-\[
-x \equiv 2 \pmod{3}
-x \equiv 3 \pmod{5}
+
+\begin{equation}
+\begin{split}
+x \equiv 2 \pmod{3} \\
+x \equiv 3 \pmod{5} \\
 x \equiv 2 \pmod{7}
-\]
+\end{split}
+\end{equation}
 
 1. Compute the product $M=m_1m_2,\ldots,m_k$
 
