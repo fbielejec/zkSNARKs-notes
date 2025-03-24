@@ -763,12 +763,13 @@ True
 #+end_example
 
 * TODO Elliptic Curves over prime field extensions
-** IN-PROGRESS Prime field extensions
+** Prime field extensions
 ---
 *NOTES*
 
 - $F_p[x]$ is a ring of polynomials with coefficients in $F_p$.
-- An *irreducible polynomial* is a polynomial that cannot be factored into the product of two non-constant polynomials.
+- An [[file:algebra.org::*Irreducible polynomial][Irreducible polynomial]] is a polynomial that cannot be factored into the product of two non-constant polynomials.
+
 ---
 
 Given some prime $p \in P$ a natural number $m \in N$ and an irreducible polynomial $P \in F_p[x]$
@@ -785,6 +786,7 @@ $F_{p^m} := \{ a_{m-1}x^{m-1} + a_{m-2} x^{m-2} + \ldots + a_1 x + a_0 \hspace{.
 - The multiplicative inverse can be computed by the Extended Euclidean Algorithm
 
 ---
+
 *NOTE*
 
 - $F_{p^m}$ is of characteristic $p$, since the multiplicative neutral element $1$ is equivalent to the multiplicative element 1 from the underlying prime field, and hence $\sum_{j=0}^{p} 1=0$.
@@ -796,7 +798,7 @@ $F_{p^m} := \{ a_{m-1}x^{m-1} + a_{m-2} x^{m-2} + \ldots + a_1 x + a_0 \hspace{.
 ** DONE Example: Extending $F_5$ to $F_{5^2}$
 Steps to Construct $\mathbb{F}_{5^2}$:
 
-*Step 1*: Choose an Irreducible Polynomial
+*Step 1*: /Choose an Irreducible Polynomial/
 - Find an irreducible polynomial of degree 2 over $\mathbb{F}_{5}$. For example, $f(x) = x^2 + 2$.
 - $f(x)$ is such that it's root is $\alpha$ in the extension field $\mathbb{F}_{5^2}$:
 
