@@ -19,6 +19,8 @@
   - [[#example][Example]]
 - [[#algebraic-closure][Algebraic closure]]
   - [[#example][Example]]
+- [[#additional][Additional]]
+  - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
 
 * Congruence (modular arithmetic)
@@ -128,3 +130,27 @@ A subset of a given set is *closed* under an operation of the larger set if perf
 
 ** Example
 The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
+* Additional
+** Chain rule differentiation
+In order to differentiate a function of a function, $y = f(g(x))$, that is to find \frac{dy}{dx}
+we need to:
+
+- Substitute $u=g(x)$. This gives us:
+
+$y=f(u)$
+
+- Use the chain rule:
+
+$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$
+
+
+=Example=
+
+$y=cos(x^2)$
+
+Let $u=x^2$ Then $y=cos(u)$. Therefore:
+
+$\frac{dy}{dx}=\frac{d}{du}(cos(u)) \cdot \frac{d}{dx}(x^2)$
+
+
+$\frac{dy}{dx}=-sin(y) \cdot 2x$
