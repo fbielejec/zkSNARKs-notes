@@ -1292,14 +1292,14 @@ To find the full \( r \)-torsion points:
 1. *Identify the base curve and field:*
    - Start with an elliptic curve \( E \) defined over the base field \( \mathbb{F}_q \).
 
-2. *Determine the embedding degree \( k \):*
-   - This step helps establish the smallest field extension required for all \( r \)-torsion points to exist in \( \mathbb{F}_{q^k} \).
+2. *Determine the embedding degree $k$:*
+   - This step helps establish the smallest field extension required for all r-torsion points to exist in $\mathbb{F}_{q^k}$.
 
-3. *Extend the curve to \( \mathbb{F}_{q^k} \):*
+3. *Extend the curve to $\mathbb{F}_{q^k}$:*
    - Define the elliptic curve over the extended field.
 
 4. *Find the torsion points:*
-   - Identify the points on the extended curve where \( rP = \mathcal{O} \).
+   - Identify the points on the extended curve where $rP = \mathcal{O}$.
 ** Example 91 MoonMath: Finding full r-torsion group
 #+BEGIN_SRC sage :session . :exports both
 # p 103
