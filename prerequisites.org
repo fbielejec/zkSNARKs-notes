@@ -70,14 +70,9 @@ $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
 ** Example
-
-\begin{equation}
-\begin{split}
-x \equiv 2 \pmod{3} \\
-x \equiv 3 \pmod{5} \\
-x \equiv 2 \pmod{7}
-\end{split}
-\end{equation}
+$x \equiv 2 \pmod{3}$
+$x \equiv 3 \pmod{5}$
+$x \equiv 2 \pmod{7}$
 
 1. Compute the product $M=m_1m_2,\ldots,m_k$
 
