@@ -22,13 +22,16 @@
   - [[#example-415-pairings-for-beginners][Example 4.1.5 Pairings for beginners]]
 - [[#pairing-groups-mathbbg_1-and-mathbbg_2][Pairing groups $\mathbb{G}_1$ and $\mathbb{G}_2$]]
   - [[#example-g1-and-g2-pairing-groups][Example: G1 and G2 pairing groups]]
-- [[#example-431-twisted-elliptic-curves][Example 4.3.1: Twisted Elliptic Curves]]
+- [[#twisted-elliptic-curves][Twisted Elliptic Curves]]
+  - [[#example-431][Example 4.3.1]]
+  - [[#example-432][Example 4.3.2]]
 - [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
 - [[#prerequisites-meromorphic-function-multiplicity-at-a-point][Prerequisites: Meromorphic function multiplicity at a point]]
-- [[#divisors-11][Divisors [1/1]​]]
+- [[#divisors][Divisors]]
   - [[#order-of-a-function-at-a-point-order-of-vanishing][Order of a function at a point (order of vanishing)]]
   - [[#example-order-of-vanishing-of-a-function-at-a-point][Example: order of vanishing of a function at a point]]
   - [[#example-washington-111][Example (washington, 11.1)]]
+  - [[#function-divisor-principal-divisor][Function divisor (principal divisor)]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -387,6 +390,7 @@ The second subgroup $\mathbb{G}_2[r]$ is defined as follows:
 $\mathbb{G}_2[r] := \{ (x,y) \in E[r] \hspace{0.5em} | \hspace{0.5em} \pi(x,y) = [p](x,y) \}$
 
 ---
+
 *NOTE*
 
 [[TraceMap][Trace Map]] of all of the points in $\mathbb{G}_2[r]$ is $\mathcal{O}$:
@@ -472,7 +476,16 @@ print('G2 =', G2)
 : G1= [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
 : G2 = [(0 : 1 : 0), (1 : x : 1), (1 : 4*x : 1)]
 
-* IN-PROGRESS Example 4.3.1: Twisted Elliptic Curves
+* IN-PROGRESS Twisted Elliptic Curves
+** Example 4.3.1
+Every twist has a degree $d$ which  which tells us the extension field of $F_q$ where $E$ and $E'$ become isomorphic (with respect to $\psi$ and $\psi^{-1}$).
+
+$d$ is also the degree of the field of definition of $E'$ as a subfield of $F_{q^k}$, i.e. a degree $d$ twist $E'$ of $E$ will be defined over $F_{q^{k/d}}$.
+
+In this example, $k=2$ and $E'$ is defined over $F_q$, so we are using a $d = 2$ twist, called a quadratic twist. Instead of performing the computations in the group $\mathbb{G}_2$, which require computations in the extension field $F_{q^2 }$, but instead we can use $\psi^{-1}$ to perform them in the $E'(F_q)$ before mapping the result back with the $\psi$.
+
+$\psi^{-1}$ maps elements in $\mathbb{G}_2 \in E(F_{q^k})[r] = E(F_{q^6})[r]$ to elements in $E'(F_{q^{k/d}})[r] = E'(F_q)[r]$.
+
 #+BEGIN_SRC sage :session . :exports both
 q=11
 F=GF(q)
@@ -555,15 +568,7 @@ G2' pairing subgroup of E'[3]: [(0 : 1 : 0), (0 : 2*i : 1), (0 : 9*i : 1)]
 (9*i + 4 : 10 : 1) -> (2*i + 7, i, 1)
 #+end_example
 
-Every twist has a degree $d$ which  which tells us the extension field of $F_q$ where $E$ and $E'$ become isomorphic (with respect to $\psi$ and $\psi^{-1}$).
-
-$d$ is also the degree of the field of definition of $E'$ as a subfield of $F_{q^k}$, i.e. a degree $d$ twist $E'$ of $E$ will be defined over $F_{q^{k/d}}$.
-
-In this example, $k=2$ and $E'$ is defined over $F_q$, so we are using a $d = 2$ twist, called a quadratic twist. Instead of performing the computations in the group $\mathbb{G}_2$, which require computations in the extension field $F_{q^2 }$, but instead we can use $\psi^{-1}$ to perform them in the $E'(F_q)$ before mapping the result back with the $\psi$.
-
-$\psi^{-1}$ maps elements in $\mathbb{G}_2 \in E(F_{q^k})[r] = E(F_{q^6})[r]$ to elements in $E'(F_{q^{k/d}})[r] = E'(F_q)[r]$.
-
-=Example 4.3.2=
+** Example 4.3.2
 #+BEGIN_SRC sage :session . :exports both
 q=103
 F=GF(q)
@@ -655,13 +660,13 @@ Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
  (76 : 84 : 1),
  (97 : 19 : 1),
  (97 : 84 : 1)]
-(3*u^4 : 61*u^3 : 1) -> (97, 84, 1)
-(0 : 1 : 0) -> (0, u^3, 0)
-(35*u^4 : 42*u^3 : 1) -> (33, 19, 1)
-(3*u^4 : 42*u^3 : 1) -> (97, 19, 1)
-(65*u^4 : 61*u^3 : 1) -> (76, 84, 1)
 (35*u^4 : 61*u^3 : 1) -> (33, 84, 1)
+(65*u^4 : 61*u^3 : 1) -> (76, 84, 1)
+(0 : 1 : 0) -> (0, u^3, 0)
+(3*u^4 : 42*u^3 : 1) -> (97, 19, 1)
+(35*u^4 : 42*u^3 : 1) -> (33, 19, 1)
 (65*u^4 : 42*u^3 : 1) -> (76, 19, 1)
+(3*u^4 : 61*u^3 : 1) -> (97, 84, 1)
 (0 : 1 : 0) -> (0, 51*u^3, 0)
 (33 : 19 : 1) -> (35*u^4, 42*u^3, 1)
 (33 : 84 : 1) -> (35*u^4, 61*u^3, 1)
@@ -730,7 +735,7 @@ where:
 2. *Pole Example*:
    - Consider $ g(X, Y) = \frac{1}{(X-a)^k} $ for some $k>0$. This function has a pole at $P$ of multiplicity $k$: $ \text{ord}_P(g) = -k $,
 
-* IN-PROGRESS Divisors [1/1]
+* IN-PROGRESS Divisors
 =Definition: divisor=
 
 A *divisor* $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
@@ -830,21 +835,20 @@ Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
 
 $\text{ord}_{P_i}(x-e_i)=2$
 
-
-\[
-\text{ord}_{P_i}(Y)=1
-\]
+$\text{ord}_{P_i}(Y)=1$
 
 - What is the order of vanishing of $f$ at the point at infinity $\mathcal{O}=[0,1,0]$:  $\text{ord}_{\mathcal{O}}(f)$?
-\[
-\text{ord}_{\mathcal{O}}(x-e_i)=\text{ord}_{\mathcal{O}}(\frac{X-e_i}{Z})=\text{ord}_{\mathcal{O}}(X-e_i) - \text{ord}_{\mathcal{O}}(Z) = 1-3=-2
-\]
 
-\[
-\text{ord}_{\mathcal{O}}(y)=\text{ord}_{\mathcal{O}}(Y/Z)=0-3=-3
-\]
+$\text{ord}_{\mathcal{O}}(x-e_i)=\text{ord}_{\mathcal{O}}(\frac{X-e_i}{Z})=\text{ord}_{\mathcal{O}}(X-e_i) - \text{ord}_{\mathcal{O}}(Z) = 1-3=-2$
 
-# for derivation by taylor expansion in the projective coordinates see: https://youtu.be/2t13YpFZwn8?t=884
+$\text{ord}_{\mathcal{O}}(y)=\text{ord}_{\mathcal{O}}(Y/Z)=0-3=-3$
+
+---
+*NOTE*
+
+For derivation by taylor expansion in the projective coordinates see: [[*Additional materials][Additional materials]]
+
+---
 
 ** Example (washington, 11.1)
 Let $E: \hspace{0.5em} y^2 = X^3-x$.
@@ -865,13 +869,13 @@ $ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1$
 
 again $y$ being the uniformizer.
 
+** IN-PROGRESS Function divisor (principal divisor)
+=Definition=
 
-=Definition: function divisor (principal divisor)=
-A *divisor of a function* $ f $ on an elliptic curve $ E $ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $ f $ at those points. In more formal terms, if $ P $ denotes a point(s) on $ E $, the divisor associated with $ f $ can be expressed as:
+A *divisor of a function* $f$ on an elliptic curve $E$ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $f$ at those points. 
+In more formal terms, if $P$ denotes a point(s) on $E$, the divisor associated with $f$ can be expressed as:
 
-\[
-\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P
-\]
+$\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P$
 
 where $\text{ord}_P(g)$ is the number of zeroes or poles at $P$ (and is negative if it represents the number of poles at $P$) .
 A divisor is considered a *principal divisor* if it represents the zeroes and poles of some rational function (every rational function has as many zeroes as poles).
@@ -1532,4 +1536,5 @@ The system of constraints is converted into a single, large polynomial that has 
   - [-] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
     - [X] 5a order of vanishing: https://youtu.be/Oh_4u-xSCro?t=234
     - [X] 5b order of vanishing examples: https://www.youtube.com/watch?v=2t13YpFZwn8
+    - [ ] order of vanishing: derivation by taylor expansion (in the projective coordinates): https://youtu.be/2t13YpFZwn8?t=884
     - [ ] divisors: https://www.youtube.com/watch?v=-UoizKdoHOU
