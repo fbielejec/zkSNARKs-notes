@@ -31,7 +31,7 @@
 * Affine Short Weierstrass form
 An *Elliptic Curve* (using short Weierstrass form) is an equation of the form:
 
-$y^2=x^3+a \mult x +b$
+$y^2=x^3+a \cdot x +b$
 
 where:
 - $a,b,x$ and $y$ are elements of some finite field.
