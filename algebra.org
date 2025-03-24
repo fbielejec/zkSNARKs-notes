@@ -3,13 +3,25 @@
 
 * Contents
 :PROPERTIES:
+:STARTUP: showall
 :TOC:      :include all
 :END:
 :CONTENTS:
 - [[#contents][Contents]]
 - [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
-- [[#rootsofunity-roots-of-unity][<<RootsOfUnity>> Roots of unity]]
+- [[#roots-of-unity][Roots of unity]]
+  - [[#n-th-roots-of-unity][n-th Roots of Unity]]
   - [[#example][Example]]
+  - [[#primitive-n-th-roots-of-unity][Primitive n-th Roots of Unity]]
+  - [[#example][Example]]
+- [[#eulers-totient-function][Euler's totient function]]
+- [[#fermats-little-theorem][Fermats Little Theorem]]
+  - [[#example][Example]]
+- [[#lagranges-theorem][Lagrange's theorem]]
+- [[#polynomials][Polynomials]]
+  - [[#polynomial-factorization][Polynomial factorization]]
+  - [[#irreducible-polynomial][Irreducible polynomial]]
+  - [[#roots-of-the-polynomial][Roots of the polynomial]]
 :END:
 
 * Square roots and quadratic residue
@@ -27,7 +39,7 @@ $x^2 = y$
 In this case, $y$ is called a *quadratic residue* of $x$.
 On the other hand, if $y$ is given and the quadratic equation has no solution $x$,
 we call $y$ a *quadratic non-residue*.
-* IN-PROGRESS Roots of unity
+* DONE Roots of unity
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
 ---
@@ -133,8 +145,15 @@ where $1$ is the multiplicative identity in $\mathbb{F}_q$.
 $\zeta^k = 1$
 
 for any positive integer $k < n$ must not hold. In other words, $\zeta$ should not equal 1 until raised to the power of $n$.
+This implies that $\zeta$ generates the group of $n$-th roots of unity.
 
-- This implies that $\zeta$ generates the group of $n$-th roots of unity.
+=Properties=
+- A primitive $n$-th root of unity generates a cyclic group of order $n$ in the multiplicative group of the finite field.
+- The set of all $n$-th roots of unity in $\mathbb{F}_q$ can be expressed as:
+
+$\{ \zeta^k \mid k = 0, 1, \ldots, n-1 \}$
+
+- There are $\varphi(n)$ primitive $n$-th roots of unity in $\mathbb{F}_q$, where $\varphi$ is the [[Euler's totient function][Euler's totient function]], denoting the number of integers up to $n$ that are relatively prime to $n$.
 ** Example
 
 In the finite field $\mathbb{F}_7$, the primitive $3$-rd roots of unity can be derived as follows:
@@ -155,12 +174,70 @@ print(f"Primitive {n}-th roots of unity in F_7: {roots}")
 
 #+RESULTS:
 : Primitive 3-th roots of unity in F_7: [2, 4]
+* TODO Euler's totient function
+* Fermats Little Theorem
 
-*** Properties
+=Theorem=
 
-- A primitive $n$-th root of unity generates a cyclic group of order $n$ in the multiplicative group of the finite field.
-- The set of all $n$-th roots of unity in $\mathbb{F}_q$ can be expressed as:
+For $p \in P$ (prime number) and $k \in Z$ every integer $k$ raised to the power of a prime number $p$ is congruent to itself modulo that prime:
 
-$\{ \zeta^k \mid k = 0, 1, \ldots, n-1 \}$
+$k^p \equiv k \quad \text{( mod p )}$
 
-- There are $\varphi(n)$ primitive $n$-th roots of unity in $\mathbb{F}_q$, where $\varphi$ is the Euler's totient function, denoting the number of integers up to $n$ that are relatively prime to $n$.
+If $k$ is coprime to $p$, then we can divide both sides of this congruence by $k$ and get:
+
+$k^{p - 1} \equiv 1  \quad \text{( mod p )}$
+
+** Example
+$k$ = 64 and $p$ = 137 ($k$ is coprime to $p$):
+
+#+BEGIN_SRC sage :session . :exports both
+ZZ(64)^ZZ(137) % ZZ(137) == ZZ(64) % ZZ(137)
+# k is coprime to p
+ZZ(64).gcd(137)
+# hence
+ZZ(64)^ZZ(137-1) % ZZ(137) == ZZ(1) % ZZ(137)
+#+END_SRC
+
+#+RESULTS:
+: True
+: 1
+: True
+* Lagrange's theorem
+If $H$ is a subgroup of any finite group $G$, then the sub-groups *order* (the number of elements) $|H|$ is a divisor of $|G|$,
+i.e. the order (number of elements) of every subgroup $H$ divides the order of group $G$:
+
+$\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]$
+
+Equivalent definition but in the context of Elliptic Curve is here: [[file:elliptic_curves.org::*Lagrange's theorem for Elliptic Curves][Lagrange's theorem for Elliptic Curves]]
+
+* IN-PROGRESS Polynomials
+** Polynomial factorization
+=Definition=
+
+Let $P \in R[x]$ be a polynomial.
+Then there always exist irreducible polynomials $F_1, F_2, \ldots, F_k \in R[x]$, such that the following holds:
+
+$P = F_1 \cdot F_2 \cdot  \ldots \cdot F_k$.
+
+This representation is unique (except for permutations in the factors) and is called the prime factorization of $P$.
+Each factor $F_i$ is called a prime factor of $P$.
+
+---
+
+*NOTE*
+
+The above is an analog to the [[file:arithmetics.org::*Fundamental Theorem of Arithmetics][Fundamental Theorem of Arithmetics]] but applied to the ring of univariate polynomials $R[x]$.
+
+---
+
+** Irreducible polynomial
+=Definition=
+
+An *Irreducible polynomial* ss defined as a polynomial that cannot be factored into the product of two non-constant polynomials using Euclidean Division.
+
+** Roots of the polynomial
+=Definition=
+
+Points where a polynomial evaluates to zero are called roots of the polynomial.
+
+The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.

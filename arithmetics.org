@@ -3,18 +3,22 @@
 
 * Contents
 :PROPERTIES:
+:STARTUP: showall
 :TOC:      :include all
 :END:
 :CONTENTS:
 - [[#contents][Contents]]
 - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
+- [[#fundamental-theorem-of-arithmetics][Fundamental Theorem of Arithmetics]]
+  - [[#example][Example]]
 - [[#coprime-integers][Coprime integers]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#modular-inverse][Modular inverse]]
   - [[#example][Example]]
 - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
   - [[#example][Example]]
-- [[#fundamental-theorem-of-arithmetics][Fundamental Theorem of Arithmetics]]
+- [[#algebraic-closure][Algebraic closure]]
+  - [[#example][Example]]
 :END:
 
 * Congruence (modular arithmetic)
@@ -117,3 +121,10 @@ $15 y_3 =1 \pmod{7} \leftrightarrow y_3=1$
 
 $x = (2 \cdot 35 \cdot 2) + (3 \cdot 32 \cdot 1) + (2 \cdot 15 \cdot 1) \pmod{105}$
 $x = 233 \pmod{105} = 23$
+* Algebraic closure
+=Definition=
+
+A subset of a given set is *closed* under an operation of the larger set if performing that operation on members of the subset always produces a member of that subset. 
+
+** Example
+The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
