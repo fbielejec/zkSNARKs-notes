@@ -34,14 +34,14 @@ A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that
 
 \( ax \equiv 1 \pmod{m} \)
 
-# ---
-# *NOTE*
+---
+*NOTE*
 
-# $ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
+\( ax \equiv 1 \pmod{m} \iff gcd(a,m)=1 \)
 
-# A modular multiplicative inverse of a modulo \( m \) can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
+A modular multiplicative inverse of a modulo \( m \) can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
 
-# ---
+---
 
 ** Example
 Let $m = 5$ and $a = 2$.
