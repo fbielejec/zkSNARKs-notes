@@ -34,6 +34,10 @@
   - [[#function-divisors-principal-divisors][Function divisors (principal divisors)]]
   - [[#principal-divisors-properties][Principal divisors: properties]]
   - [[#example-principal-divisor-divisor-of-a-function][Example: Principal divisor (divisor of a function)]]
+  - [[#example-principal-divisor][Example: Principal divisor]]
+- [[#connection-between-point-addition-on-an-elliptic-curve-and-divisors][Connection between point addition on an elliptic curve and divisors]]
+  - [[#example-311-pairings-for-beginners][Example 3.1.1 Pairings For Beginners]]
+  - [[#example-divisors][Example: divisors]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -916,56 +920,42 @@ $\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
 
 ** IN-PROGRESS Example: Principal divisor (divisor of a function)
 
-$E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3)$
+$E: \hspace{.5em} y^2 = (x - e_1) \times (x - e_2) \times (x - e_3)$
 
 where:
 - $P_i = (e_i,\mathcal{O})$
 
+$\text{div}(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}$
 
-$div(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}$
+(see [[*Example: order of vanishing of a function at a point][Example: order of vanishing of a function at a point]] for details).
 
-
-(see order of vanishing example for details).
-
-*Example*
+** Example: Principal divisor
 Consider a meromorphic function defined on an elliptic curve:
 
-\[
-f(X, Y) = \frac{Y}{X - a}
-\]
+$f(X, Y) = \frac{Y}{X - a}$
 
-where $ a $ is a constant.
+where $a$ is a constant.
 
-- At a point where $ Y = 0 $ (e.g., a point on the x-axis), $ f $ has a zero.
-- At the point where $ X = a $, $ f $ has a simple pole.
+- At a point where $Y = 0$ (e.g., a point on the x-axis), $f$ has a zero.
+- At the point where $X = a$, $f$ has a simple pole.
 
-The associated principal divisor $ D_f $ can be expressed as:
+The associated principal divisor $D_f$ can be expressed as:
 
-\[
-D_f = (P_1) - (P_2)
-\]
+$D_f = (P_1) - (P_2)$
 
-where $ P_1 $ is the point associated with the zero and $ P_2 $ with the pole of the function.
+where:
+- $P_1$ is the point associated with the zero and
+- $P_2$ with the pole of the function.
 
-# *TODO: Example*
-# Suppose $P=(a,b)$ is a (finite) point. Let $g(X,Y)=X-a$.
-# Then we have:
+* Connection between point addition on an elliptic curve and divisors
+- The *chord and tangent rule* for elliptic curves (see [[file:elliptic_curves.org::*EC group law][EC group law]]) states that given two points $P$ and $Q$ on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as $R$.
 
----
-*NOTE*
+- The process involves drawing a line that intersects the curve at three points: $P$, $Q$, and $R$, where $R$ is the point of addition $P + Q$. The coordinates of $R$ can be obtained through geometric operations defined on the elliptic curve.
 
-=The connection between point addition on an elliptic curve and divisors=
-- The *chord and tangent rule* for elliptic curves states that given two points $ P $ and $ Q $ on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as $ R $.
-- The process involves drawing a line that intersects the curve at three points: $ P $, $ Q $, and $ R $, where $ R $ is the point of addition $ P + Q $. The coordinates of $ R $ can be obtained through geometric operations defined on the elliptic curve.
-- Each point addition can be associated with a divisor. For instance, when you compute $ R = P + Q $, this addition can be represented as a divisor:
-  \[
-  D = P + Q - R
-  \]
+- Each point addition can be associated with a divisor. For instance, when you compute $R = P + Q$, this addition can be represented as a divisor:
+$D = P + Q - R$
 
----
-
-IN-PROGRESS
-=Example 3.1.1 Pairings For Beginners=
+** Example 3.1.1 Pairings For Beginners
 #+begin_src sage :session . :exports both
 F = FiniteField(103)
 E = EllipticCurve(F, [20, 20])
@@ -991,7 +981,7 @@ P+Q-R-T # == E(0) thus there is some function f on E such that (f) = (P) + (Q) -
 : (x - 26*z, y - 20*z) + (x + 40*z, y + 25*z) - (x + 44*z, y + 8*z) - (x + 26*z, y + 19*z)
 : (0 : 1 : 0)
 
-=Example: divisors=
+** Example: divisors
 #+begin_src sage :session . :exports both
 # Step 1: Define the finite field and the elliptic curve
 F = FiniteField(7)  # Example field F_7
@@ -1029,7 +1019,8 @@ print(f"Divisor D representing the addition: {D}")
 : Divisor D representing the addition: (0 : 1 : 0)
 
 ** DONE Example 5.0.1
-p67 PairingsForBeginners
+- p67 PairingsForBeginners
+
 #+BEGIN_SRC sage :session . :exports both
 q=23
 Fq = FiniteField(q)
