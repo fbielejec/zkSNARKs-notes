@@ -42,12 +42,6 @@ we call $y$ a *quadratic non-residue*.
 * DONE Roots of unity
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
----
-*NOTE*
-
-Roots of unity can in fact be defined in any field.
----
-
 ** n-th Roots of Unity
 =Definition=
 
@@ -61,7 +55,7 @@ where :
 
 =Key points=
 
-- Since $F_{q}^{*}$ is cyclic, there are exactly $gcd(n,q - 1)$ n-th roots of unity in F_q.
+- Since $F_{q}^{*}$ is cyclic, there are exactly $gcd(n,q - 1)$ n-th roots of unity in $F_q$.
 - There exist n-th roots of unity in $F_q$ if and only if $n$ divides $q - 1$. This is because the order of any element in the multiplicative group $F_{q}^{*}$ divides the order of the group, which is $q - 1$.
 
 ** Example
