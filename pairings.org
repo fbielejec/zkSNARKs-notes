@@ -16,6 +16,7 @@
 - [[#trace-map-tr][Trace Map $Tr$]]
   - [[#example][Example]]
 - [[#anti-trace-map-atr][Anti-trace map $aTr$]]
+- [[#supersingular-curve][Supersingular curve]]
 - [[#distortion-map-phi][Distortion map $\phi$]]
   - [[#example-414-pairings-for-beginners][Example 4.1.4 Pairings for beginners]]
   - [[#example-415-pairings-for-beginners][Example 4.1.5 Pairings for beginners]]
@@ -23,15 +24,17 @@
   - [[#example-g1-and-g2-pairing-groups][Example: G1 and G2 pairing groups]]
 - [[#example-431-twisted-elliptic-curves][Example 4.3.1: Twisted Elliptic Curves]]
 - [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
-- [[#the-weil-pairing][The Weil Pairing]]
-  - [[#function-f-multiplicity-at-a-point-pin-e][Function $f$ multiplicity at a point $P\in E$]]
-  - [[#prerequisites-divisors-12][Prerequisites: Divisors [1/2]​]]
+- [[#prerequisites-meromorphic-function-multiplicity-at-a-point][Prerequisites: Meromorphic function multiplicity at a point]]
+- [[#divisors-12][Divisors [1/2]​]]
+  - [[#order-of-zeros-and-poles-of-a-function-divisor-on-an-elliptic-curve][Order of zeros and poles of a function divisor on an elliptic curve]]
+    - [[#example-washington-111][Example (washington, 11.1)]]
   - [[#example-501][Example 5.0.1]]
-  - [[#the-weil-pairing][The Weil Pairing]]
+- [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
-- [[#additional-pairings-in-zk][Additional: pairings in ZK]]
+- [[#teaser-pairings-in-zk][Teaser: pairings in ZK]]
   - [[#example-1][Example 1]]
   - [[#example-2][Example 2]]
+- [[#additional-materials][Additional materials]]
 :END:
 
 * Billinear map
@@ -298,14 +301,14 @@ Anti-trace map maps any $P \in E[r]$ to the "trace zero" subgroup $\mathbb{G}_2$
 
 $aTr: P \rightarrow P^{'} = [k]P - Tr(p)$
 
-* Distortion map $\phi$
-
-=Definition: supersingular curve=
+* Supersingular curve
+=Definition=
 
 An elliptic curve $E$ is called /supersingular/ if $\#E(F_q) = q+1$.
 A curve which is not supersingular is called ordinary.
-Supersingular curves come equipped with a /distorsion map $\phi$/, i.e. a non-$F_q$-rational map that takes a point in $E(F_q)$ to a point in $E(F_q^k)$.
 
+Supersingular curves come equipped with a [[*Distortion map $\phi$][Distortion map]] $\phi$, i.e. a non-$F_q$-rational map that takes a point in $E(F_q)$ to a point in $E(F_q^k)$.
+* Distortion map $\phi$
 ** Example 4.1.4 Pairings for beginners
 #+BEGIN_SRC sage :session . :exports both
 q=59
@@ -667,7 +670,7 @@ Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
 (97 : 84 : 1) -> (3*u^4, 61*u^3, 1)
 #+end_example
 
-* IN-PROGRESS Prerequisites: Meromorphic function
+* Prerequisites: Meromorphic function
 =Definition=
 
 Let $E$ be an elliptic curve defined over a field $F$.
@@ -682,6 +685,7 @@ where:
 The poles of $f$ are the values of $P$ such that $h(P) = 0$.
 
 =Example=
+
 On an elliptic curve defined by:
 
 $y^2 = x^3 + ax + b$
@@ -695,106 +699,104 @@ where:
 
 This function is meromorphic because $y$ is a regular function, and it has a pole at the point where $x = c$.
 
-* IN-PROGRESS The Weil Pairing
-** DONE Function $f$ multiplicity at a point $P\in E$
-=Definition: Multiplicity at a Point=
-The *multiplicity* of a meromorphic function $ f $ at a point $ P $ on an elliptic curve refers to how many times the function $ f $ vanishes (has a zero) or goes to infinity (has a pole) at that point.
+* IN-PROGRESS Prerequisites: Meromorphic function multiplicity at a point
 
-- If $ f $ has a zero of order $ k $ at $ P $, it means that $ f(P) = 0 $ and $ f $ can be expressed locally around $ P $ as:
-  \[
-  f(P) = (x - x_0)^k g(x)
-  \]
-  where $ g(x) $ is a regular function and $ g(x_0) \neq 0 $.
+=Definition=
 
-- If $ f $ has a pole of order $ m $ at $ P $, it means that $ f(P) $ is infinite, and $ f $ can be expressed as:
-  \[
-  f(P) = \frac{(x - x_0)^{-m}}{h(x)}
-  \]
-  where $ h(x) $ is regular and $ h(x_0) \neq 0 $.
+The *multiplicity* of a [[*Prerequisites: Meromorphic function][meromorphic function]] $f$ at a point $P$ on an elliptic curve $E$ refers to how many times the function $f$ vanishes (has a zero) or goes to infinity (has a pole) at that point (see [[*Divisors][Divisors]]).
+
+If $f$ has a zero of order $k$ at $P$, it means that $f(P) = 0$ and $f$ can be expressed locally around $P$ as:
+
+$f(P) = (x - x_0)^k g(x)$
+
+where:
+- $g(x)$ is a regular function and
+- $g(x_0) \neq 0$.
+
+If $f$ has a pole of order $m$ at $P$, it means that $f(P)$ is infinite, and $f$ can be expressed as:
+
+$f(P) = \frac{(x - x_0)^{-m}}{h(x)}$
+
+where:
+- $h(x)$ is regular and
+- $h(x_0) \neq 0$.
 
 =Examples=
+
 1. *Zero Example*:
    - Let $P=(a,b)$ be a point, not of order 2. Consider the rational function $g(X,Y)=(X-a)^k$ for some $k>0$. Then note that $g(P)=0$. We say $g$ has a zero at $P$ of multiplicity $k$: $ \text{ord}_P(g) = k $.
 
 2. *Pole Example*:
    - Consider $ g(X, Y) = \frac{1}{(X-a)^k} $ for some $k>0$. This function has a pole at $P$ of multiplicity $k$: $ \text{ord}_P(g) = -k $,
 
-** IN-PROGRESS Prerequisites: Divisors [1/2]
-- [ ] https://crypto.stanford.edu/pbc/notes/elliptic/divisor.html
-- [X] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
-  - [X] 5a order of vanishing: https://youtu.be/Oh_4u-xSCro?t=234
-  - [X] 5b order of vanishing examples: https://www.youtube.com/watch?v=2t13YpFZwn8
-  - [ ] divisors: https://www.youtube.com/watch?v=-UoizKdoHOU
+* IN-PROGRESS Divisors [1/2]
+=Definition: divisor=
 
-=Definition: divisor on an Elliptic Curve=
-A divisor $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
+A *divisor* $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
 
-\[
-\text{D} = \sum_{P \in E} n_p (P)
-\]
+$\text{D} = \sum_{P \in E} n_p (P)#
 
 where all but finitely many $n_p\in \mathbb{Z}$ are zero.
 
+---
+
+*NOTE*
+
 The standard parentheses $(\cdot)$ around the P's and the absence of square parentheses $[\cdot]$ around the $nP$'s is what differentiates the formal sum in a divisor from an actual sum of points (i.e. using the group law) on E.
 
+---
+
 =Definition: divisor degree=
+
 The degree of a divisor $D$ is:
 
-\[
-\text{Deg}(D) = \sum_{P \in E} n_P
-\]
+$\text{Deg}(D) = \sum_{P \in E} n_P$
 
 =Definition: divisor support=
+
 The support of $D$ is the set:
 
-\[
-\textit{supp}(D)=\{P \in E(\bar{F}_q) \hspace{.5em} : \hspace{.5em} n_p \neq 0\}
-\]
+$\textit{supp}(D)=\{P \in E(\bar{F}_q) \hspace{.5em} : \hspace{.5em} n_p \neq 0\}$
 
 =Definition: divisor sum=
+
 The sum function simply uses the group law on $E$ to add up the points:
 
-\[
-\text{sum}(\sum_{j} a_j (P_j))=\sum_{j} a_j [P_j ]
-\]
+$\text{sum}(\sum_{j} a_j (P_j))=\sum_{j} a_j [P_j ]$
 
-*Definition: poles and zeros of a function divisor on an elliptic curve*
+** IN-PROGRESS Order of zeros and poles of a function divisor on an elliptic curve
+
+=Definition=
+
 A function $f$ is said to have a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
+
 However, we need more refined information, namely the order of the zero or pole.
 Let $P$ be a point on $E$.
+
 It can be shown that there is a function $u_P$ called a *uniformizer* at $P$ such that:
 
-\[
-U(P)=0
-\]
+$U(P)=0$
 
 and such that every function f(x,y) can be written in the form:
 
-\[
-f=u^rg, \hspace{0.5em} \text{with} \hspace{0.5em} r \in \mathbb{Z} \hspace{0.5em} \text{and} \hspace{0.5em} g(P) \neq 0, \infty
-\]
+$f=u^rg, \hspace{0.5em} \text{with} \hspace{0.5em} r \in \mathbb{Z} \hspace{0.5em} \text{and} \hspace{0.5em} g(P) \neq 0, \infty#
 
 We define the order of $f$ at $P$ by:
 
-\[
-ord_P(f)=r
-\]
+$ord_P(f)=r$
 
-*Example (washington, 11.1)*
+*** Example (washington, 11.1)
 Let $E: \hspace{0.5em} y^2 = X^3-x$.
 
 We know that on E:
 
-\[
-\frac{x}{y}=\frac{y}{x^2-1}
-\]
+$\frac{x}{y}=\frac{y}{x^2-1}$
 
 - What is the order of $f(x,y)=x$ in $P=(0,0)$ (a zero)?
-\[
-ord_{(0,0)}(x)=ord_{(0,0)}(y^2{\frac{1}{x^2-1}})=2
-\]
 
-because $u(P) = y$ is $0$ at $P=(0,0)$, hence it is a uniformizer at $(0,0)$ and $g(x,y)=1/(x^2-1)$ is nonzero and finite at $(0,0)$.
+$ord_{(0,0)}(x)=ord_{(0,0)}(y^2{\frac{1}{x^2-1}})=2$
+
+Because $u(P) = y$ is $0$ at $P=(0,0)$, hence it is a uniformizer at $(0,0)$ and $g(x,y)=1/(x^2-1)$ is nonzero and finite at $(0,0)$.
 
 - What is the order of $f(x,y)=\frac{x}{y}$ in $P=(0,0)$ (a zero)?
 
@@ -1410,26 +1412,26 @@ f5P
 : (4*x^3 + 8*x^2*y + 5*x*y^2 + y^3 + 8*x^2 - 2*y^2 - 11*x - 9*y + 4)/(x^2 + 9*x + 3)
 : 5*x^2 + x*y + 3*x - y + 5
 
-** IN-PROGRESS The Weil Pairing
+* IN-PROGRESS The Weil Pairing
 For a point $P \in E[r]$ the function $f_{r,P}$ with divisor $r(P)-r(\mathcal{O})$ is at the heart of both the Weil and Tate pairing definitions.
 
-=Definition: The Weil pairing=
-Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions f and g such that $(f)=rD_P$ and $(g)=rD_Q$. The Weil pairing $w_r$ is a map:
+=Definition=
 
-\[
-w_r: E(F_{q^k})[r] \times E(F_{q^k})[r] \rightarrow \mu_r
-\]
+Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions f and g such that $(f)=rD_P$ and $(g)=rD_Q$. The *Weil pairing* $w_r$ is a map:
+
+$w_r: E(F_{q^k})[r] \times E(F_{q^k})[r] \rightarrow \mu_r$
 
 defined as:
 
-\[
-w_r(P,Q)=\frac{f(D_Q)}{g(D_P)}
-\]
+$w_r(P,Q)=\frac{f(D_Q)}{g(D_P)}$
 
-where $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
+where:
+- $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
 
 ---
+
 *NOTE*
+
 Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
 
 We write $D_P \sim D_Q$.
@@ -1452,7 +1454,7 @@ E.order() == q+1
 : 24
 : True
 
-* Additional: pairings in ZK
+* Teaser: pairings in ZK
 ** Example 1
 
 =both parties=
@@ -1521,3 +1523,11 @@ In a zk-SNARK, elliptic curve pairings are used to check a system of quadratic c
 The system of constraints is converted into a single, large polynomial that has particular roots is and only if each of the (quadratic) constraints is satisfied.
 
 ---
+
+* Additional materials
+- Divisor [0/2]
+  - [ ] https://crypto.stanford.edu/pbc/notes/elliptic/divisor.html
+  - [-] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
+    - [X] 5a order of vanishing: https://youtu.be/Oh_4u-xSCro?t=234
+    - [X] 5b order of vanishing examples: https://www.youtube.com/watch?v=2t13YpFZwn8
+    - [ ] divisors: https://www.youtube.com/watch?v=-UoizKdoHOU
