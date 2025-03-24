@@ -9,5 +9,5 @@
 
 | file Name                | Description                                   |
 |--------------------------+-----------------------------------------------|
-| [[file:arithmetic.org][Arithmetic prerequisites]] | Preliminary definition                        |
-| [[file:algebra.org][Algebra]]                  | Finite fields, prime fields, field extensions |
+| [[file:arithmetics.org][Arithmetic prerequisites]] | Preliminary definition                        |
+| [[file:algebra.org][Algebra prerequisites]]    | Finite fields, prime fields, field extensions |
