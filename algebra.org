@@ -1,0 +1,166 @@
+#+STARTUP: overview
+#+latex_class_options: [12pt]
+
+* Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
+- [[#rootsofunity-roots-of-unity][<<RootsOfUnity>> Roots of unity]]
+  - [[#example][Example]]
+:END:
+
+* Square roots and quadratic residue
+In the context of prime fields, an element that is a square of another element is called a *quadratic residue*,
+and an element that is not a square of another element is called a *quadratic non-residue*.
+
+=Definition=
+
+Let $p \in P$ be a prime number and $F_p$ it's associated prime field.
+Then a number $x \in F_p$ is called a square root of another number $y \in F_p$,
+if $x$ is a solution to the following:
+
+$x^2 = y$
+
+In this case, $y$ is called a *quadratic residue* of $x$.
+On the other hand, if $y$ is given and the quadratic equation has no solution $x$,
+we call $y$ a *quadratic non-residue*.
+* IN-PROGRESS Roots of unity
+In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
+
+---
+*NOTE*
+
+Roots of unity can in fact be defined in any field.
+---
+
+** n-th Roots of Unity
+=Definition=
+
+In a finite field $F_q$, the n-th roots of unity are the solutions to the equation:
+
+$x^n=1$
+
+where :
+- x is an element of the field,
+- n is a positive integer.
+
+=Key points=
+
+- Since $F_{q}^{*}$ is cyclic, there are exactly $gcd(n,q - 1)$ n-th roots of unity in F_q.
+- There exist n-th roots of unity in $F_q$ if and only if $n$ divides $q - 1$. This is because the order of any element in the multiplicative group $F_{q}^{*}$ divides the order of the group, which is $q - 1$.
+
+** Example
+#+BEGIN_SRC sage :session . :exports both
+Z5 = Zmod(5)
+Z5
+# field has 5 elements
+for i in Z5:
+  print(i)
+
+# nonzero elements of this field form a multiplicative group of order 4
+G5 = Z5.unit_group() # multiplicative group
+G5.inject_variables()
+G5
+for i in G5:
+  print(i)
+
+G5.order()
+
+print('---')
+
+# group elements
+for i in range(1,5):
+    print(Z5(f^i))
+
+print('2-nd roots of unity')
+for i in range(1,5):
+    elem = Z5(f^i)
+    if elem^2 == Z5(1):
+      print(elem)
+
+print('4-th roots of unity') # all elements satisfy this property
+for i in range(1,5):
+    elem = Z5(f^i)
+    if elem^4 == Z5(1):
+      print(elem)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Ring of integers modulo 5
+0
+1
+2
+3
+4
+Defining f
+Multiplicative Abelian group isomorphic to C4
+1
+f
+f^2
+f^3
+4
+---
+2
+4
+3
+1
+2-nd roots of unity
+4
+1
+4-th roots of unity
+2
+4
+3
+1
+#+end_example
+
+** Primitive n-th Roots of Unity
+=Definition=
+
+An element $\zeta$ in $\mathbb{F}_q$ is called a *primitive $n$-th root of unity* if it satisfies the following conditions:
+
+1. *Unity Condition*:
+$\zeta^n = 1$
+where $1$ is the multiplicative identity in $\mathbb{F}_q$.
+
+2. *Primitive Condition*:
+- The order of $\zeta$ must be exactly $n$, meaning that:
+
+$\zeta^k = 1$
+
+for any positive integer $k < n$ must not hold. In other words, $\zeta$ should not equal 1 until raised to the power of $n$.
+
+- This implies that $\zeta$ generates the group of $n$-th roots of unity.
+** Example
+
+In the finite field $\mathbb{F}_7$, the primitive $3$-rd roots of unity can be derived as follows:
+
+1. The elements of $\mathbb{F}_7$ are $\{1, 2, 3, 4, 5, 6\}$.
+2. Check which elements satisfy $x^3 = 1$ in $\mathbb{F}_7$.
+3. Identify the ones that generate roots distinctly without repetition until reaching $n$.
+
+#+BEGIN_SRC sage :session . :exports both
+F = FiniteField(7)
+
+# Find primitive 3rd roots of unity in F_7
+n = 3
+roots = [x for x in F if x^n == 1 and x != 1]
+
+print(f"Primitive {n}-th roots of unity in F_7: {roots}")
+#+END_SRC
+
+#+RESULTS:
+: Primitive 3-th roots of unity in F_7: [2, 4]
+
+*** Properties
+
+- A primitive $n$-th root of unity generates a cyclic group of order $n$ in the multiplicative group of the finite field.
+- The set of all $n$-th roots of unity in $\mathbb{F}_q$ can be expressed as:
+
+$\{ \zeta^k \mid k = 0, 1, \ldots, n-1 \}$
+
+- There are $\varphi(n)$ primitive $n$-th roots of unity in $\mathbb{F}_q$, where $\varphi$ is the Euler's totient function, denoting the number of integers up to $n$ that are relatively prime to $n$.

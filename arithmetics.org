@@ -7,19 +7,18 @@
 :END:
 :CONTENTS:
 - [[#contents][Contents]]
-- [[#coprime-numbers][Coprime numbers]]
 - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
+- [[#coprime-integers][Coprime integers]]
+- [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#modular-inverse][Modular inverse]]
   - [[#example][Example]]
 - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
   - [[#example][Example]]
+- [[#fundamental-theorem-of-arithmetics][Fundamental Theorem of Arithmetics]]
 :END:
 
-* Coprime integers
-Coprime integers are pairs of integers that do not have any common factor other than 1.
 * Congruence (modular arithmetic)
 Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
-
 
 $a - b = k \times m$
 
@@ -27,9 +26,33 @@ Congruence modulo $m$ is a congruence relation, meaning that it is an equivalenc
 
 $a \equiv b \quad \text{(mod m)}$
 
+* IN-PROGRESS Fundamental Theorem of Arithmetics
+The *Fundamental Theorem of Arithmetic* states that every integer greater than 1 can be uniquely expressed as a product of prime numbers, up to the order of the factors.
+
+=Definition=
+
+Any integer \( n \) can be written in the form:
+
+\[
+   n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}
+   \]
+where:
+
+- \( p_1, p_2, \ldots, p_k \) are distinct prime numbers,
+- \( e_1, e_2, \ldots, e_k \) are positive integers that represent the multiplicities of the primes.
+
+** Example
+Consider the number 30:
+
+\[
+     30 = 2^1 \cdot 3^1 \cdot 5^1
+     \]
+
+In this case, the prime factorization involves the primes 2, 3, and 5.
+* Coprime integers
+Coprime integers are pairs of integers that do not have any common factor other than 1.
 * TODO Euclidean Algorithm
 * Modular inverse
-
 A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
 
 $ax \equiv 1 \pmod{m}$
@@ -48,7 +71,7 @@ Let $m = 5$ and $a = 2$.
 $gcd(2,5) = 1$ so there exists a multiplicative inverse.
 Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
 * Chinese Remainder Theorem
-*Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors share a common factor other than 1).
+*Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise [[Coprime integers][coprime]] (no two divisors share a common factor other than 1).
 
 Suppose we have a system of simultaneous congruences:
 
@@ -90,22 +113,7 @@ $35 y_1 =1 \pmod{3} \leftrightarrow y_1=2$
 $21 y_2 =1 \pmod{5} \leftrightarrow y_2=1$
 $15 y_3 =1 \pmod{7} \leftrightarrow y_3=1$
 
-4. Combine the Results. The solution $x$ can be constructed as: $x=\sum_{i=1}^{k}a_iM_iy_i \pmod{M}$ (ensures that $x$ satisfies all the congruences.)
+4. Combine the Results. The solution $x$ can be constructed as: $x=\sum_{i=1}^{k}a_iM_iy_i \pmod{M}$ (ensures that $x$ satisfies all the congruences):
 
 $x = (2 \cdot 35 \cdot 2) + (3 \cdot 32 \cdot 1) + (2 \cdot 15 \cdot 1) \pmod{105}$
 $x = 233 \pmod{105} = 23$
-** Square roots and quadratic residue
-In the context of prime fields, an element that is a square of another element is called a *quadratic residue*,
-and an element that is not a square of another element is called a *quadratic non-residue*.
-
-=Definition=
-
-Let $p \in P$ be a prime number and $F_p$ its associated prime field.
-Then a number $x \in F_p$ is called a square root of another number $y \in F_p$,
-if $x$ is a solution to the following:
-
-$x^2 = y$
-
-In this case, $y$ is called a *quadratic residue* of $x$.
-On the other hand, if $y$ is given and the quadratic equation has no solution $x$,
-we call $y$ a *quadratic non-residue*.

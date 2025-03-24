@@ -1,11 +1,13 @@
 +TITLE: SNARKs by hand
 #+AUTHOR: Filip Bielejec
-#+INCLUDE: prerequisites.org
 #+LANGUAGE: en
 #+latex_class_options: [12pt]
+#+INCLUDE: arithmetic.org
+#+INCLUDE: algebra.org
 
 * Table of Contents
 
-| file Name     | Description            |
-|---------------+------------------------|
-| [[file:prerequisites.org][Prerequisites]] | Preliminary definition |
+| file Name                | Description                                   |
+|--------------------------+-----------------------------------------------|
+| [[file:arithmetic.org][Arithmetic prerequisites]] | Preliminary definition                        |
+| [[file:algebra.org][Algebra]]                  | Finite fields, prime fields, field extensions |
