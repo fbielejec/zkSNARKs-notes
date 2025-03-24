@@ -31,8 +31,9 @@
   - [[#order-of-a-function-at-a-point-order-of-vanishing][Order of a function at a point (order of vanishing)]]
   - [[#example-order-of-vanishing-of-a-function-at-a-point][Example: order of vanishing of a function at a point]]
   - [[#example-washington-111][Example (washington, 11.1)]]
-  - [[#function-divisor-principal-divisor][Function divisor (principal divisor)]]
-  - [[#principality-of-a-divisor][Principality of a divisor]]
+  - [[#function-divisors-principal-divisors][Function divisors (principal divisors)]]
+  - [[#principal-divisors-properties][Principal divisors: properties]]
+  - [[#example-divisor-of-a-function][Example: divisor of a function]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -870,7 +871,7 @@ $ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1$
 
 again $y$ being the uniformizer.
 
-** IN-PROGRESS Function divisor (principal divisor)
+** Function divisors (principal divisors)
 =Definition=
 
 A *divisor of a function* $f$ on an elliptic curve $E$ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $f$ at those points.
@@ -883,7 +884,16 @@ where:
 
 A divisor is considered a *principal divisor* if it represents the zeroes and poles of some rational function (every rational function has as many zeroes as poles).
 
-** IN-PROGRESS Principality of a divisor
+---
+
+*NOTE*
+
+Every divisor associated with a function $f$ is a principal divisor.
+It characterizes the function's zeros and poles and reflects its algebraic properties on the curve.
+
+---
+
+** Principal divisors: properties
 - PairingsForBeginners p67
 
 A divisor $D=\sum_{P}n_{P}P$ is *principal* (i.e. it is the divisor of a function) if and only if $\sum_{P}n_{P}=0$ and $\sum_{P}[n_{P}]P=\mathcal{O}$ on $E$.
@@ -896,29 +906,23 @@ Thus if $P\in E[r]$:, then $f_{r,P}$ has a divisor:
 
 $(f_{r,P})=r(P)-r(\mathcal{O})$
 
----
-*NOTE*
-
-Every divisor associated with a function $ f $ is a principal divisor. It characterizes the function's zeros and poles and reflects its algebraic properties on the curve.
-
----
-
 Principal divisors are a device for keeping track of poles and zeroes.
+
 For example, suppose a function $g$ has a zero of order 3 at a point $P$, and a pole of order 2 at another point $Q$ and a pole of order 1 at $\mathcal{O}$. (Note the number of zeroes and poles are equal, as they must be.)
+
 Then using divisors, we can say all this concisely:
 
 $\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
 
-=Example: divisor of a function=
+** IN-PROGRESS Example: divisor of a function
 
-\[
-E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3) \hspace{.5em}
-\text{where} \hspace{.5em} P_i = (e_i,\mathcal{O})
-\]
+$E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3) \hspace{.5em}#
+where:
+- $P_i = (e_i,\mathcal{O})$
 
-\[
-div(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}
-\]
+
+$div(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}$
+
 
 (see order of vanishing example for details).
 
