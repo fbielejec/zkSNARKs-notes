@@ -15,32 +15,37 @@
   - [[#example][Example]]
 :END:
 
-* Coprime numbers
-Coprime numbers are pairs of numbers that do not have any common factor other than 1.
+* Coprime integers
+Coprime integers are pairs of integers that do not have any common factor other than 1.
 * Congruence (modular arithmetic)
-Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be congruent modulo $m$, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that
+Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that
 $a - b = k \times m$
 Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted
 $a \equiv b \quad \text{(mod m)}$
+* TODO <<EuclideanAlgorithm>>Euclidean Algorithm (and the Extended Euclidean Algorithm) 
 * Modular inverse
 A modular multiplicative inverse of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
 
 $ax \equiv 1 \pmod{m}$
 
----
+[---
 *NOTE*
 
 $ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
 
-A modular multiplicative inverse of a modulo m can be found by using the extended Euclidean algorithm.
----
+A modular multiplicative inverse of a modulo \( m \) can be found by using the [[EuclideanAlgorithm][Extended Euclidean Algorithm]].
+
+]
 
 ** Example
 Let $m = 5$ and $a = 2$.
 $gcd(2,5) = 1$ so there exists a multiplicative inverse.
 Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
 * Chinese Remainder Theorem
-Chinese remainder theorem states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors share a common factor other than 1).
+:PROPERTIES:
+:CATEGORY: Definitions
+:END:
+*Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors share a common factor other than 1).
 
 Suppose we have a system of simultaneous congruences:
 
@@ -62,6 +67,9 @@ $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
 ** Example
+:PROPERTIES:
+:CATEGORY: Example
+:END:
 $x \equiv 2 \pmod{3}$
 $x \equiv 3 \pmod{5}$
 $x \equiv 2 \pmod{7}$
@@ -91,6 +99,7 @@ In the context of prime fields, an element that is a square of another element i
 and an element that is not a square of another element is called a *quadratic non-residue*.
 
 =Definition=
+
 Let $p \in P$ be a prime number and $F_p$ its associated prime field.
 Then a number $x \in F_p$ is called a square root of another number $y \in F_p$,
 if $x$ is a solution to the following:
