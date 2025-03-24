@@ -1290,7 +1290,7 @@ Any full r-torsion group contains $r + 1$ cyclic subgroups (for prime $r$) of or
 To find the full \( r \)-torsion points:
 
 1. *Identify the base curve and field:*
-   - Start with an elliptic curve \( E \) defined over the base field \( \mathbb{F}_q \).
+   - Start with an elliptic curve $E$ defined over the base field $\mathbb{F}_q$.
 
 2. *Determine the embedding degree $k$:*
    - This step helps establish the smallest field extension required for all r-torsion points to exist in $\mathbb{F}_{q^k}$.
