@@ -4,11 +4,13 @@
 #+latex_class_options: [12pt]
 #+INCLUDE: arithmetic.org
 #+INCLUDE: algebra.org
+#+INCLUDE: elliptic_curves.org
+#+INCLUDE: pairings.org
 
 * Table of Contents
-| file                     | Description                                   |
-|--------------------------+-----------------------------------------------|
-| [[file:arithmetics.org][Arithmetic prerequisites]] | Preliminary definitions                       |
-| [[file:algebra.org][Algebra prerequisites]]    | Finite fields, prime fields, field extensions |
-| [[file:elliptic_curves.org][Elliptic curves]]          | Everything EC up to EC pairings               |
-| [[file:pairings.org][Elliptic Curve Pairings]]  | Weil and Tate pairings                        |
+| file                     | Description                                               |
+|--------------------------+-----------------------------------------------------------|
+| [[file:arithmetics.org][Arithmetic prerequisites]] | Preliminary definitions                                   |
+| [[file:algebra.org][Algebra prerequisites]]    | Finite fields, prime fields, field extensions             |
+| [[file:elliptic_curves.org][Elliptic curves]]          | Everything EC up to EC pairings                           |
+| [[file:pairings.org][Elliptic Curve Pairings]]  | Everything you need to compute the Weil and Tate pairings |

@@ -35,6 +35,7 @@
   - [[#example-principal-divisor-divisor-of-a-function][Example: Principal divisor (divisor of a function)]]
   - [[#example-principal-divisor][Example: Principal divisor]]
   - [[#connection-between-point-addition-on-an-elliptic-curve-and-divisors][Connection between point addition on an elliptic curve and divisors]]
+  - [[#linear-equivalence-of-divisors][Linear equivalence of divisors]]
   - [[#example-311-pairings-for-beginners][Example 3.1.1 Pairings For Beginners]]
   - [[#example-divisors][Example: divisors]]
   - [[#example-501][Example 5.0.1]]
@@ -954,6 +955,13 @@ where:
 - Each point addition can be associated with a divisor. For instance, when you compute $R = P + Q$, this addition can be represented as a divisor:
 $D = P + Q - R$
 
+** Linear equivalence of divisors
+=Definition=
+
+Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
+
+We write $D_P \sim D_Q$.
+
 ** IN-PROGRESS Example 3.1.1 Pairings For Beginners
 #+begin_src sage :session . :exports both
 F = FiniteField(103)
@@ -1364,15 +1372,6 @@ $w_r(P,Q)=\frac{f(D_Q)}{g(D_P)}$
 where:
 - $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
 
----
-
-*NOTE*
-
-Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
-
-We write $D_P \sim D_Q$.
-
----
 ** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
 #+BEGIN_SRC sage :session . :exports both
 q=23
@@ -1394,14 +1393,17 @@ E.order() == q+1
 ** Example 1
 
 =both parties=
+
 There exists a (symmetric, i.e. $G_0=G_1$) pairing $e: G_0 \times G_1 \rightarrow G_T$
 and a $G$ which is a generator of $G_0=G_1$
 
 =prover=
+
 I know $a=200$ and $b=275$ such that
 $200G=A, \quad 275G=B \quad \text{and} \quad (200 \times 275)G=D$
 
 =verifier=
+
 Receives $A,B$ and $D$ and wants to check whether $D$ was computed correctly.
 He can do so without knowing the secrets $a=200$ and $b=275$ by using pairings and checking if:
 $e(A,B)=e(G,D)$
