@@ -10,6 +10,28 @@
 - [[#contents][Contents]]
 - [[#billinear-map][Billinear map]]
 - [[#pairing][Pairing]]
+  - [[#example-billinearity-of-a-pairing][Example: billinearity of a pairing]]
+- [[#frobenius-endomorphism][Frobenius endomorphism]]
+  - [[#example][Example]]
+- [[#trace-map-tr][Trace Map $Tr$]]
+  - [[#example][Example]]
+- [[#anti-trace-map-atr][Anti-trace map $aTr$]]
+- [[#distortion-map-phi][Distortion map $\phi$]]
+  - [[#example-414-pairings-for-beginners][Example 4.1.4 Pairings for beginners]]
+  - [[#example-415-pairings-for-beginners][Example 4.1.5 Pairings for beginners]]
+- [[#pairing-groups-mathbbg_1-and-mathbbg_2][Pairing groups $\mathbb{G}_1$ and $\mathbb{G}_2$]]
+  - [[#example-g1-and-g2-pairing-groups][Example: G1 and G2 pairing groups]]
+- [[#example-431-twisted-elliptic-curves][Example 4.3.1: Twisted Elliptic Curves]]
+- [[#the-weil-pairing][The Weil Pairing]]
+  - [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
+  - [[#function-f-multiplicity-at-a-point-pin-e][Function $f$ multiplicity at a point $P\in E$]]
+  - [[#prerequisites-divisors-12][Prerequisites: Divisors [1/2]​]]
+  - [[#example-501][Example 5.0.1]]
+  - [[#the-weil-pairing][The Weil Pairing]]
+  - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
+- [[#additional-pairings-in-zk][Additional: pairings in ZK]]
+  - [[#example-1][example 1]]
+  - [[#example-2][example 2]]
 :END:
 
 * Billinear map
@@ -48,3 +70,1463 @@ where $1$ is the identity element in the target group, $g_0,g_1$ are the generat
 
 There exists an efficient algorithm to compute $e$.
 * Pairing
+=Definition=
+
+Pairing is a [[BilinearMap][bilinear map]] on an abelian group M taking values in some other abelian group R:
+
+$<\cdot ,\cdot>: M \times M \rightarrow R$
+
+In the cryptographic setting it is advantageous to relax the condition that the two arguments come from the same group and instead work with:
+
+$e : \mathbb{G}_1 \times \mathbb{G}_2 \rightarrow \mathbb{G}_T$
+
+Let $F_{q^k}$ be some [[PrimeFieldExtension][finite field extension]] of $F_q$ with $k\geq 1$. The groups $\mathbb{G}_1$ and $\mathbb{G}_2$ are defined in $E(F_{q^k})$ and the /target group/ $\mathbb{G}_T$ is defined in the multiplicative group $F_{q^k}^{*}$
+
+** Example: billinearity of a pairing
+#+BEGIN_SRC sage :session . :exports both
+q=7691
+Fq=GF(q)
+E_Fq=EllipticCurve(Fq, [0,1])
+E_Fq
+
+# constructing F_q^2 extension field
+Fqx.<x> = Fq[]
+#Fqx
+
+# modulus is an irreducible polynomial in Fq such that x is it's root in Fq^2
+Px=Fqx(x^2+1)
+#Px(x)
+
+Fq2.<x> = GF(q^2, name='x', modulus=Px)
+#Fq2
+
+# now we define the elliptic curve over the extension field
+E_Fq2=EllipticCurve(Fq2,[0,1])
+#E_Fq2
+
+P=E_Fq(2693, 4312)
+Q=E_Fq2(633*x + 6145, 7372*x + 109)
+
+E_Fq_order = E_Fq.order()
+E_Fq_order.factor()
+
+# extension group order is equal to the square of the "vanilla" group order
+E_Fq2_order = E_Fq2.order()
+E_Fq2_order.factor()
+
+# P and Q were especially chosen to be in different subgroups of the same prime order r=641)
+P.order()
+#P*641 # gives point at infinity
+
+Q.order()
+#Q*641 # gives point at infinity
+r = 641
+
+# --- billinearity
+# take any a and b scalars \in Zr
+a = 403; b = 135
+#a*P
+#b*Q
+
+# Weil pairing of P,Q e(P,Q) is:
+ePQ = Fq2(6744*x + 5677)
+
+# pairing lies in the roots of unity subgroup of the extension field F_{q^2}: e(P,Q)^r = 1
+ePQ^r
+
+# e(aP,Q) == e(P,Q)^a
+ePQ^a
+# e(P,bQ) == e(P,Q)^b
+ePQ^b
+
+# e(aP,bQ) == e(P,Q)^{ab mod r}
+ePQ^((a*b) % 641)
+#+END_SRC
+
+#+RESULTS:
+: Elliptic Curve defined by y^2 = x^3 + 1 over Finite Field of size 7691
+: 2^2 * 3 * 641
+: 2^4 * 3^2 * 641^2
+: 641
+: 641
+: 1
+: 3821*x + 7025
+: 248*x + 5
+: 2719*x + 2731
+
+---
+
+*NOTE*
+
+Since $e(P,Q) \neq 1$ in the roots of unity subgroup of $F_{q^2}$, $e([a]P,[b]Q)$ is trivial (equal to $\mathcal{O}$) only if $r | ab$, which implies that either $r|a$ or $r|b$, which in turn means aiter (or both) $[a]P$ or $[b]Q$ are equal to $\mathcal{O}$.
+This condition guarantees non-trivial (meaning $e([a]P,[b]Q) \neq 0$) pairings for non-trivial arguments. This property is called /non-degeneracy/ of the pairing.
+
+---
+
+* Frobenius endomorphism
+=Definition=
+
+Let $F_q$ be a finite field of characteristic $q$ and $E(F_q)$ an elliptic curve over that field.
+*Frobenius endomporphism* is a map $\pi$ such that:
+
+$\pi: E(F_q) \rightarrow E(F_q): \left\{\begin{array}{ll}
+                                         (x,y)  \mapsto (x^p,y^p) \\
+                                         \mathcal{O} \mapsto \mathcal{O}
+                                        \end{array}\right}$
+
+** Example
+#+begin_src sage :session . :exports both
+q = 5  # Define the characteristic, q is a prime
+F = FiniteField(q)
+E = EllipticCurve(F, [4, 1])  # Define the curve y^2 = x^3 + 4x + 1 over GF(5)
+
+# Define a point on the curve
+P = E.random_point()
+
+# Print the original point
+print(f"Original point P: {P}")
+
+# Apply the Frobenius endomorphism
+x, y = P.xy()
+Frobenius_P = E([x^q, y^q])
+
+# Print the point after applying Frobenius endomorphism
+print(f"Point after Frobenius endomorphism π(P): {Frobenius_P}")
+#+end_src
+
+#+RESULTS:
+: Original point P: (3 : 0 : 1)
+: Point after Frobenius endomorphism π(P): (3 : 0 : 1)
+
+* Trace Map $Tr$
+- p53 PairingsForBeginners
+
+=Definition=
+
+For an elliptic curve \(E\) defined over an extension field \(\mathbb{F}_{q^k}\), the trace map \(\text{Tr}\) of a point \(P \in E(\mathbb{F}_{q^k})\) is defined as:
+
+$\text{Tr}(P) = \sum_{i=0}^{k-1} \pi^{i}(P) = P + \pi(P) + \pi^2(P) + \cdots + \pi^{k-1}(P)$
+
+
+where \(\pi\) is the [[*Frobenius endomorphism][Frobenius endomorphism]], defined by raising the coordinates of each point to the \(q\)-th power:
+
+\[
+\pi((x, y)) = (x^q, y^q)
+\]
+
+Trace map is actually a homomorphism and it sends all torsion points into one of the subgroups of the r-torsion (the base field subgroup):
+
+$Tr: E(F_q^k) \rightarrow E(F_q)$
+
+** Example
+#+BEGIN_SRC sage :session . :exports both
+q=11
+F=GF(q)
+E=EllipticCurve(F,[7,2])
+
+E_order=E.order()
+print(f"E(F_{q}) order: {E.order()}")
+
+E_order.factor()
+
+r=7
+torsion_points = [P for P in E.points() if r * P == E(0)]
+
+print(f"{r}-torsion points of E(F_{q}): {torsion_points}")
+
+# embedding degree
+k = 1
+while not (r.divides(q^k - 1)):
+    k += 1
+print(f"Embedding degree of E_F{q}: {k}")
+
+# extending E(F_q) to E(F_q^k)
+# ring of polynomials with coefficients in Fq:
+Fx.<x> = F[]
+# irreducible polynomial on the ring
+f=Fx(x^3+x+4)
+print(f"Polynomial f(x)= {f} from {Fx} is irreducible in F: {f.is_irreducible()}")
+
+# Construct F_q^k by dividing all polynomials in the ring over F by the irreducible polynomial P_mod:
+Fqk.<u> = GF(q^k, name = 'u', modulus = f)
+print(f"F_{q}^{k} has order: {Fqk.order()}")
+
+# u is the root of P_mod in F_q^k
+print(f"f(u)={f(u)}")
+
+# Extending E(F_q) to F_q^k:
+E_Fqk = EllipticCurve(Fqk, [7,2])
+print(f"E(F_{q}^{k}) has order: {E_Fqk.order()}")
+
+# Full r-torsion
+full_torsion_points = [P for P in E_Fqk.points() if r * P == E_Fqk(0)]
+print(f"Cardinality of the full {r}-torsion E[F_{q}^{k}]({r}): {len(full_torsion_points)}")
+
+def trace_map(P):
+        return sum(E_Fqk((P[0]^(q^i), P[1]^(q^i))) for i in range(k))
+
+P = E_Fqk.random_point()
+trace_P=trace_map(P)
+
+# The trace map takes point P in E(F_q^k) to the r-torsion E(F_q)[r]:
+print(f"Tr({P})={trace_P} is in the {r}-torsion E[F_{q}]: {E(trace_P) in torsion_points}")
+
+# Notation on p 53
+Q=E_Fqk(x^481 % f,x^1049 % f)
+trace_map(Q)
+print(f"Tr({Q})={trace_map(Q)} is in the {r}-torsion E[F_{q}]: {E(trace_map(Q)) in torsion_points}")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+E(F_11) order: 7
+7
+7-torsion points of E(F_11): [(0 : 1 : 0), (7 : 3 : 1), (7 : 8 : 1), (8 : 3 : 1), (8 : 8 : 1), (10 : 4 : 1), (10 : 7 : 1)]
+Embedding degree of E_F11: 3
+Polynomial f(x)= x^3 + x + 4 from Univariate Polynomial Ring in x over Finite Field of size 11 is irreducible in F: True
+F_11^3 has order: 1331
+f(u)=0
+E(F_11^3) has order: 1372
+Cardinality of the full 7-torsion E[F_11^3](7): 49
+Tr((8*u + 8 : 9*u^2 + 7*u + 4 : 1))=(10 : 4 : 1) is in the 7-torsion E[F_11]: True
+(8 : 8 : 1)
+Tr((4*u^2 + 7*u + 4 : 10*u^2 + 2*u + 6 : 1))=(8 : 8 : 1) is in the 7-torsion E[F_11]: True
+#+end_example
+
+* Anti-trace map $aTr$
+
+=Definition=
+Anti-trace map maps any $P \in E[r]$ to the "trace zero" subgroup $\mathbb{G}_2$:
+$aTr: P \rightarrow P^{'} = [k]P - Tr(p)$
+
+* Distortion map $\phi$
+
+=Definition: supersingular curve=
+An elliptic curve $E$ is called /supersingular/ if $\#E(F_q) = q+1$.
+A curve which is not supersingular is called ordinary.
+Supersingular curves come equipped with a /distorsion map $\phi$/, i.e. a non-$F_q$-rational map that takes a point in $E(F_q)$ to a point in $E(F_q^k)$.
+
+** Example 4.1.4 Pairings for beginners
+#+BEGIN_SRC sage :session . :exports both
+q=59
+F=GF(q)
+E_F=EllipticCurve(F, [0,1])
+E_order=E_F.order()
+
+print(f"E(F_{q}) order: {E_order}")
+print(f"E(F_{q}) is supersingular: {E_order == q+1}")
+#r=5
+#k=2
+Fi.<i> = F[]
+Fi
+f=Fi(i^2+1)
+print(f"Polynomial f(x)={f} from {Fi} is irreducible: {f.is_irreducible()}")
+
+F_ext = F.extension(f, name = "i")
+#[p for p in F_ext]
+E_ext=EllipticCurve(F_ext, [0,1])
+xi = E_ext(24*i+29,23*i)
+# TODO : cube root of unity?
+xi
+
+def distortion_map(P):
+        return (xi[0]*P[0], P[1])
+
+# \phi^3 is equivalent to the identity map:
+distortion_map(distortion_map(distortion_map((36,37*i))))
+#+END_SRC
+
+#+RESULTS:
+: E(F_59) order: 60
+: E(F_59) is supersingular: True
+: Univariate Polynomial Ring in i over Finite Field of size 59
+: Polynomial f(x)=i^2 + 1 from Univariate Polynomial Ring in i over Finite Field of size 59 is irreducible: True
+: (24*i + 29 : 23*i : 1)
+: (36, 37*i)
+
+** Example 4.1.5 Pairings for beginners
+#+BEGIN_SRC sage :session . :exports both
+q=59
+F=GF(q)
+E_F=EllipticCurve(F, [1,0])
+
+Fi.<i> = F[]
+f=Fi(i^2+1)
+F_ext = F.extension(f, name = "i")
+E_ext=EllipticCurve(F_ext, [1,0])
+
+def distortion_map(P):
+        return (-P[0], i*P[1])
+
+E_ext(distortion_map(distortion_map(distortion_map(distortion_map((25,30))))))
+
+E_ext(distortion_map(distortion_map(distortion_map(distortion_map((31*i+51,34*i+49))))))
+#+END_SRC
+
+#+RESULTS:
+: (25 : 30 : 1)
+: (31*i + 51 : 34*i + 49 : 1)
+
+* Pairing groups $\mathbb{G}_1$ and $\mathbb{G}_2$
+- p 105
+
+=Definition: pairing groups G_1 and G_2=
+Given the [[FrobeniusEndomorphism][Frobenius map]] definition we can characterize two important subgroups of the full r-torsion group $E[r]$.
+
+The first subgroup $\mathbb{G}_1[r]$ (abbreviated $\mathbb{G}_1$ when $r$ is implicit) is defined as the one on which the Frobenius map acts trivially:
+
+$\mathbb{G}_1[r] := \{ (x,y) \in E[r] \hspace{0.5em} | \hspace{0.5em} \pi(x,y) = (x,y) \}$
+
+It can be shown that $\mathbb{G}_1$ is precisely the r-torsion group $E(F_p)[r]$ of the unextended elliptic curve defined over the prime field $F_p$.
+
+The second subgroup $\mathbb{G}_2[r]$ is defined as follows:
+
+$\mathbb{G}_2[r] := \{ (x,y) \in E[r] \hspace{0.5em} | \hspace{0.5em} \pi(x,y) = [p](x,y) \}$
+
+---
+*NOTE*
+
+[[TraceMap][Trace Map]] of all of the points in $\mathbb{G}_2[r]$ is $\mathcal{O}$:
+
+$\forall P \in \mathbb{G}_2[r] \hspace{0.5em}  Tr(P)=\mathcal{O}$
+
+Hence it is also reffered to as the *trace zero* subgroup.
+/(result attributed to Dan Boneh, see S.D Galbraith, Pairings, volume 317, Lemma IX.16)/
+---
+
+If $E(F)$ is an elliptc curve and $r$ is the largest prime factor of the curves order we call $\mathbb{G}_1[r]$ and $\mathbb{G}_2[r]$ *pairing groups* (also written $\mathbb{G}_1$ and $\mathbb{G}_2$).
+
+** Example: G1 and G2 pairing groups
+#+BEGIN_SRC sage :session . :exports both
+# consider the curve E1,1(F5)
+q=5
+F5=GF(q)
+E11_F5=EllipticCurve(F5, [1,1]);
+print(f"Order of the elliptic curve: {E11_F5.order()}")
+
+# E11_F5 has the embedding degree k = 2 with respect to r = 3
+r=3
+for k in range(1,q):
+  if r.divides(q^k-1):
+    print("Embedding degree k(r=3) =",k) ; break
+
+# 0. Begin by finding the 3-torsion of the unextended curve over the prime field
+unextended_3torsion = []
+for p in E11_F5:
+  if p*3 == E11_F5(0):
+    unextended_3torsion.append(p);
+
+print(unextended_3torsion)
+
+# full r-torsion group will be in the E(Fq^k(r))=E(Fq^2)
+# 1. Define the extension field
+# 1.1 Find a polynomial of order m=2 irreducible in F5
+F5x.<x> = F5[]
+P_MOD = F5x(x^2+2)
+P_MOD.is_irreducible()
+
+# 1.2 Construct the extension field
+F5_2x=GF(q^2, name='x', modulus=P_MOD)
+
+# 2. Define the elliptic curve on the extension field
+E_F5_2 = EllipticCurve(F5_2x, [1,1])
+
+# 3. Full 3-torsion group (it's in the E_F5_2 group because embedding degree is k=2)
+full_torsion_group = [P for P in E_F5_2 if r * P == E_F5_2(0)]
+print("Full r-torsion group:", full_torsion_group)
+
+# 4. G1 subgroup
+G1 = []
+for P in full_torsion_group:
+  # we have to use the Frobenius endomorphism of the underlying field
+  PiP = E_F5_2([a.frobenius() for a in P]) # \pi(P)
+  if P == PiP:
+    G1.append(P)
+
+print('G1=', G1)
+
+# as expected G1 is identical to the 3-torsion sub-group of the unextended elliptic curve (see 0.)
+
+# 5. G2 subgroup
+G2 = []
+for P in full_torsion_group:
+  PiP = E_F5_2([a.frobenius() for a in P]) # \pi(P)
+  pP = 5*P # [5]P
+  if pP == PiP: # \pi(P) = [r]P
+    G2.append(P)
+
+print('G2 =', G2)
+
+#+END_SRC
+
+#+RESULTS:
+: Order of the elliptic curve: 9
+: Embedding degree k(r=3) = 2
+: [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
+: True
+: Full r-torsion group: [(0 : 1 : 0), (1 : x : 1), (1 : 4*x : 1), (2 : 1 : 1), (2 : 4 : 1), (2*x + 1 : x + 1 : 1), (2*x + 1 : 4*x + 4 : 1), (3*x + 1 : x + 4 : 1), (3*x + 1 : 4*x + 1 : 1)]
+: G1= [(0 : 1 : 0), (2 : 1 : 1), (2 : 4 : 1)]
+: G2 = [(0 : 1 : 0), (1 : x : 1), (1 : 4*x : 1)]
+
+* IN-PROGRESS Example 4.3.1: Twisted Elliptic Curves
+#+BEGIN_SRC sage :session . :exports both
+q=11
+F=GF(q)
+E=EllipticCurve(F, [0, 4])
+E_twist=EllipticCurve(F, [0, -4])
+
+print(f"elliptic curve E: {E}")
+print(f"twisted elliptic curve E': {E_twist}")
+
+r=3
+r_torsion=[P for P in E.points() if r*P == E(0)]
+r_torsion_twist=[P for P in E_twist.points() if r*P == E_twist(0)]
+
+k=2
+Fi.<i> = F[]
+f=Fi(i^k+1)
+F_ext = F.extension(f, name = "i")
+E_ext=EllipticCurve(F_ext, [0, 4])
+E_ext_twist=EllipticCurve(F_ext, [0, -4])
+full_torsion=[P for P in E_ext.points() if r*P == E_ext(0)]
+full_torsion_twist=[P for P in E_ext_twist.points() if r*P == E_ext_twist(0)]
+
+G1=r_torsion
+print(f"G1 pairing subgroup of E[{r}]: {G1}")
+
+G1_twist=r_torsion_twist
+print(f"G1' pairing subgroup of E'[{r}]: {G1_twist}")
+
+def trace_map(P, EC):
+  return sum(EC((P[0]^(q^i), P[1]^(q^i), P[2])) for i in range(k))
+
+# G2 is the "trace zero" subgroup
+G2=[P for P in full_torsion if trace_map(P, E_ext) == E_ext(0)]
+print(f"G2 pairing subgroup of E[{r}]: {G2}")
+
+G2_twist=[P for P in full_torsion_twist if trace_map(P, E_ext_twist) == E_ext_twist(0)]
+print(f"G2' pairing subgroup of E'[{r}]: {G2_twist}")
+
+i=F_ext.gen()
+def psi_inv(P):
+  return (-P[0], i*P[1], P[2])
+
+# \psi^{-1} : E[r] -> E[r]'
+# the map works for the entire curve group
+# but if we restrict the psi_inv to G2 it actually maps between curve elements in Fq^2 to Fq
+for P in G2:
+  x,y,z = psi_inv(P)
+  print(f"{P} -> {(x, y, z)}")
+
+# \psi : E'[r] -> E[r]
+def psi(P):
+  return (-P[0], -P[1]*i, P[2])
+
+# similar, this could be the entire twisted curve: E_ext_twist.points()
+for P in full_torsion_twist:
+  x,y,z = psi(P)
+  print(f"{P} -> {(x, y, z)}")
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+elliptic curve E: Elliptic Curve defined by y^2 = x^3 + 4 over Finite Field of size 11
+twisted elliptic curve E': Elliptic Curve defined by y^2 = x^3 + 7 over Finite Field of size 11
+G1 pairing subgroup of E[3]: [(0 : 1 : 0), (0 : 2 : 1), (0 : 9 : 1)]
+G1' pairing subgroup of E'[3]: [(0 : 1 : 0), (3 : 1 : 1), (3 : 10 : 1)]
+G2 pairing subgroup of E[3]: [(0 : 1 : 0), (8 : i : 1), (8 : 10*i : 1)]
+G2' pairing subgroup of E'[3]: [(0 : 1 : 0), (0 : 2*i : 1), (0 : 9*i : 1)]
+(0 : 1 : 0) -> (0, i, 0)
+(8 : i : 1) -> (3, 10, 1)
+(8 : 10*i : 1) -> (3, 1, 1)
+(0 : 1 : 0) -> (0, 10*i, 0)
+(0 : 2*i : 1) -> (0, 2, 1)
+(0 : 9*i : 1) -> (0, 9, 1)
+(3 : 1 : 1) -> (8, 10*i, 1)
+(3 : 10 : 1) -> (8, i, 1)
+(2*i + 4 : 1 : 1) -> (9*i + 7, 10*i, 1)
+(2*i + 4 : 10 : 1) -> (9*i + 7, i, 1)
+(9*i + 4 : 1 : 1) -> (2*i + 7, 10*i, 1)
+(9*i + 4 : 10 : 1) -> (2*i + 7, i, 1)
+#+end_example
+
+Every twist has a degree $d$ which  which tells us the extension field of $F_q$ where $E$ and $E'$ become isomorphic (with respect to $\psi$ and $\psi^{-1}$).
+
+$d$ is also the degree of the field of definition of $E'$ as a subfield of $F_{q^k}$, i.e. a degree $d$ twist $E'$ of $E$ will be defined over $F_{q^{k/d}}$.
+
+In this example, $k=2$ and $E'$ is defined over $F_q$, so we are using a $d = 2$ twist, called a quadratic twist. Instead of performing the computations in the group $\mathbb{G}_2$, which require computations in the extension field $F_{q^2 }$, but instead we can use $\psi^{-1}$ to perform them in the $E'(F_q)$ before mapping the result back with the $\psi$.
+
+$\psi^{-1}$ maps elements in $\mathbb{G}_2 \in E(F_{q^k})[r] = E(F_{q^6})[r]$ to elements in $E'(F_{q^{k/d}})[r] = E'(F_q)[r]$.
+
+=Example 4.3.2=
+#+BEGIN_SRC sage :session . :exports both
+q=103
+F=GF(q)
+E=EllipticCurve(F, [0,72])
+E_order=E.order()
+
+[r for r in divisors(E_order) if r.is_prime()]
+
+# select r as the largest prime divisor of the curve's order
+r=7
+
+k = 1
+while not (r.divides(q^k - 1)):
+    k += 1
+k
+
+r_torsion=[P for P in E.points() if r*P== E(0) ]
+#r_torsion
+
+# define the extension Fq^k
+R.<u> = F[]
+mod_poly=R(u^6+2)
+#mod_poly.is_irreducible()
+Fqk=F.extension(modulus=mod_poly, name = 'u')
+Fqk
+
+EFqk=EllipticCurve(Fqk, [0,72])
+#full_r_torsion=[P for P in EFqk.points() if r*P == EFqk(0) ] #NOTE: gets intractable
+
+def trace_map(P):
+        return sum(EFqk((P[0]^(q^i), P[1]^(q^i))) for i in range(k))
+
+# trace zero subgroup G2 is generated by this point:
+G=EFqk(35*u^4,42*u^3)
+
+trace_map(G*5)
+
+# NOTE: we should probably go all the way to q^k but the group is visible already
+G2=set([i*G for i in (1..q) ])
+G2
+
+u=Fqk.gen()
+
+# d=6
+E_twist=EllipticCurve(F, [0,72*u^6])
+E_twist
+
+r_torsion_twist = [p for p in E_twist.points() if r*p == E_twist(0)]
+r_torsion_twist
+
+# \psi^{-1} : E[r] -> E[r]'
+def psi_inv(P):
+  return (u^2*P[0], u^3*P[1], P[2])
+
+# back and forth isomorphism maps elements in G2=E(F_q^k)[r] to elements in E'(F_q^{k/d})[r] = E'(Fq)[r]
+# gaining advantage of working in Fq instead of Fq^6
+for P in G2:
+  x,y,z = psi_inv(P)
+  print(f"{P} -> {(x, y, z)}")
+
+# \psi : E'[r] -> E[r]
+def psi(P):
+  return (P[0]/u^2, P[1]/u^3, P[2])
+
+for P in r_torsion_twist:
+  x,y,z = psi(P)
+  print(f"{P} -> {(x, y, z)}")
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[2, 3, 7]
+6
+Finite Field in u of size 103^6
+(0 : 1 : 0)
+{(0 : 1 : 0),
+ (3*u^4 : 42*u^3 : 1),
+ (3*u^4 : 61*u^3 : 1),
+ (35*u^4 : 42*u^3 : 1),
+ (35*u^4 : 61*u^3 : 1),
+ (65*u^4 : 42*u^3 : 1),
+ (65*u^4 : 61*u^3 : 1)}
+Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
+[(0 : 1 : 0),
+ (33 : 19 : 1),
+ (33 : 84 : 1),
+ (76 : 19 : 1),
+ (76 : 84 : 1),
+ (97 : 19 : 1),
+ (97 : 84 : 1)]
+(3*u^4 : 61*u^3 : 1) -> (97, 84, 1)
+(0 : 1 : 0) -> (0, u^3, 0)
+(35*u^4 : 42*u^3 : 1) -> (33, 19, 1)
+(3*u^4 : 42*u^3 : 1) -> (97, 19, 1)
+(65*u^4 : 61*u^3 : 1) -> (76, 84, 1)
+(35*u^4 : 61*u^3 : 1) -> (33, 84, 1)
+(65*u^4 : 42*u^3 : 1) -> (76, 19, 1)
+(0 : 1 : 0) -> (0, 51*u^3, 0)
+(33 : 19 : 1) -> (35*u^4, 42*u^3, 1)
+(33 : 84 : 1) -> (35*u^4, 61*u^3, 1)
+(76 : 19 : 1) -> (65*u^4, 42*u^3, 1)
+(76 : 84 : 1) -> (65*u^4, 61*u^3, 1)
+(97 : 19 : 1) -> (3*u^4, 42*u^3, 1)
+(97 : 84 : 1) -> (3*u^4, 61*u^3, 1)
+#+end_example
+
+* IN-PROGRESS The Weil Pairing
+*** DONE Prerequisites: Meromorphic function
+Let \( E \) be an elliptic curve defined over a field \( K \). A meromorphic function \( f: E \to K \) is a function that can be expressed as:
+
+\[
+f(P) = \frac{g(P)}{h(P)}
+\]
+
+where \( g(P) \) and \( h(P) \) are regular functions on \( E \) and \( h(P) \) is not identically zero. The poles of \( f \) are the values of \( P \) such that \( h(P) = 0 \).
+
+=Example=
+On an elliptic curve defined by:
+
+\[
+y^2 = x^3 + ax + b
+\]
+
+a typical meromorphic function could be:
+
+\[
+f(P) = \frac{y}{x - c}
+\]
+
+where \( c \) is some constant. This function is meromorphic because \( y \) is a regular function, and it has a pole at the point where \( x = c \).
+
+#+header: :exports results
+#+begin_src maxima :results output
+eq: -1 * (x**3 + 1) = 0;
+solution: solve(eq, x);
+print(solution);
+#+end_src
+
+#+RESULTS:
+:        sqrt(3) %i - 1      sqrt(3) %i + 1
+: [x = - --------------, x = --------------, x = - 1]
+:              2                   2
+
+*** DONE Function $f$ multiplicity at a point $P\in E$
+=Definition: Multiplicity at a Point=
+The *multiplicity* of a meromorphic function \( f \) at a point \( P \) on an elliptic curve refers to how many times the function \( f \) vanishes (has a zero) or goes to infinity (has a pole) at that point.
+
+- If \( f \) has a zero of order \( k \) at \( P \), it means that \( f(P) = 0 \) and \( f \) can be expressed locally around \( P \) as:
+  \[
+  f(P) = (x - x_0)^k g(x)
+  \]
+  where \( g(x) \) is a regular function and \( g(x_0) \neq 0 \).
+
+- If \( f \) has a pole of order \( m \) at \( P \), it means that \( f(P) \) is infinite, and \( f \) can be expressed as:
+  \[
+  f(P) = \frac{(x - x_0)^{-m}}{h(x)}
+  \]
+  where \( h(x) \) is regular and \( h(x_0) \neq 0 \).
+
+=Examples=
+1. *Zero Example*:
+   - Let $P=(a,b)$ be a point, not of order 2. Consider the rational function $g(X,Y)=(X-a)^k$ for some $k>0$. Then note that $g(P)=0$. We say $g$ has a zero at $P$ of multiplicity $k$: \( \text{ord}_P(g) = k \).
+
+2. *Pole Example*:
+   - Consider \( g(X, Y) = \frac{1}{(X-a)^k} \) for some $k>0$. This function has a pole at $P$ of multiplicity $k$: \( \text{ord}_P(g) = -k \),
+
+*** IN-PROGRESS Prerequisites: Divisors [1/2]
+- [ ] https://crypto.stanford.edu/pbc/notes/elliptic/divisor.html
+- [X] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
+  - [X] 5a order of vanishing: https://youtu.be/Oh_4u-xSCro?t=234
+  - [X] 5b order of vanishing examples: https://www.youtube.com/watch?v=2t13YpFZwn8
+  - [ ] divisors: https://www.youtube.com/watch?v=-UoizKdoHOU
+
+=Definition: divisor on an Elliptic Curve=
+A divisor $D$ on $E$ (elliptic curve) is a way to denote a multi set of points on $E$, written as the formal sum:
+
+\[
+\text{D} = \sum_{P \in E} n_p (P)
+\]
+
+where all but finitely many $n_p\in \mathbb{Z}$ are zero.
+
+The standard parentheses $(\cdot)$ around the P's and the absence of square parentheses $[\cdot]$ around the $nP$'s is what differentiates the formal sum in a divisor from an actual sum of points (i.e. using the group law) on E.
+
+=Definition: divisor degree=
+The degree of a divisor $D$ is:
+
+\[
+\text{Deg}(D) = \sum_{P \in E} n_P
+\]
+
+=Definition: divisor support=
+The support of $D$ is the set:
+
+\[
+\textit{supp}(D)=\{P \in E(\bar{F}_q) \hspace{.5em} : \hspace{.5em} n_p \neq 0\}
+\]
+
+=Definition: divisor sum=
+The sum function simply uses the group law on $E$ to add up the points:
+
+\[
+\text{sum}(\sum_{j} a_j (P_j))=\sum_{j} a_j [P_j ]
+\]
+
+*Definition: poles and zeros of a function divisor on an elliptic curve*
+A function $f$ is said to have a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
+However, we need more refined information, namely the order of the zero or pole.
+Let $P$ be a point on $E$.
+It can be shown that there is a function $u_P$ called a *uniformizer* at $P$ such that:
+
+\[
+U(P)=0
+\]
+
+and such that every function f(x,y) can be written in the form:
+
+\[
+f=u^rg, \hspace{0.5em} \text{with} \hspace{0.5em} r \in \mathbb{Z} \hspace{0.5em} \text{and} \hspace{0.5em} g(P) \neq 0, \infty
+\]
+
+We define the order of $f$ at $P$ by:
+
+\[
+ord_P(f)=r
+\]
+
+*Example (washington, 11.1)*
+Let $E: \hspace{0.5em} y^2 = X^3-x$.
+
+We know that on E:
+
+\[
+\frac{x}{y}=\frac{y}{x^2-1}
+\]
+
+- What is the order of $f(x,y)=x$ in $P=(0,0)$ (a zero)?
+\[
+ord_{(0,0)}(x)=ord_{(0,0)}(y^2{\frac{1}{x^2-1}})=2
+\]
+
+because $u(P) = y$ is $0$ at $P=(0,0)$, hence it is a uniformizer at $(0,0)$ and $g(x,y)=1/(x^2-1)$ is nonzero and finite at $(0,0)$.
+
+- What is the order of $f(x,y)=\frac{x}{y}$ in $P=(0,0)$ (a zero)?
+
+\[
+ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1
+\]
+
+again $y$ being the uniformizer.
+
+=Definition: The order of function \( f \) at a point \( P \) on an elliptic curve \( E \)=
+The order of a function \( f \) at a point \( P \), denoted as \( \text{ord}_P(f) \), measures the behavior of the function at that point. It can be classified as:
+
+1. *Zero of Order \( k \)*:
+   - If \( f \) has a zero at \( P \) of order \( k \), then:
+   \[
+   f(P) = 0
+   \]
+   and \( f \) can be locally expressed around \( P \) as:
+   \[
+   f(x, y) = (x - x_P)^k g(x, y)
+   \]
+   where \( g \) is a regular function (i.e., holomorphic) and \( g(P) \neq 0 \).
+
+2. *Pole of Order \( m \)*:
+   - If \( f \) has a pole at \( P \) of order \( m \), then:
+   \[
+   \lim_{P \to P_0} f(P) = \infty
+   \]
+   and \( f \) can be expressed as:
+   \[
+   f(x, y) = \frac{(x - x_P)^{-m}}{h(x, y)}
+   \]
+   where \( h \) is a regular function with \( h(P) \neq 0 \).
+
+3. *Regular at \( P \)*:
+   - If \( f \) is regular (non-zero) at \( P \), then:
+   \[
+   \text{ord}_P(f) = 0
+   \]
+
+*Example: order of vanishing of a function at a point*
+\[
+E/F: y^2=x^3 + Ax +B= (x-e_1)(x-e_2)(x-e_3), \hspace{.5em} e_i \in F
+\]
+
+Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
+- What is the order of vanishing of $f$ at $P_i$, i.e. what is $\text{ord}_{P_i}(f)$?
+
+\[
+\text{ord}_{P_i}(x-e_i)=2
+\]
+
+\[
+\text{ord}_{P_i}(Y)=1
+\]
+
+- What is the order of vanishing of $f$ at the point at infinity $\mathcal{O}=[0,1,0]$:  $\text{ord}_{\mathcal{O}}(f)$?
+\[
+\text{ord}_{\mathcal{O}}(x-e_i)=\text{ord}_{\mathcal{O}}(\frac{X-e_i}{Z})=\text{ord}_{\mathcal{O}}(X-e_i) - \text{ord}_{\mathcal{O}}(Z) = 1-3=-2
+\]
+
+\[
+\text{ord}_{\mathcal{O}}(y)=\text{ord}_{\mathcal{O}}(Y/Z)=0-3=-3
+\]
+
+# for derivation by taylor expansion in the projective coordinates see: https://youtu.be/2t13YpFZwn8?t=884
+
+=Definition: function divisor (principal divisor)=
+A *divisor of a function* \( f \) on an elliptic curve \( E \) is a formal sum of the points on the elliptic curve, weighted by the orders of the function \( f \) at those points. In more formal terms, if \( P \) denotes a point(s) on \( E \), the divisor associated with \( f \) can be expressed as:
+
+\[
+\text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P
+\]
+
+where $\text{ord}_P(g)$ is the number of zeroes or poles at $P$ (and is negative if it represents the number of poles at $P$) .
+A divisor is considered a *principal divisor* if it represents the zeroes and poles of some rational function (every rational function has as many zeroes as poles).
+
+IN-PROGRESS
+
+*Example (washington, 11.4): Finding a function with a given divisor*
+
+---
+*NOTE*
+
+Suppose $P1$, $P2$, $P3$ are three points on $E$ that lie on the line $ax + by + c = 0$.
+Then the function:
+
+\[
+f (x, y) = ax + by + c
+\]
+
+has zeros at $P1$, $P2$, $P3$.
+
+If $b \neq 0$ then $f$ has a triple pole at $\infty$. Therefore:
+
+\[
+\text{div}(ax + by + c) = (P1) + (P2) + (P3) - 3(\infty)
+\]
+
+The line through $P_3=(x_3,y_3)$ and $-P_3$ is $x-x_3=0$.
+The divisor of the function $x-x_3$ is:
+
+\[
+\text{div}(x-x_3)=(P_3)+(-P_3)-2 (\infty)
+\]
+
+Therefore:
+
+\[
+\text{div} (\frac{ax+by+c}{x-x_3})=\text{div}(ax+by+c)-\text{div}(x-x_3)=(P_1)+(P_2)-(-P_3)-(\infty)
+\]
+
+---
+
+#+BEGIN_SRC sage :session . :exports both
+F = FiniteField(11)
+E = EllipticCurve(F, [4, 0])
+
+P1=E(0,0); P2=E(2,4); P3=E(4,5); P4=E(6,3); P5=E(0)
+D = E.divisor([(1,P1), (1,P2), (1,P3), (1,P4), (-4,P5)]); D
+
+P1+P2+P3+P4+P5 == E(0)
+
+#+END_SRC
+
+#+RESULTS:
+: (x, y) + (x - 2*z, y - 4*z) + (x - 4*z, y - 5*z) + (x + 5*z, y - 3*z) - 4*(x, z)
+: True
+
+=Principality of a divisor (p67)=
+A divisor $D=\sum_{P}n_{P}P$ is *principal* (i.e. it is the divisor of a function) if and only if $\sum_{P}n_{P}=0$ and $\sum_{P}[n_{P}]P=\mathcal{O}$ on $E$.
+For any $m\in\mathbb{Z}$ and $P\in E$ it follows that there exists a function $f_{m,P}$ with divisor:
+
+
+\[
+(f_{m,P})=m(P) - ([m]P)-(m-1)(\mathcal{O})
+\]
+
+Thus if $P\in E[r]$:, then $f_{r,P}$ has a divisor:
+
+\[
+(f_{r,P})=r(P)-r(\mathcal{O})
+\]
+
+---
+*NOTE*
+
+Every divisor associated with a function \( f \) is a principal divisor. It characterizes the function's zeros and poles and reflects its algebraic properties on the curve.
+
+---
+
+Principal divisors are a device for keeping track of poles and zeroes.
+For example, suppose a function $g$ has a zero of order 3 at a point $P$, and a pole of order 2 at another point $Q$ and a pole of order 1 at $\mathcal{O}$. (Note the number of zeroes and poles are equal, as they must be.)
+Then using divisors, we can say all this concisely:
+
+$\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
+
+=Example: divisor of a function=
+
+\[
+E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3) \hspace{.5em}
+\text{where} \hspace{.5em} P_i = (e_i,\mathcal{O})
+\]
+
+\[
+div(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}
+\]
+
+(see order of vanishing example for details).
+
+*Example*
+Consider a meromorphic function defined on an elliptic curve:
+
+\[
+f(X, Y) = \frac{Y}{X - a}
+\]
+
+where \( a \) is a constant.
+
+- At a point where \( Y = 0 \) (e.g., a point on the x-axis), \( f \) has a zero.
+- At the point where \( X = a \), \( f \) has a simple pole.
+
+The associated principal divisor \( D_f \) can be expressed as:
+
+\[
+D_f = (P_1) - (P_2)
+\]
+
+where \( P_1 \) is the point associated with the zero and \( P_2 \) with the pole of the function.
+
+# *TODO: Example*
+# Suppose $P=(a,b)$ is a (finite) point. Let $g(X,Y)=X-a$.
+# Then we have:
+
+---
+*NOTE*
+
+=The connection between point addition on an elliptic curve and divisors=
+- The *chord and tangent rule* for elliptic curves states that given two points \( P \) and \( Q \) on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as \( R \).
+- The process involves drawing a line that intersects the curve at three points: \( P \), \( Q \), and \( R \), where \( R \) is the point of addition \( P + Q \). The coordinates of \( R \) can be obtained through geometric operations defined on the elliptic curve.
+- Each point addition can be associated with a divisor. For instance, when you compute \( R = P + Q \), this addition can be represented as a divisor:
+  \[
+  D = P + Q - R
+  \]
+
+---
+
+IN-PROGRESS
+=Example 3.1.1 Pairings For Beginners=
+#+begin_src sage :session . :exports both
+F = FiniteField(103)
+E = EllipticCurve(F, [20, 20])
+P = E(26,20); Q = E(63,78); R = E(59,95); S = E(24,25); T = E(77,84); U = E(30,99)
+
+E.is_on_curve(P[0], P[1]);
+
+#D1 = E.divisor(P) + E.divisor(Q) - E.divisor(R) - E.divisor(S); D1
+D1 = E.divisor([(1,P), (1,Q), (-1,R), (-1,S)]); D1
+D1.support()
+P + Q - R - S # !+ E(0,1,0) thus a function with (f) = (P) + (Q) - (R) - (S) does not exist (D1 is not a principal divisor)
+
+D2 = E.divisor([(1,P), (1,Q), (-1,R), (-1,T)]); D2
+P+Q-R-T # == E(0) thus there is some function f on E such that (f) = (P) + (Q) - (R) - (T)
+
+#+end_src
+
+#+RESULTS:
+: True
+: (x - 26*z, y - 20*z) + (x + 40*z, y + 25*z) - (x + 44*z, y + 8*z) - (x - 24*z, y - 25*z)
+: [(26 : 20 : 1), (63 : 78 : 1), (59 : 95 : 1), (24 : 25 : 1)]
+: (18 : 49 : 1)
+: (x - 26*z, y - 20*z) + (x + 40*z, y + 25*z) - (x + 44*z, y + 8*z) - (x + 26*z, y + 19*z)
+: (0 : 1 : 0)
+
+=Example: divisors=
+#+begin_src sage :session . :exports both
+# Step 1: Define the finite field and the elliptic curve
+F = FiniteField(7)  # Example field F_7
+E = EllipticCurve(F, [1, 1])  # Elliptic curve y^2 = x^3 + x + 1
+
+# Step 2: Identify points on the curve
+P1 = E.points()[3]  # A point on the curve
+P2 = E.points()[4]  # Another point on the curve
+#O = E(0)      # Point at infinity (the identity element)
+
+# Step 3: Create divisors
+D1 = 2 * P1 + 3 * P2  # Effective divisor 2*P1 + 3*P2
+D2 = P1 - P2          # A divisor of degree 0 (principal)
+
+# Step 4: Display the divisors
+print(f"Divisor D1: {D1}")
+print(f"Divisor D2: {D2}")
+
+# Point addition
+P = E.points()[1]  # A point on the curve
+Q = E.points()[3]  # Another point on the curve
+R = P + Q  # Result of point addition
+
+# Divisor representation
+D = P + Q - R  # Construct the divisor from points
+
+print(f"Point P: {P}, Point Q: {Q}, Result R: {R}")
+print(f"Divisor D representing the addition: {D}")
+#+end_src
+
+#+RESULTS:
+: Divisor D1: (2 : 5 : 1)
+: Divisor D2: (0 : 1 : 1)
+: Point P: (0 : 1 : 1), Point Q: (2 : 2 : 1), Result R: (0 : 6 : 1)
+: Divisor D representing the addition: (0 : 1 : 0)
+
+*** DONE Example 5.0.1
+p67 PairingsForBeginners
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq = FiniteField(q)
+E = EllipticCurve(Fq, [17, 6])
+E
+E.order() # curve order is 30
+
+# r =5 is the largest prime factor od the curves order
+r = list(factor(E.order()))[2][0]
+r
+
+# point of order r=5
+P=E(10,7)
+5*P
+# [r]P=0 therefore P is in E[r]
+# thus (f_{5,P}) exists and has a divisor (f_5,P)=5(P)-5(O) (see 5.2)
+#+END_SRC
+
+#+RESULTS:
+: Elliptic Curve defined by y^2 = x^3 + 17*x + 6 over Finite Field of size 23
+: 30
+: 5
+: (0 : 1 : 0)
+
+We will build $f_{5,P}$ by using $f_{m+1,P}=f_{m,P} \cdot \frac{\ell_{[m]P,P}}{v_{[m+1]P}}$
+
+---
+*NOTE*
+The divisor:
+
+\[
+(\frac{\ell_{[m]P,P}}{v[m+1],P})=(\ell_{[m]P,P}) - (v_{[m+1]P})=(P) + ([m]P) - ([m+1]P) - (\mathcal{O})
+\]
+
+---
+
+1) m = 1
+We compute the function:
+
+\[
+f_{1+1,P}=f_{1,P} \cdot \frac{\ell_{P,P}}{v[2]P}
+\]
+
+with divisor $(f_{2,P})=2(P)-([2]P)-(\mathcal{O})$.
+Note that $(f_{1,P})$ is the zero divisor.
+$\ell_{P,P}$ is the tangent line at $P=(10,7)$. Let's find it's equation:
+
+Diff both sides of E with respect to x:
+# #+BEGIN_SRC maxima :exports both :results output replace
+# y(x) := y^2;
+# print(diff(y(x),x));
+# #+END_SRC
+
+\[
+2y \frac{dy}{dx}=3x^2+17
+\]
+
+\[
+\frac{dy}{dx}=\frac{3x^2+17}{2y}
+\]
+
+Evaluate at $P=(10,7)$ mod 23 to get the slope of the tangent line:
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+F=GF(q)
+
+F(F(3)*F(10)^2+F(17)) / F(F(2)*F(7))
+#+END_SRC
+
+#+RESULTS:
+: 21
+
+Using the point-slope form of the line $y-y_1=\lambda*(x-x_1)$ for $\lambda=21$ (slope), $x_1=10$, $y_1=7$ we get:
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+# y = 21*x - 21*10 + 7
+Fq(-21*10+7)
+#+END_SRC
+
+#+RESULTS:
+: 4
+
+Thus the tangent line at P is:
+
+\[
+\ell: y=21x+4
+\]
+
+Now to get the vertical line passing through $[2]P$:
+
+---
+*NOTE*
+A vertical line on an elliptic curve is a line of the form:
+
+\[
+x=c
+\]
+where $c$ is a constant.
+This line passes through all points on the curve with x-coordinate equal to $c$.
+For a given point $P=(x_1,y_1)$ the vertical line passing through P is simply:
+
+\[
+x=x_1
+\]
+---
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+P=E(10,7)
+
+S=2*P
+S
+
+Fq(S[0])
+# this is the solution from the book:
+Fq(-16)
+#+END_SRC
+
+#+RESULTS:
+: (7 : 10 : 1)
+: 7
+: 7
+
+A vertical line passing through $[2]P$ is:
+\[
+v :x=7
+\]
+
+We can get the same results using closed-form formulas for the group law:
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+Fxy.<x,y> = Fq[]; Fxy
+
+def fDBL(P):
+  lbda = (3*P[0]^2 + a) / (2*P[1]);
+  c = P[1] - lbda*P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - 2*P[0]);
+  return l/v;
+
+P=E(10,7)
+
+fDBL(P)
+#+END_SRC
+
+#+RESULTS:
+: Multivariate Polynomial Ring in x, y over Finite Field of size 23
+: (2*x + y - 4)/(x - 7)
+
+This corresponds to the first solution (mod 23):
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+Fxy.<x,y> = Fq[];
+
+# manual solution
+Fxy(y - 21*x - 4)
+Fxy(x - 7)
+
+# sage solution
+Fxy(y + 2*x - 4)
+Fxy(x - 7)
+
+# solution from the book (MagmaScript)
+Fxy(y + 2*x +19)
+Fxy(x + 16)
+#+END_SRC
+
+#+RESULTS:
+: 2*x + y - 4
+: x - 7
+: 2*x + y - 4
+: x - 7
+: 2*x + y - 4
+: x - 7
+
+Finally we get:
+
+\[
+f_{2,P}=\frac{y + 2*x - 4}{x - 7}
+\]
+
+2) m = 2
+
+We compute the function:
+
+\[
+f_{3,P}=f_{2,P} \cdot \frac{\ell_{[2]P,P}}{v_{[3]P}}
+\]
+with divisor $(f_{3,P})=3(P)-([3]P)-2(\mathcal{O})$,
+where $\ell_{[2]P,P}$ is the chord line through $P$ and $[2]P$ and $v_{[3]P}$ is the vertical line going through $[3]P$.
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+Fxy.<x,y> = Fq[];
+
+def fADD(P,Q):
+  lbda = (Q[1] - P[1]) / (Q[0] - P[0]);
+  c = P[1] - lbda * P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - P[0] - P[1]);
+  return l/v;
+
+P=E(10,7);
+
+fADD(P,2*P)
+#+END_SRC
+
+#+RESULTS:
+: (x + y + 6)/(x - 7)
+
+Hence:
+
+\[
+f_{3,P}=\frac{y + 2*x - 4}{x - 7} \cdot \frac{x+y+6}{x-7}
+\]
+
+3) m = 3
+
+We compute the function
+
+\[
+f_{4,P}=f_{3,P} \cdot \frac{\ell_{[3]P,P}}{v_{[4]P}}
+\]
+
+with divisor $(f_{4,P})=4(P)-(4P)-3(\mathcal{O})$.
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+Fxy.<x,y> = Fq[];
+
+def fADD(P,Q):
+  lbda = (Q[1] - P[1]) / (Q[0] - P[0]);
+  c = P[1] - lbda * P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - P[0] - P[1]);
+  return l/v;
+
+P=E(10,7);
+
+fADD(P,3*P)
+#+END_SRC
+
+#+RESULTS:
+: (2*x + y - 4)/(x - 10)
+
+4) m = 4
+
+The last function we need has a divisor:
+
+\[
+(P)+(4P)-(5P)-(\mathcal{O})
+\]
+
+which would be the quotient of lines defining the group-law addition of $P$ and $4P$, but since $P$ has order 5 $P=-4P$
+so this function actually has a divisor $(P)+(-P)-2(\mathcal{O})$ and the last update is simply the vertical line at $P$:
+
+\[
+v:x=10
+\]
+
+Combining these results:
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+
+a=17; b=6;
+E=EllipticCurve(Fq,[a,b]);
+
+Fxy.<x,y> = Fq[];
+
+def fDBL(P):
+  lbda = (3*P[0]^2 + a) / (2*P[1]);
+  c = P[1] - lbda*P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - 2*P[0]);
+  return l/v;
+
+def fADD(P,Q):
+  lbda = (Q[1] - P[1]) / (Q[0] - P[0]);
+  c = P[1] - lbda * P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - P[0] - P[1]);
+  return l/v;
+
+P=E(10,7);
+
+f2P = fDBL(P)
+f2P
+
+f3P = f2P * fADD(P,2*P)
+f3P
+
+f4P = f3P * fADD(P,3*P)
+f4P
+
+f5P = f4P * Fxy(x-10)
+f5P
+#f5P.factor()
+
+# solution from the book
+(x+22)*y + 5*x^2 + 3*x + 5
+#+END_SRC
+
+#+RESULTS:
+: (2*x + y - 4)/(x - 7)
+: (2*x^2 + 3*x*y + y^2 + 8*x + 2*y - 1)/(x^2 + 9*x + 3)
+: (4*x^3 + 8*x^2*y + 5*x*y^2 + y^3 + 8*x^2 - 2*y^2 - 11*x - 9*y + 4)/(x^3 - x^2 + 5*x - 7)
+: (4*x^3 + 8*x^2*y + 5*x*y^2 + y^3 + 8*x^2 - 2*y^2 - 11*x - 9*y + 4)/(x^2 + 9*x + 3)
+: 5*x^2 + x*y + 3*x - y + 5
+
+*** IN-PROGRESS The Weil Pairing
+For a point $P \in E[r]$ the function $f_{r,P}$ with divisor $r(P)-r(\mathcal{O})$ is at the heart of both the Weil and Tate pairing definitions.
+
+=Definition: The Weil pairing=
+Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions f and g such that $(f)=rD_P$ and $(g)=rD_Q$. The Weil pairing $w_r$ is a map:
+
+\[
+w_r: E(F_{q^k})[r] \times E(F_{q^k})[r] \rightarrow \mu_r
+\]
+
+defined as:
+
+\[
+w_r(P,Q)=\frac{f(D_Q)}{g(D_P)}
+\]
+
+where $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
+
+---
+*NOTE*
+Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
+
+We write $D_P \sim D_Q$.
+
+---
+*** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+E=EllipticCurve(Fq, [0,-1])
+
+E.order()
+# E is supersingular:
+E.order() == q+1
+
+
+#+END_SRC
+
+#+RESULTS:
+: 24
+: True
+
+* Additional: pairings in ZK 
+** example 1
+
+=both parties=
+There exists a (symmetric, i.e. $G_0=G_1$) pairing $e: G_0 \times G_1 \rightarrow G_T$
+and a $G$ which is a generator of $G_0=G_1$
+
+=prover=
+I know $a=200$ and $b=275$ such that
+$200G=A, \quad 275G=B \quad \text{and} \quad (200 \times 275)G=D$
+
+=verifier=
+Receives $A,B$ and $D$ and wants to check whether $D$ was computed correctly.
+He can do so without knowing the secrets $a=200$ and $b=275$ by using pairings and checking if:
+$e(A,B)=e(G,D)$
+
+which in this case holds:
+$e(A,B)=e(200G,275G)=e\left(G,(200 \times 275) G \right)=e(G,D)$
+** example 2
+If a statement can be transformed into a relationship with a single multiplication than it can easily be checked using a pairing.
+
+=prover=
+
+*statement*:
+I know an $a$ which is a solution to:
+$x^2+2027x+16152$
+
+---
+*NOTE*
+
+#+BEGIN_SRC sage :session . :exports both
+x = var('x')
+solve(x^2+2027*x+16152, x)
+#+END_SRC
+
+#+RESULTS:
+: [x == -2019, x == -8]
+
+---
+
+Prover takes a pair of two elliptic curve points $g_1$ and $g_2$ and computes $a \times g_1$ and $a \times g_2$.
+He sends the results along with the points $g_1$ and $g_2$ to the verifier.
+Because of the ECDLP he can be sure verifier cannot compute $a$ knowing $a \times g_1$ and $a \times g_2$.
+
+=verifier=
+
+Verifier recieves $g_1$, $g_2$, $a \times g_1$ and $a \times g_2$.
+He then computes:
+
+\begin{equation*}
+e\left(ag_1, ag_2 \right) \times e\left(g_1, -2027ag_2 \right) \times e\left(g_1, 16152g_2 \right)
+\end{equation*}
+
+which by the billinearity property of the map $e$ is the same as computing:
+
+\begin{equation*}
+e\left(g_1,g_2\right)^{a^2+2027a+16152}
+\end{equation*}
+
+and if the result is $1$ then $a^2+2027a+16152$ is equal to $0$ (with high probability), QED.
+
+---
+
+*NOTE*
+
+In a zk-SNARK, elliptic curve pairings are used to check a system of quadratic constraints just like this one.
+The system of constraints is converted into a single, large polynomial that has particular roots is and only if each of the (quadratic) constraints is satisfied.
+
+---
+
