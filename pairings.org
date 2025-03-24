@@ -1,0 +1,50 @@
+#+STARTUP: overview
+#+latex_class_options: [12pt]
+
+* Contents
+:PROPERTIES:
+:STARTUP: showall
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#billinear-map][Billinear map]]
+- [[#pairing][Pairing]]
+:END:
+
+* Billinear map
+An elliptic curve pairing is a function (a map) that takes a pair of points on an elliptic curve and returns an element of some other group, called the target group, preserving certain algebraic properties (billinearity, non-degeneracy and efficiency).
+
+$e: G_0 \times G_1 \rightarrow G_T$
+
+=Billinearity=
+
+Let's take points $P,Q \in G_0$ and $S,T \in G_1$.
+Billinearity means that these two properties hold for $e$:
+- $E(P+Q,S)=e(P,S) \times e(Q,S)$
+- $E(P,S+T)=e(P,S) \times e(P,T)$
+
+Let $a,b$ be scalars. If $e$ is a billinear map we can derive these properties:
+\begin{equation*}
+e(aP,bS) = e\left( (a-1)P + P,bS \right) = e\left( (a-1)P, bS \right) \times e\left( P,bS \right) = e\left( (a-2)P + P,bS \right) \times e\left( P,bS \right) = e\left( (a-2)P, bS \right) \times e\left( P,bS \right)^{2} = \dots = e\left( P,bS \right)^{a}
+\end{equation*}
+
+\begin{equation*}
+e\left( P,bS \right)^{a} = e \left( P, (b-1)S+S \right)^{a} = \left[ e \left( P, (b-1)S \right) \times e \left( P, S \right) \right]^{a}= \dots =e \left( P, S \right) ^{ab}
+\end{equation*}
+
+\begin{equation*}
+e \left( P, S \right) ^{ab}= \dots = e \left( P, abS \right)= \dots = e \left( abP, S \right)
+\end{equation*}
+
+$e(P,S)^{ab} = e(aP,bS)$
+
+=Non-degeneracy=
+
+$\forall g_0 \in G_0,  g_1 \in G_1 \quad e \left( g_0, g_1 \right) \neq 1$
+where $1$ is the identity element in the target group, $g_0,g_1$ are the generators of groups $G_0,G_1$
+
+=Efficiency (computability)=
+
+There exists an efficient algorithm to compute $e$.
+* Pairing

@@ -48,7 +48,8 @@
 - [[#r-torsion-group-ef_qr][r-torsion group $E(F_q)[r]$]]
   - [[#example][Example]]
 - [[#embedding-degree][Embedding degree]]
-- [[#r-torsion-group-ef_qkrr-full-r-torsion-group][r-torsion group $E(F_{q^{k(r)}})[r]$ ("full" r-torsion group)]]
+  - [[#example][Example]]
+- [[#r-torsion-group-ef_qkrr-the-full-r-torsion-group][r-torsion group $E(F_{q^{k(r)}})[r]$ (the "full" r-torsion group)]]
   - [[#example-91-moonmath-finding-full-r-torsion-group][Example 91 MoonMath: Finding full r-torsion group]]
   - [[#example-411-pairings-for-beginners-finding-full-r-torsion-group][Example 4.1.1 Pairings For Beginners: Finding full r-torsion group]]
   - [[#example-412-pairings-for-beginners][Example 4.1.2 Pairings For Beginners]]
@@ -1162,7 +1163,7 @@ where:
 - $\mathcal{O}$ is the identity element (the [[*Point at infinity][Point at infinity]]).
 
 In other words, P has finite order $r$ or less.
-* IN-PROGRESS r-torsion group $E(F_q)[r]$
+* r-torsion group $E(F_q)[r]$
 =Definition=
 
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $r$ a factor of $n$.
@@ -1178,9 +1179,9 @@ In another words the r-torsion group of an elliptic curve $E(F_q)$, where $F_q$ 
 
 - *Group Structure* the r-torsion group $E[r]$ forms a finite abelian group under the addition operation defined on the elliptic curve.
 - *Order of the Group*: The order (the number of elements) of the $E[r]$ can vary. Over a finite field $F_q$, the structure of $E[r]$ depends on r, q and the elliptic curve itself.
-- *Connection to Field Size*: If r divides q−1, then there exist r-torsion points over F_q. Otherwise, the r-torsion group may only have the identity point $\mathcal{O}$.
-- In the case where \( r \) is a prime number, \( E[r] \) is isomorphic to \( \mathbb{Z}/r\mathbb{Z} \times \mathbb{Z}/r\mathbb{Z} \) over algebraically closed fields. This means that every \( r \)-torsion point can be represented as \( aP + bQ \), where \( P \) and \( Q \) are points of exact order \( r \) and \( a, b \in \mathbb{Z}/r\mathbb{Z} \).
-- If F is any field with characteristic zero or prime to r, we have: $E[r] \cong Z_r \times Z_r$. This means that in general $\#E[r]=r^2$ (a remarkable result!).
+- *Connection to Field Size*: If $r$ divides $q − 1$, then there exist r-torsion points over $F_q$. Otherwise, the r-torsion group may only have the identity point $\mathcal{O}$.
+- In the case where $r$ is a prime number, $E[r]$ is isomorphic to $\mathbb{Z}/r\mathbb{Z} \times \mathbb{Z}/r\mathbb{Z}$ over algebraically closed fields. This means that every r-torsion point can be represented as $aP + bQ$, where $P$ and $Q$ are points of exact order $r$ and $a, b \in \mathbb{Z}/r\mathbb{Z}$.
+- If $F$ is any field with characteristic zero or prime to r, we have: $E[r] \cong Z_r \times Z_r$. This means that in general $\#E[r]=r^2$ (a remarkable result!).
 
 ** Example
 Let's consider:
@@ -1270,8 +1271,58 @@ Number of generators of E(F_101): 48
 Number of points in 21-torsion group of E(F_101): 21
 #+end_example
 
-* TODO Embedding degree
-* IN-PROGRESS r-torsion group $E(F_{q^{k(r)}})[r]$ ("full" r-torsion group)
+* IN-PROGRESS Embedding degree
+=Definition=
+
+The embedding degree $k$ of an elliptic curve is the smallest positive integer such that the group of r-torsion points of the elliptic curve $E$ (i.e., the points $P \in E$ such that $rP = \mathcal{O}$) is contained within the finite field $\mathbb{F}_{q^k}$, where $r$ is a prime number dividing the order of the elliptic curve.
+
+In other words, $k$ is the smallest integer for which the curve has enough points to map every possible interaction of its points into the finite field.
+
+In yet another words, $k$ is the smallest integer for which the field $F_{q^k}$ contains all of the $r$-th roots of unity.
+
+Relation to the [[*r-torsion group $E(F_{q^{k(r)}})\[r\]$ ("full" r-torsion group)][r-torsion group $E(F_{q^{k(r)}})[r]$ ("full" r-torsion group)]]
+
+Embedding degree $k$ is the smallest integer such that:
+$E(F_{p^k})[r]=E(\overline{F_p})[r]$
+
+---
+*NOTE*
+
+- We note that the embedding degree is actually a function k(q, r) of q and r
+- Embedding degree is used to distinguish elliptic curves with efficiently computable pairings.
+
+---
+
+=Mathematical definition=
+
+Let $F$ be a finite field of order $|F| = q$, $E(F)$ an elliptic curve over $F$ of order $\# E(F)=n$ and let $r$ be a prime factor of $n$ ($r$ divides $n$, i.e. $n$ is the cofactor).
+The embedding degree of $E(F)$ with respect to $r$ is the smallest integer $k$ such that the following equation holds:
+
+$r \hspace{.5em} | \hspace{.5em} q^k -1$
+
+($r$ divides $q^k -1$).
+
+Another formulation of the above:
+
+$q^k \equiv 1 \hspace{.5em} | \hspace{.5em} \(\text{mod} \hspace{.5em} r\)$
+
+We write $k(r)$ for the embedding degree of $E(F)$ with respect to $r$.
+
+---
+
+*NOTE*
+
+[[file:algebra.org::*Fermats Little Theorem][Fermats Little Theorem]]  implies that there always exists an embedding degree $k(r)$ for every elliptic curve.
+and that any factor $r$ of the curve's order $n$, since $k = r - 1$, is always a solution to the congruency $q^k \equiv 1 \quad \text{( mod r )}$.
+This implies that the remainder of the integer division of $q^{r-1} - 1$ by $r$ is $0$.
+
+---
+
+** TODO Example
+# TODO: example that illustrates how k is the smallest integer for which the field F_q^k contains all r-th roots of unity
+# - find the embedding degree
+# - find all roots of unity in the extension fields with extension < r
+* r-torsion group $E(F_{q^{k(r)}})[r]$ (the "full" r-torsion group)
 =Definition=
 
 Let $F_q$ be a prime field and let $E(F_q)$ be an elliptic curve of order $n$, such that $r$ is a factor of $n$, with the [[*Embedding degree][Embedding degree]] $k(r)$ and $r$-torsion group $E(F_q)[r]$.

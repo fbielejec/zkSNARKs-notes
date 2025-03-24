@@ -11,3 +11,4 @@
 | [[file:arithmetics.org][Arithmetic prerequisites]] | Preliminary definitions                       |
 | [[file:algebra.org][Algebra prerequisites]]    | Finite fields, prime fields, field extensions |
 | [[file:elliptic_curves.org][Elliptic curves]]          | Everything EC up to EC pairings               |
+| [[file:pairings.org][Elliptic Curve Pairings]]  | Weil and Tate pairings                        |
