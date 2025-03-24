@@ -33,7 +33,7 @@
   - [[#example-washington-111][Example (washington, 11.1)]]
   - [[#function-divisors-principal-divisors][Function divisors (principal divisors)]]
   - [[#principal-divisors-properties][Principal divisors: properties]]
-  - [[#example-divisor-of-a-function][Example: divisor of a function]]
+  - [[#example-principal-divisor-divisor-of-a-function][Example: Principal divisor (divisor of a function)]]
   - [[#example-501][Example 5.0.1]]
 - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
@@ -914,9 +914,10 @@ Then using divisors, we can say all this concisely:
 
 $\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
 
-** IN-PROGRESS Example: divisor of a function
+** IN-PROGRESS Example: Principal divisor (divisor of a function)
 
-$E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3) \hspace{.5em}#
+$E: y^2 = (x - e_1) \times (x - e_2) \times (x - e_3)$
+
 where:
 - $P_i = (e_i,\mathcal{O})$
 
