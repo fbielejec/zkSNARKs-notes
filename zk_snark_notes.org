@@ -946,11 +946,10 @@ The order of an elliptic curve over finite field need not be equal to the order 
 [[HasseTheorem][Hasse's theorem]] on elliptic curves, also referred to as the *Hasse bound*, provides an estimate of the number of points on an elliptic curve over a finite field, bounding the value both above and below.
 ---
 
-** Hasse's theorem <<HasseTheorem>>
+** IN-PROGRESS Hasse's theorem
 If N is the number of points on the elliptic curve E over a finite field with q elements, then Hasse's result states that:
 
 ${\displaystyle |N-(q+1)|\leq 2{\sqrt {q}}.}$
-
 ** Order of a point on an elliptic curve <<OrderOfAPoint>>
 The order of a point on an elliptic curve is the smallest positive integer n such that
 
