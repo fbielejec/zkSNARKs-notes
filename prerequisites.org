@@ -1,0 +1,102 @@
+#+STARTUP: overview
+#+latex_class_options: [12pt]
+
+* Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#coprime-numbers][Coprime numbers]]
+- [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
+- [[#modular-inverse][Modular inverse]]
+  - [[#example][Example]]
+- [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
+  - [[#example][Example]]
+:END:
+
+* Coprime numbers
+Coprime numbers are pairs of numbers that do not have any common factor other than 1.
+* Congruence (modular arithmetic)
+Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be congruent modulo $m$, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that
+$a - b = k \times m$
+Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted
+$a \equiv b \quad \text{(mod m)}$
+* Modular inverse
+A modular multiplicative inverse of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
+
+$ax \equiv 1 \pmod{m}$
+
+---
+*NOTE*
+
+$ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
+
+A modular multiplicative inverse of a modulo m can be found by using the extended Euclidean algorithm.
+---
+
+** Example
+Let $m = 5$ and $a = 2$.
+$gcd(2,5) = 1$ so there exists a multiplicative inverse.
+Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
+* Chinese Remainder Theorem
+Chinese remainder theorem states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors share a common factor other than 1).
+
+Suppose we have a system of simultaneous congruences:
+
+$x \equiv a_1 \pmod{m_1}$
+$x \equiv a_2 \pmod{m_2}$
+...
+$x \equiv a_k \pmod{m_k}$
+
+where:
+- $a_1,...,a_k$ are integers.
+- $m_1,...,m_k$ are pairwise coprime integers, i.e. $\forall i\neq j \hspace{.5em} gcd(m_i,m_j)=1$.
+
+The Chinese Remainder Theorem states that there exists a unique solution
+x modulo $M=m_1 m_2 \cdot \cdot \cdot m_k$.
+In other words there is an integer $x$ such that
+
+$x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
+
+and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
+
+** Example
+$x \equiv 2 \pmod{3}$
+$x \equiv 3 \pmod{5}$
+$x \equiv 2 \pmod{7}$
+
+1. Compute the product $M=m_1m_2,\ldots,m_k$
+
+$M=3\cdot5\cdot7=105$
+
+2. Compute partial products $\forall i=1,\ldots,k \hspace{.5em} M_i=\frac{M}{m_i}$
+
+$M_1=(3\cdot5\cdot7)/3=35$
+$M_2=(3\cdot5\cdot7)/5=21$
+$M_3=(3\cdot5\cdot7)/7=15$
+
+1. Find modular inverses $y_i$: $\forall i \hspace{.5em} M_i y_i \equiv 1 \pmod{m_i}$. We know these inverses exist because $gcd(M_i,m_i)=1$
+
+$35 y_1 =1 \pmod{3} \leftrightarrow y_1=2$
+$21 y_2 =1 \pmod{5} \leftrightarrow y_2=1$
+$15 y_3 =1 \pmod{7} \leftrightarrow y_3=1$
+
+4. Combine the Results. The solution $x$ can be constructed as: $x=\sum_{i=1}^{k}a_iM_iy_i \pmod{M}$ (ensures that $x$ satisfies all the congruences.)
+
+$x = (2 \cdot 35 \cdot 2) + (3 \cdot 32 \cdot 1) + (2 \cdot 15 \cdot 1) \pmod{105}$
+$x = 233 \pmod{105} = 23$
+** Square roots and quadratic residue
+In the context of prime fields, an element that is a square of another element is called a *quadratic residue*,
+and an element that is not a square of another element is called a *quadratic non-residue*.
+
+=Definition=
+Let $p \in P$ be a prime number and $F_p$ its associated prime field.
+Then a number $x \in F_p$ is called a square root of another number $y \in F_p$,
+if $x$ is a solution to the following:
+
+$x^2 = y$
+
+In this case, $y$ is called a *quadratic residue* of $x$.
+On the other hand, if $y$ is given and the quadratic equation has no solution $x$,
+we call $y$ a *quadratic non-residue*.
