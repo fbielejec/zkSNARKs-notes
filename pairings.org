@@ -11,7 +11,7 @@
 - [[#billinear-map][Billinear map]]
 - [[#pairing][Pairing]]
   - [[#example-billinearity-of-a-pairing][Example: billinearity of a pairing]]
-- [[#frobenius-endomorphism][Frobenius endomorphism]]
+- [[#frobenius-endomorphism-frobenius-map][Frobenius endomorphism (Frobenius map)]]
   - [[#example][Example]]
 - [[#trace-map-tr][Trace Map $Tr$]]
   - [[#example][Example]]
@@ -22,16 +22,16 @@
 - [[#pairing-groups-mathbbg_1-and-mathbbg_2][Pairing groups $\mathbb{G}_1$ and $\mathbb{G}_2$]]
   - [[#example-g1-and-g2-pairing-groups][Example: G1 and G2 pairing groups]]
 - [[#example-431-twisted-elliptic-curves][Example 4.3.1: Twisted Elliptic Curves]]
+- [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
 - [[#the-weil-pairing][The Weil Pairing]]
-  - [[#prerequisites-meromorphic-function][Prerequisites: Meromorphic function]]
   - [[#function-f-multiplicity-at-a-point-pin-e][Function $f$ multiplicity at a point $P\in E$]]
   - [[#prerequisites-divisors-12][Prerequisites: Divisors [1/2]​]]
   - [[#example-501][Example 5.0.1]]
   - [[#the-weil-pairing][The Weil Pairing]]
   - [[#example-511-constructing-the-weil-pairing][Example 5.1.1: constructing the Weil pairing]]
 - [[#additional-pairings-in-zk][Additional: pairings in ZK]]
-  - [[#example-1][example 1]]
-  - [[#example-2][example 2]]
+  - [[#example-1][Example 1]]
+  - [[#example-2][Example 2]]
 :END:
 
 * Billinear map
@@ -163,7 +163,7 @@ This condition guarantees non-trivial (meaning $e([a]P,[b]Q) \neq 0$) pairings f
 
 ---
 
-* Frobenius endomorphism
+* Frobenius endomorphism (Frobenius map)
 =Definition=
 
 Let $F_q$ be a finite field of characteristic $q$ and $E(F_q)$ an elliptic curve over that field.
@@ -203,16 +203,13 @@ print(f"Point after Frobenius endomorphism π(P): {Frobenius_P}")
 
 =Definition=
 
-For an elliptic curve \(E\) defined over an extension field \(\mathbb{F}_{q^k}\), the trace map \(\text{Tr}\) of a point \(P \in E(\mathbb{F}_{q^k})\) is defined as:
+For an elliptic curve $E$ defined over an extension field $\mathbb{F}_{q^k}$, the trace map $\text{Tr}$ of a point $P \in E(\mathbb{F}_{q^k})$ is defined as:
 
 $\text{Tr}(P) = \sum_{i=0}^{k-1} \pi^{i}(P) = P + \pi(P) + \pi^2(P) + \cdots + \pi^{k-1}(P)$
 
+where $\pi$ is the [[*Frobenius endomorphism][Frobenius endomorphism]], defined by raising the coordinates of each point to the q-th power:
 
-where \(\pi\) is the [[*Frobenius endomorphism][Frobenius endomorphism]], defined by raising the coordinates of each point to the \(q\)-th power:
-
-\[
-\pi((x, y)) = (x^q, y^q)
-\]
+$\pi((x, y)) = (x^q, y^q)$
 
 Trace map is actually a homomorphism and it sends all torsion points into one of the subgroups of the r-torsion (the base field subgroup):
 
@@ -296,12 +293,15 @@ Tr((4*u^2 + 7*u + 4 : 10*u^2 + 2*u + 6 : 1))=(8 : 8 : 1) is in the 7-torsion E[F
 * Anti-trace map $aTr$
 
 =Definition=
+
 Anti-trace map maps any $P \in E[r]$ to the "trace zero" subgroup $\mathbb{G}_2$:
+
 $aTr: P \rightarrow P^{'} = [k]P - Tr(p)$
 
 * Distortion map $\phi$
 
 =Definition: supersingular curve=
+
 An elliptic curve $E$ is called /supersingular/ if $\#E(F_q) = q+1$.
 A curve which is not supersingular is called ordinary.
 Supersingular curves come equipped with a /distorsion map $\phi$/, i.e. a non-$F_q$-rational map that takes a point in $E(F_q)$ to a point in $E(F_q^k)$.
@@ -368,12 +368,11 @@ E_ext(distortion_map(distortion_map(distortion_map(distortion_map((31*i+51,34*i+
 : (31*i + 51 : 34*i + 49 : 1)
 
 * Pairing groups $\mathbb{G}_1$ and $\mathbb{G}_2$
-- p 105
-
 =Definition: pairing groups G_1 and G_2=
+
 Given the [[FrobeniusEndomorphism][Frobenius map]] definition we can characterize two important subgroups of the full r-torsion group $E[r]$.
 
-The first subgroup $\mathbb{G}_1[r]$ (abbreviated $\mathbb{G}_1$ when $r$ is implicit) is defined as the one on which the Frobenius map acts trivially:
+The first subgroup $\mathbb{G}_1[r]$ (abbreviated $\mathbb{G}_1$ when $r$ is implicit) is defined as the one on which the [[*Frobenius endomorphism][Frobenius endomorphism]] acts trivially:
 
 $\mathbb{G}_1[r] := \{ (x,y) \in E[r] \hspace{0.5em} | \hspace{0.5em} \pi(x,y) = (x,y) \}$
 
@@ -392,6 +391,7 @@ $\forall P \in \mathbb{G}_2[r] \hspace{0.5em}  Tr(P)=\mathcal{O}$
 
 Hence it is also reffered to as the *trace zero* subgroup.
 /(result attributed to Dan Boneh, see S.D Galbraith, Pairings, volume 317, Lemma IX.16)/
+
 ---
 
 If $E(F)$ is an elliptc curve and $r$ is the largest prime factor of the curves order we call $\mathbb{G}_1[r]$ and $\mathbb{G}_2[r]$ *pairing groups* (also written $\mathbb{G}_1$ and $\mathbb{G}_2$).
@@ -667,67 +667,59 @@ Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
 (97 : 84 : 1) -> (3*u^4, 61*u^3, 1)
 #+end_example
 
-* IN-PROGRESS The Weil Pairing
-*** DONE Prerequisites: Meromorphic function
-Let \( E \) be an elliptic curve defined over a field \( K \). A meromorphic function \( f: E \to K \) is a function that can be expressed as:
+* IN-PROGRESS Prerequisites: Meromorphic function
+=Definition=
 
-\[
-f(P) = \frac{g(P)}{h(P)}
-\]
+Let $E$ be an elliptic curve defined over a field $F$.
+A meromorphic function $f: E \to F$ is a function that can be expressed as:
 
-where \( g(P) \) and \( h(P) \) are regular functions on \( E \) and \( h(P) \) is not identically zero. The poles of \( f \) are the values of \( P \) such that \( h(P) = 0 \).
+$f(P) = \frac{g(P)}{h(P)}$
+
+where:
+- $g(P)$ and $h(P)$ are regular functions on $E$ and
+- $h(P)$ is not identically zero.
+
+The poles of $f$ are the values of $P$ such that $h(P) = 0$.
 
 =Example=
 On an elliptic curve defined by:
 
-\[
-y^2 = x^3 + ax + b
-\]
+$y^2 = x^3 + ax + b$
 
 a typical meromorphic function could be:
 
-\[
-f(P) = \frac{y}{x - c}
-\]
+$f(P) = \frac{y}{x - c}$
 
-where \( c \) is some constant. This function is meromorphic because \( y \) is a regular function, and it has a pole at the point where \( x = c \).
+where:
+- $c$ is some constant.
 
-#+header: :exports results
-#+begin_src maxima :results output
-eq: -1 * (x**3 + 1) = 0;
-solution: solve(eq, x);
-print(solution);
-#+end_src
+This function is meromorphic because $y$ is a regular function, and it has a pole at the point where $x = c$.
 
-#+RESULTS:
-:        sqrt(3) %i - 1      sqrt(3) %i + 1
-: [x = - --------------, x = --------------, x = - 1]
-:              2                   2
-
-*** DONE Function $f$ multiplicity at a point $P\in E$
+* IN-PROGRESS The Weil Pairing
+** DONE Function $f$ multiplicity at a point $P\in E$
 =Definition: Multiplicity at a Point=
-The *multiplicity* of a meromorphic function \( f \) at a point \( P \) on an elliptic curve refers to how many times the function \( f \) vanishes (has a zero) or goes to infinity (has a pole) at that point.
+The *multiplicity* of a meromorphic function $ f $ at a point $ P $ on an elliptic curve refers to how many times the function $ f $ vanishes (has a zero) or goes to infinity (has a pole) at that point.
 
-- If \( f \) has a zero of order \( k \) at \( P \), it means that \( f(P) = 0 \) and \( f \) can be expressed locally around \( P \) as:
+- If $ f $ has a zero of order $ k $ at $ P $, it means that $ f(P) = 0 $ and $ f $ can be expressed locally around $ P $ as:
   \[
   f(P) = (x - x_0)^k g(x)
   \]
-  where \( g(x) \) is a regular function and \( g(x_0) \neq 0 \).
+  where $ g(x) $ is a regular function and $ g(x_0) \neq 0 $.
 
-- If \( f \) has a pole of order \( m \) at \( P \), it means that \( f(P) \) is infinite, and \( f \) can be expressed as:
+- If $ f $ has a pole of order $ m $ at $ P $, it means that $ f(P) $ is infinite, and $ f $ can be expressed as:
   \[
   f(P) = \frac{(x - x_0)^{-m}}{h(x)}
   \]
-  where \( h(x) \) is regular and \( h(x_0) \neq 0 \).
+  where $ h(x) $ is regular and $ h(x_0) \neq 0 $.
 
 =Examples=
 1. *Zero Example*:
-   - Let $P=(a,b)$ be a point, not of order 2. Consider the rational function $g(X,Y)=(X-a)^k$ for some $k>0$. Then note that $g(P)=0$. We say $g$ has a zero at $P$ of multiplicity $k$: \( \text{ord}_P(g) = k \).
+   - Let $P=(a,b)$ be a point, not of order 2. Consider the rational function $g(X,Y)=(X-a)^k$ for some $k>0$. Then note that $g(P)=0$. We say $g$ has a zero at $P$ of multiplicity $k$: $ \text{ord}_P(g) = k $.
 
 2. *Pole Example*:
-   - Consider \( g(X, Y) = \frac{1}{(X-a)^k} \) for some $k>0$. This function has a pole at $P$ of multiplicity $k$: \( \text{ord}_P(g) = -k \),
+   - Consider $ g(X, Y) = \frac{1}{(X-a)^k} $ for some $k>0$. This function has a pole at $P$ of multiplicity $k$: $ \text{ord}_P(g) = -k $,
 
-*** IN-PROGRESS Prerequisites: Divisors [1/2]
+** IN-PROGRESS Prerequisites: Divisors [1/2]
 - [ ] https://crypto.stanford.edu/pbc/notes/elliptic/divisor.html
 - [X] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
   - [X] 5a order of vanishing: https://youtu.be/Oh_4u-xSCro?t=234
@@ -812,33 +804,33 @@ ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1
 
 again $y$ being the uniformizer.
 
-=Definition: The order of function \( f \) at a point \( P \) on an elliptic curve \( E \)=
-The order of a function \( f \) at a point \( P \), denoted as \( \text{ord}_P(f) \), measures the behavior of the function at that point. It can be classified as:
+=Definition: The order of function $ f $ at a point $ P $ on an elliptic curve $ E $=
+The order of a function $ f $ at a point $ P $, denoted as $ \text{ord}_P(f) $, measures the behavior of the function at that point. It can be classified as:
 
-1. *Zero of Order \( k \)*:
-   - If \( f \) has a zero at \( P \) of order \( k \), then:
+1. *Zero of Order $ k $*:
+   - If $ f $ has a zero at $ P $ of order $ k $, then:
    \[
    f(P) = 0
    \]
-   and \( f \) can be locally expressed around \( P \) as:
+   and $ f $ can be locally expressed around $ P $ as:
    \[
    f(x, y) = (x - x_P)^k g(x, y)
    \]
-   where \( g \) is a regular function (i.e., holomorphic) and \( g(P) \neq 0 \).
+   where $ g $ is a regular function (i.e., holomorphic) and $ g(P) \neq 0 $.
 
-2. *Pole of Order \( m \)*:
-   - If \( f \) has a pole at \( P \) of order \( m \), then:
+2. *Pole of Order $ m $*:
+   - If $ f $ has a pole at $ P $ of order $ m $, then:
    \[
    \lim_{P \to P_0} f(P) = \infty
    \]
-   and \( f \) can be expressed as:
+   and $ f $ can be expressed as:
    \[
    f(x, y) = \frac{(x - x_P)^{-m}}{h(x, y)}
    \]
-   where \( h \) is a regular function with \( h(P) \neq 0 \).
+   where $ h $ is a regular function with $ h(P) \neq 0 $.
 
-3. *Regular at \( P \)*:
-   - If \( f \) is regular (non-zero) at \( P \), then:
+3. *Regular at $ P $*:
+   - If $ f $ is regular (non-zero) at $ P $, then:
    \[
    \text{ord}_P(f) = 0
    \]
@@ -871,7 +863,7 @@ Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
 # for derivation by taylor expansion in the projective coordinates see: https://youtu.be/2t13YpFZwn8?t=884
 
 =Definition: function divisor (principal divisor)=
-A *divisor of a function* \( f \) on an elliptic curve \( E \) is a formal sum of the points on the elliptic curve, weighted by the orders of the function \( f \) at those points. In more formal terms, if \( P \) denotes a point(s) on \( E \), the divisor associated with \( f \) can be expressed as:
+A *divisor of a function* $ f $ on an elliptic curve $ E $ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $ f $ at those points. In more formal terms, if $ P $ denotes a point(s) on $ E $, the divisor associated with $ f $ can be expressed as:
 
 \[
 \text{div} f = (f) = D_f = \sum_{P \in E} \text{ord}_P(f) \cdot P
@@ -950,7 +942,7 @@ Thus if $P\in E[r]$:, then $f_{r,P}$ has a divisor:
 ---
 *NOTE*
 
-Every divisor associated with a function \( f \) is a principal divisor. It characterizes the function's zeros and poles and reflects its algebraic properties on the curve.
+Every divisor associated with a function $ f $ is a principal divisor. It characterizes the function's zeros and poles and reflects its algebraic properties on the curve.
 
 ---
 
@@ -980,18 +972,18 @@ Consider a meromorphic function defined on an elliptic curve:
 f(X, Y) = \frac{Y}{X - a}
 \]
 
-where \( a \) is a constant.
+where $ a $ is a constant.
 
-- At a point where \( Y = 0 \) (e.g., a point on the x-axis), \( f \) has a zero.
-- At the point where \( X = a \), \( f \) has a simple pole.
+- At a point where $ Y = 0 $ (e.g., a point on the x-axis), $ f $ has a zero.
+- At the point where $ X = a $, $ f $ has a simple pole.
 
-The associated principal divisor \( D_f \) can be expressed as:
+The associated principal divisor $ D_f $ can be expressed as:
 
 \[
 D_f = (P_1) - (P_2)
 \]
 
-where \( P_1 \) is the point associated with the zero and \( P_2 \) with the pole of the function.
+where $ P_1 $ is the point associated with the zero and $ P_2 $ with the pole of the function.
 
 # *TODO: Example*
 # Suppose $P=(a,b)$ is a (finite) point. Let $g(X,Y)=X-a$.
@@ -1001,9 +993,9 @@ where \( P_1 \) is the point associated with the zero and \( P_2 \) with the pol
 *NOTE*
 
 =The connection between point addition on an elliptic curve and divisors=
-- The *chord and tangent rule* for elliptic curves states that given two points \( P \) and \( Q \) on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as \( R \).
-- The process involves drawing a line that intersects the curve at three points: \( P \), \( Q \), and \( R \), where \( R \) is the point of addition \( P + Q \). The coordinates of \( R \) can be obtained through geometric operations defined on the elliptic curve.
-- Each point addition can be associated with a divisor. For instance, when you compute \( R = P + Q \), this addition can be represented as a divisor:
+- The *chord and tangent rule* for elliptic curves states that given two points $ P $ and $ Q $ on the curve, the line (chord) connecting them intersects the curve at a third point, which can also be denoted as $ R $.
+- The process involves drawing a line that intersects the curve at three points: $ P $, $ Q $, and $ R $, where $ R $ is the point of addition $ P + Q $. The coordinates of $ R $ can be obtained through geometric operations defined on the elliptic curve.
+- Each point addition can be associated with a divisor. For instance, when you compute $ R = P + Q $, this addition can be represented as a divisor:
   \[
   D = P + Q - R
   \]
@@ -1074,7 +1066,7 @@ print(f"Divisor D representing the addition: {D}")
 : Point P: (0 : 1 : 1), Point Q: (2 : 2 : 1), Result R: (0 : 6 : 1)
 : Divisor D representing the addition: (0 : 1 : 0)
 
-*** DONE Example 5.0.1
+** DONE Example 5.0.1
 p67 PairingsForBeginners
 #+BEGIN_SRC sage :session . :exports both
 q=23
@@ -1418,7 +1410,7 @@ f5P
 : (4*x^3 + 8*x^2*y + 5*x*y^2 + y^3 + 8*x^2 - 2*y^2 - 11*x - 9*y + 4)/(x^2 + 9*x + 3)
 : 5*x^2 + x*y + 3*x - y + 5
 
-*** IN-PROGRESS The Weil Pairing
+** IN-PROGRESS The Weil Pairing
 For a point $P \in E[r]$ the function $f_{r,P}$ with divisor $r(P)-r(\mathcal{O})$ is at the heart of both the Weil and Tate pairing definitions.
 
 =Definition: The Weil pairing=
@@ -1443,7 +1435,7 @@ Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their differe
 We write $D_P \sim D_Q$.
 
 ---
-*** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
+** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
 #+BEGIN_SRC sage :session . :exports both
 q=23
 Fq=GF(q)
@@ -1460,8 +1452,8 @@ E.order() == q+1
 : 24
 : True
 
-* Additional: pairings in ZK 
-** example 1
+* Additional: pairings in ZK
+** Example 1
 
 =both parties=
 There exists a (symmetric, i.e. $G_0=G_1$) pairing $e: G_0 \times G_1 \rightarrow G_T$
@@ -1478,7 +1470,7 @@ $e(A,B)=e(G,D)$
 
 which in this case holds:
 $e(A,B)=e(200G,275G)=e\left(G,(200 \times 275) G \right)=e(G,D)$
-** example 2
+** Example 2
 If a statement can be transformed into a relationship with a single multiplication than it can easily be checked using a pairing.
 
 =prover=
@@ -1529,4 +1521,3 @@ In a zk-SNARK, elliptic curve pairings are used to check a system of quadratic c
 The system of constraints is converted into a single, large polynomial that has particular roots is and only if each of the (quadratic) constraints is satisfied.
 
 ---
-
