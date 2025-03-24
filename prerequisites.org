@@ -18,12 +18,18 @@
 * Coprime integers
 Coprime integers are pairs of integers that do not have any common factor other than 1.
 * Congruence (modular arithmetic)
-Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that
+Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
+
+
 $a - b = k \times m$
-Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted
+
+Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted:
+
 $a \equiv b \quad \text{(mod m)}$
+
 * TODO Euclidean Algorithm
 * Modular inverse
+
 A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
 
 \( ax \equiv 1 \pmod{m} \)
