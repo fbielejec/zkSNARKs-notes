@@ -1280,6 +1280,7 @@ For the prime power $q^{k(r)}$ the r-torsion group $E(F_q^{k(r)})$ is the *full 
 $E(F_{q^{k(r)}})[r] = \{P \in E(F_{q^{k(r)}}): \hspace{.5em} [r]P=\mathcal{O} \}$
 
 ---
+
 *NOTE*
 
 Any full r-torsion group contains $r + 1$ cyclic subgroups (for prime $r$) of order $r$ (see p51 PairingsForBeginners).
@@ -1425,7 +1426,7 @@ True
 #+end_example
 
 ** Example 4.1.2 Pairings For Beginners
-In the rare case that $r^2 \hspace{.5em} | \hspace{.5em} #E$ it is possible that the entire r-torsion can be found over $E(F_q)$
+In the rare case that $r^2 \hspace{.5em} | \hspace{.5em} \#E$ it is possible that the entire r-torsion can be found over $E(F_q)$
 #+BEGIN_SRC sage :session . :exports both
 q=31
 Fq=GF(q)
