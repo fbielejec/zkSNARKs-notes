@@ -71,6 +71,7 @@ x \equiv 2 \pmod{3}
 x \equiv 3 \pmod{5}
 x \equiv 2 \pmod{7}
 \]
+
 1. Compute the product $M=m_1m_2,\ldots,m_k$
 
 $M=3\cdot5\cdot7=105$
