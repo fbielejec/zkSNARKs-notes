@@ -3,7 +3,7 @@
 
 * Contents
 :PROPERTIES:
-:STARTUP:  showall
+:VISIBILITY:  all
 :TOC:      :include all :ignore this :depth 2
 :END:
 :CONTENTS:
