@@ -3,7 +3,8 @@
 
 * Contents
 :PROPERTIES:
-:STARTUP: showall
+:STARTUP:
+showall
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
@@ -125,7 +126,7 @@ $x = 233 \pmod{105} = 23$
 * Algebraic closure
 =Definition=
 
-A subset of a given set is *closed* under an operation of the larger set if performing that operation on members of the subset always produces a member of that subset. 
+A subset of a given set is *closed* under an operation of the larger set if performing that operation on members of the subset always produces a member of that subset.
 
 ** Example
 The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
