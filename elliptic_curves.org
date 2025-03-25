@@ -82,6 +82,7 @@ E
 : Elliptic Curve defined by y^2 = x^3 + 3 over Finite Field of size 101
 
 * TODO Point at infinity
+- [ ] A question that may arise from this description is what happens if the line that is drawn between the two points does not intersect the curve again? In this case the line is said to intersect the curve at "infinity", and the result of the addition is the point
 * IN-PROGRESS EC group law
 ** DONE Geometric interpretation: Point addition (chord rule)
 Over any field a line (a degree one equation in $x$ and $y$) intersects a cubic equation (a degree three equation in $x$ and $y$) in three places.
@@ -649,11 +650,12 @@ Elliptic Curve defined by y^2 = x^3 + 5 over Finite Field of size 13
 (12 : 11 : 1)
 #+end_example
 
-The substitutions from the example above (x = X/Z, y = Y/Z) are the most simple (and standard) way to obtain projective coordinates,
-but we are not restricted to this choice of substitution.
+The substitutions from the example above (x = X/Z, y = Y/Z) are the most simple (and standard) way to obtain projective coordinates, but we are not restricted to this choice of substitution.
 
-Elliptic Curve Discrete Logarithm Problem (ECDLP)
-=Discrete Logarithm Problem (DLP)=
+* Elliptic Curve Discrete Logarithm Problem (ECDLP)
+** Discrete Logarithm Problem (DLP)
+=Definition=
+
 Let $G$ be a finite cyclic group of order $r$ and let $g$ be a generator of $G$.
 
 There exists an exponential map:
@@ -669,13 +671,19 @@ h=g^x
 There are groups in which the DLP is assumed infisible to solve and they are called *DL-secure* groups.
 
 =Example=
+
 If the group is $Z_{5}^{*}$, and the generator is 2, then the discrete logarithm of 1 to the base 2 is 4 because $2^4 \equiv 1 \medspace \text{mod} \medspace 5$.
 
-Extending this, a DLP can be constructed with elliptic curves.
-By selecting a point on an elliptic curve group, one can double it to obtain the point 2P. After that, one can add the point P to the point 2P to obtain the point 3P. The determination of a point nP in this manner is referred to as Scalar Multiplication of a point.
+** Elliptic Curve Discrete Logarithm Problem
+Extending [[*Discrete Logarithm Problem (DLP)][Discrete Logarithm Problem (DLP)]], a DLP can be constructed with elliptic curves.
 
-* Elliptic Curve Discrete Logarithm Problem (ECDLP)
+By selecting a point on an elliptic curve group, one can double it to obtain the point 2P.
+After that, one can add the point P to the point 2P to obtain the point 3P.
+The determination of a point $nP$ in this manner is referred to as Scalar Multiplication of a point (see [[*Elliptic Curve scalar multiplication][Elliptic Curve scalar multiplication]]).
+
+=Definition: Elliptic Curve Discrete Logarithm Problem=
 Given points $P$ and $Q$ in the group, find a number $k$ such that $Pk = Q$
+
 ** Example 1
 Consider $y^2 = x^3 + 9x + 17$ over $F_{23}$.
 What is the discrete logarithm $k$ of $Q = (4,5)$ to the base $P = (16,5)$?
@@ -1514,3 +1522,4 @@ print(f"E{r} torsion: {r_torsion}");
 - field extension towers [0/2]:
   - [ ] https://hackmd.io/@benjaminion/bls12-381?ref=blog.lambdaclass.com#Field-extensions
   - [ ] https://blog.lambdaclass.com/how-we-implemented-the-bn254-ate-pairing-in-lambdaworks/
+- [ ] Attacks on ECC (also excellent introduction to ECs): https://github.com/elikaski/ECC_Attacks
