@@ -6,6 +6,7 @@
 #+INCLUDE: algebra.org
 #+INCLUDE: elliptic_curves.org
 #+INCLUDE: pairings.org
+#+INCLUDE: playground.org
 
 * Table of Contents
 | file                     | Description                                               |
@@ -14,3 +15,4 @@
 | [[file:algebra.org][Algebra prerequisites]]    | Finite fields, prime fields, field extensions             |
 | [[file:elliptic_curves.org][Elliptic curves]]          | Everything EC up to EC pairings                           |
 | [[file:pairings.org][Elliptic Curve Pairings]]  | Everything you need to compute the Weil and Tate pairings |
+| [[file:playground.org][Playground]]               | Sage playground                                           |

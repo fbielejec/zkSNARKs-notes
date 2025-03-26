@@ -1,0 +1,57 @@
+#+STARTUP: overview
+#+latex_class_options: [12pt]
+
+* Contents
+:PROPERTIES:
+:VISIBILITY:  all
+:TOC:      :include all :ignore this :depth 2
+:END:
+:CONTENTS:
+- [[#divisors][Divisors]]
+:END:
+
+* IN-PROGRESS Divisors
+#+BEGIN_SRC sage  :session . :exports both
+F = GF(5)
+#E = EllipticCurve(F, [1, 0])  # y^2 = x^3 + x
+    # E
+
+      # E.points()
+
+      # #Fxy.<x,y> = F[];
+
+      # P=E.random_point()
+      # P = E(2,0)
+      # #P.multiplicity()
+
+      # # f = x - 2
+      # E.divisor(P)
+
+      # E.function_field()
+
+#  F=GF(5)
+P2 = AffineSpace(2, F, names = 'xy')
+P2
+R = P2.coordinate_ring()
+R
+x, y = R.gens()
+
+f = y^2 - x^3 - x
+
+C = Curve(f)
+C
+
+#K = FractionField(R)
+#K
+
+r = 1/x
+r
+#C.divisor_of_function(r)
+
+#+END_SRC
+
+#+RESULTS:
+: Affine Space of dimension 2 over Finite Field of size 5
+: Multivariate Polynomial Ring in x, y over Finite Field of size 5
+: Affine Plane Curve over Finite Field of size 5 defined by -x^3 + y^2 - x
+: 1/x
