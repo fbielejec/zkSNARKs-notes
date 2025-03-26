@@ -682,65 +682,6 @@ Elliptic Curve defined by y^2 = x^3 + 62 over Finite Field of size 103
 (97 : 84 : 1) -> (3*u^4, 61*u^3, 1)
 #+end_example
 
-* Prerequisites: Meromorphic function
-=Definition=
-
-Let $E$ be an elliptic curve defined over a field $F$.
-A meromorphic function $f: E \to F$ is a function that can be expressed as:
-
-$f(P) = \frac{g(P)}{h(P)}$
-
-where:
-- $g(P)$ and $h(P)$ are regular functions on $E$ and
-- $h(P)$ is not identically zero.
-
-The poles of $f$ are the values of $P$ such that $h(P) = 0$.
-
-=Example=
-
-On an elliptic curve defined by:
-
-$y^2 = x^3 + ax + b$
-
-a typical meromorphic function could be:
-
-$f(P) = \frac{y}{x - c}$
-
-where:
-- $c$ is some constant.
-
-This function is meromorphic because $y$ is a regular function, and it has a pole at the point where $x = c$.
-
-* IN-PROGRESS Prerequisites: Meromorphic function multiplicity at a point
-
-=Definition=
-
-The *multiplicity* of a [[*Prerequisites: Meromorphic function][meromorphic function]] $f$ at a point $P$ on an elliptic curve $E$ refers to how many times the function $f$ vanishes (has a zero) or goes to infinity (has a pole) at that point (see [[*Divisors][Divisors]]).
-
-If $f$ has a zero of order $k$ at $P$, it means that $f(P) = 0$ and $f$ can be expressed locally around $P$ as:
-
-$f(P) = (x - x_0)^k g(x)$
-
-where:
-- $g(x)$ is a regular function and
-- $g(x_0) \neq 0$.
-
-If $f$ has a pole of order $m$ at $P$, it means that $f(P)$ is infinite, and $f$ can be expressed as:
-
-$f(P) = \frac{(x - x_0)^{-m}}{h(x)}$
-
-where:
-- $h(x)$ is regular and
-- $h(x_0) \neq 0$.
-
-=Examples=
-
-1. *Zero Example*:
-   - Let $P=(a,b)$ be a point, not of order 2. Consider the rational function $g(X,Y)=(X-a)^k$ for some $k>0$. Then note that $g(P)=0$. We say $g$ has a zero at $P$ of multiplicity $k$: $ \text{ord}_P(g) = k $.
-
-2. *Pole Example*:
-   - Consider $ g(X, Y) = \frac{1}{(X-a)^k} $ for some $k>0$. This function has a pole at $P$ of multiplicity $k$: $ \text{ord}_P(g) = -k $,
-
 * IN-PROGRESS Divisors
 =Definition: divisor=
 
@@ -748,21 +689,31 @@ A *divisor* $D$ on $E$ (elliptic curve) is a way to denote a multi set of points
 
 $\text{D} = \sum_{P \in E} n_p (P)$
 
-where all but finitely many $n_p\in \mathbb{Z}$ are zero.
+where:
+- \( n_P \in \mathbb{Z} \) are the coefficients associated with points),
+- only finitely many \( n_P \) are nonzero (i.e. the sum is finite)
 
 ---
 
-*NOTE*
+<<PrimeDivisors>> *NOTE: prime divisors*
 
-The standard parentheses $(\cdot)$ around the P's and the absence of square parentheses $[\cdot]$ around the $nP$'s is what differentiates the formal sum in a divisor from an actual sum of points (i.e. using the group law) on E.
+The standard parentheses $(\cdot)$ around the P's and the absence of square parentheses $[\cdot]$ around the $nP$'s is what differentiates the formal sum in a divisor from an actual [[DivisorSum][sum of points]] (i.e. using the group law) on E.
+
+The notation $(P)$ in the divisor is a formal symbol representing the *prime divisor* associated with the point $P$.
+For $P \in E$, $(P)$ is a divisor with coefficient $1$ at $P$ and 0 elsewhere (a degree-1 divisor, see also [[DivisorDegree][divisor degree]] for a definition)).
+
+In fact every point $P \in E$, gives rise to a degree-1 divisor and the expression $(P)$ is exactly that, a degree-1 divisor.
+
+While every point defines a divisor, *not every divisor comes from a point*, they are formal linear combinations of such terms.
+For example $D = (P) - (Q)$ is not a single point but a formal difference.
 
 ---
 
-=Definition: divisor degree=
+<<DivisorDegree>> =Definition: divisor degree=
 
-The degree of a divisor $D$ is:
+The degree of a divisor $D$ is the sum of it's coefficients:
 
-$\text{Deg}(D) = \sum_{P \in E} n_P$
+$\text{deg}(D) = \sum_{P \in E} n_P$
 
 =Definition: divisor support=
 
@@ -770,93 +721,224 @@ The support of $D$ is the set:
 
 $\textit{supp}(D)=\{P \in E(\bar{F}_q) \hspace{.5em} : \hspace{.5em} n_p \neq 0\}$
 
-=Definition: divisor sum=
+<<DivisorSum>> =Definition: divisor sum=
 
 The sum function simply uses the group law on $E$ to add up the points:
 
 $\text{sum}(\sum_{j} a_j (P_j))=\sum_{j} a_j [P_j ]$
 
-** Order of a function at a point (order of vanishing)
+=Definition: divisors equivalence=
 
-=Definition: The order of vanishing of the function $f$ at a point $P$ on an elliptic curve $E$=
+Two divisors $D_1$ and $D_2$ are are said to be linearly equivalent if their difference $D_1 - D_2$ is a principal divisor.
 
-The order of a function $f$ at a point $P$, denoted as $\text{ord}_P(f)$, measures the behavior of the function at that point.
-It can be classified as:
+=Definition: principal divisor=
 
-1. *Zero of Order $ k $*:
-If $f$ has a zero at $P$ of order $k$, then:
+*Principal Divisor:* A divisor of a rational function $f \in \mathbb{F}_q(E)$, given by:
+$\text{div}(f) = \sum_{P \in E} \text{ord}_P(f) (P)$,
 
-$f(P) = 0$
+where:
+- $\text{ord}_P(f)$ is the order of vanishing (or pole) of $f$ at $P (see
 
-and $f$ can be locally expressed around $P$ as:
+=Example=
 
-$f(x, y) = (x - x_P)^k g(x, y)$
+If $D = 3(P) - 2(Q)$, then:
+- $\deg(D) = 3 + (-2) = 1$
+- the support is $\{P, Q\}$
 
-where :
-- $g$ is a regular function (i.e., holomorphic) and
-- $g(P) \neq 0$.
+#+BEGIN_SRC sage :session . :exports both
+F = FiniteField(103)
+E = EllipticCurve(F, [20, 20])
+P = E(26,20); Q = E(63,78);
 
-2. *Pole of Order $ m $*:
-If $f$ has a pole at $P$ of order $m$, then:
+D1 = E.divisor([(3,P), (2,Q)])
+# same as
+D1 = 3*E.divisor(P) - 2*E.divisor(Q)
+D1
 
-$\lim_{P \to P_0} f(P) = \infty$
+degree_D = sum([D1.coefficient(p) for p in [P,Q] ])
+print("Degree of D:", degree_D)
 
-and $f$ can be expressed as:
+support_D = D1.support()
+print("Support of D:", support_D)
+#+END_SRC
+
+#+RESULTS:
+: 3*(x - 26*z, y - 20*z) - 2*(x + 40*z, y + 25*z)
+: Degree of D: 1
+: Support of D: [(26 : 20 : 1), (63 : 78 : 1)]
+
+** DONE Rational function $f$ on $E$
+
+---
+
+*NOTE*
+
+Rational function (algebraic term) is sometimes in literature refered to as the /meromorphic function/ (a term from complex analysis).
+
+---
+
+=Definition=
+
+A *rational function* $f$ on an elliptic curve $E$ is a ratio of polynomial functions defined on $E$ that is "well-defined" at all but finitely many points $P \in E$.
+
+More formally, let $E$ be an elliptic curve defined over a field $F$.
+A *rational function* $f: E \to F$ is a function that can be expressed as:
+
+$f(P) = \frac{g(P)}{h(P)}$
+
+where:
+-  $g$ and $h$ are polynomials in the coordinate ring $\mathbb{F}_q[E]$ (i.e., polynomials in $x$ and $y$ satisfying curve's $E$ equation $y^2 = x^3 + ax + b$).
+- For points ${P \in E$ $h(P)$ is not identically zero (not zero everywhere on the curve).
+
+=Rational Functions Field vs. Coordinate Ring=
+
+The *function field* $\mathbb{F}_q(E)$ (field of rational functions on $E$) is the fraction field of $\mathbb{F}_q[E]$.
+While $\mathbb{F}_q[E]$ contains only polynomials (e.g., $f(x,y)=x$, $f(x,y)=y$ or $f(x,y)=x^2y$) $\mathbb{F}_q(E)$ includes ratios like $\frac{x^2 + y}{y - 1}$.
+
+---
+
+<<CoordinateRing>> *NOTE*
+
+The *coordinate ring* $\mathbb{F}_q[E]$ of an elliptic curve $E$ over a finite field $\mathbb{F}_q$ is an algebraic object consists of all polynomial functions $f(x, y)$ that are "allowed" on $E$ (satisfy the curve's equation).
+
+More formally:
+
+Consider an elliptic curve $E$ defined by a Weierstrass equation:
+
+$E: y^2 + a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6,#
+
+where:
+- a_i \in \mathbb{F}_q$
+
+$\mathbb{F}_q[E] := \frac{\mathbb{F}_q[x, y]}{(y^2 + a_1xy + a_3y - x^3 - a_2x^2 - a_4x - a_6)}$
+
+where:
+- $\mathbb{F}_q[x, y]$ is the ring of polynomials in two variables.
+- The denominator $(y^2 + \cdots) $ is the *ideal* generated by the Weierstrass equation.
+- This quotient ring means we treat the curve equation as $0$, so $y^2 \equiv x^3 + \cdots$ in $\mathbb{F}_q[E]$.
+
+---
+
+=Example=
+
+A typical rational function would be:
+
+$f(P) = \frac{y}{x - c}$
+
+where:
+ - $c$ is some constant.
+
+This function is rational because $y$ is a regular function, and it has a pole (see [[*Poles and zeros of a rational function f on E][Poles and zeros of a rational function f on E]]) at the point where $x = c$.
+
+** DONE Poles and zeros of a rational function $f$ on $E$
+Once again a rational function is a function which can be expressed as:
+
+$f = \frac{g}{h}$,
+
+where:
+- $g$ and $h are polynomials in the quotient ring $\mathbb{F}_q[E]$ (see [[CoordinateRing][Coordinate Ring]])
+
+In the [[*Rational function $f$ on $E$][Rational function $f$ on $E$]] we said that $f$ is /"well defined"/ everywhere but in a finite number of points.
+The points where $f$ is *undefined* can be classified as *zeros* or *poles* of $f$.
+
+=Definition: zero (point of vanishing) of f=
+
+A zero is where $f$ *vanishes* (i.e., $f(P) = 0$).
+
+=Example zero of f=
+
+Consider the rational function $f(x,y)=(x-a)$.
+$f$ has a zero at $P=(a,b)$ becasue $f(P)=0$.
+
+=Definition: pole of f=
+
+A pole is where $f$ is undefined ("blows up").
+$f$ may be undefined at points where $h(P) = 0$ (i.e., the denominator vanishes).
+$f(P)$ is then undefined because the denominator vanishes while the numerator does not i.e.:
+
+$\lim_{h(P) \to 0} \frac{g(P)}{h(P)} = \infty$
+
+=Example: pole of f=
+
+Let $f = \frac{1}{y}$ on $E: y^2 = x^3 + x$,
+$f$ has a pole at $P = (a, 0)$ (point where $y = 0$).
+
+Finally we say that $f$ is *well-defined* in the points where $f$ has neither a zero nor a pole.
+
+** DONE Order of poles and zeros of a rational function $f$ on $E$
+
+From [[*Poles and zeros of a rational function $f$ on $E$][Poles and zeros of a rational function]] we know that function $f$ has a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
+However, we need more refined information, namely the *order** of the zero or pole.
+
+=Definition: order=
+
+For a rational function $f \in F_q(E)^{*}$ on an elliptic curve $E$, the *order* of $f$ at a point $P \in E$, denoted $\text{ord}_P(f)$, is an integer that measures how $f$ behaves near $P$.
+It encodes how many times the function $f$ vanishes (has a zero) or goes to infinity (has a pole) at that point (see [[*Poles and zeros of a rational function $f$ on $E$][Poles and zeros of a rational function $f$ on $E$]]).
+
+=Definition: order of a zero (order of vanishing)=
+
+If $f$ has a zero of order $k$ at $P=(x_P,y_P)$ then $f(P) = 0$ and $f$ can be expressed locally around $P$ as:
+
+$f(x,y) = (x - x_P)^k \cdot g(x, y)$
+
+where:
+ - $g(x,y)$ is a regular function and
+ - $g(P) \neq 0$.
+
+=Example=
+
+Consider the rational function $f(x,y)=(x-a)^k$ for some $k>0$.
+$f$ has a zero of multiplicity $k$ at $P=(a,b)$, thus:
+
+$\text{ord}_P(f) = k$.
+
+=Definition: order of a pole=
+
+If $f$ has a pole of order $m$ at $P$, it means that $f(P)$ is undefined (intuitively we can think of it as infinite), and $f$ can be expressed as:
 
 $f(x, y) = \frac{(x - x_P)^{-m}}{h(x, y)}$
 
 where:
-- $h$ is a regular function with $h(P) \neq 0$.
+- $h$ is a regular function and
+- $h(P) \neq 0$.
 
-3. *Regular at $P$*:
-If $f$ is regular (non-zero) at $P$, then:
-$\text{ord}_P(f) = 0$
+=Example=
 
-=Definition: Uniformizer=
+Consider $f(x, y) = \frac{1}{(x-a)^k}$ for some $k>0$.
+This function has a pole at $P=(a,b)$ of multiplicity $k$:
 
-A function $f$ is said to have a zero at a point $P$ if it takes the value $\mathcal{O}$ at $P$, and it has a pole at $P$ if it takes the value $\infty$ at $P$.
+$\text{ord}_P(g) = -k$,
 
-However, we need more refined information, namely the order of the zero or pole.
-Let $P$ be a point on $E$.
+---
 
+*NOTE: How to Compute the Order*
+
+1. *For zeros*:
+   - Factor $f$ locally near $P=(a,b)$ using taylor expansion. If $f = (x - a)^k \cdot g(x)$, where $g(a) \neq 0$, then $\text{ord}_{(a,b)}(f) = k$.
+
+2. *For poles*:
+   - If $f = \frac{g}{h}$, then $\text{ord}_P(f) = \text{ord}_P(g) - \text{ord}_P(h)$.
+   - If $h$ vanishes at $P$ but $g$ does not $\text{ord}_P(f) = -\text{ord}_P(h)$.
+
+3. *At infinity (for Weierstrass form)*:
+   - The point $\mathcal{O} = (0:1:0)$ is treated with homogeneous coordinates. For $f = \frac{x}{y}$, $\text{ord}_\mathcal{O}(f) = -1 - 1 = -2$ (double pole).
+
+---
+
+** IN-PROGRESS Uniformizer
 It can be shown that there is a function $u_P$ called a *uniformizer* at $P$ such that:
 
-$U(P)=0$
+# $U(P)=0$
 
 and such that every function f(x,y) can be written in the form:
 
-$f=u^rg, \hspace{0.5em} \text{with} \hspace{0.5em} r \in \mathbb{Z} \hspace{0.5em} \text{and} \hspace{0.5em} g(P) \neq 0, \infty#
+$f=u^rg, \hspace{0.5em} \text{with} \hspace{0.5em} r \in \mathbb{Z} \hspace{0.5em} \text{and} \hspace{0.5em} g(P) \neq 0, \infty$
 
 We define the order of $f$ at $P$ by:
 
-$ord_P(f)=r$
+# $ord_P(f)=r$
 
-** Example: order of vanishing of a function at a point
-
-$E/F: y^2=x^3 + Ax +B= (x-e_1)(x-e_2)(x-e_3), \hspace{.5em} e_i \in F$
-
-Lets assume points $P_i=(e_i,0)$ and a function $f(x,y)=x-e_i$
-
-- What is the order of vanishing of $f$ at $P_i$, i.e. what is $\text{ord}_{P_i}(f)$?
-
-$\text{ord}_{P_i}(x-e_i)=2$
-
-$\text{ord}_{P_i}(Y)=1$
-
-- What is the order of vanishing of $f$ at the point at infinity $\mathcal{O}=[0,1,0]$:  $\text{ord}_{\mathcal{O}}(f)$?
-
-$\text{ord}_{\mathcal{O}}(x-e_i)=\text{ord}_{\mathcal{O}}(\frac{X-e_i}{Z})=\text{ord}_{\mathcal{O}}(X-e_i) - \text{ord}_{\mathcal{O}}(Z) = 1-3=-2$
-
-$\text{ord}_{\mathcal{O}}(y)=\text{ord}_{\mathcal{O}}(Y/Z)=0-3=-3$
-
----
-*NOTE*
-
-For derivation by taylor expansion in the projective coordinates see: [[*Additional materials][Additional materials]]
-
----
-
-** Example (washington, 11.1)
+** DONE Example (washington, 11.1)
 Let $E: \hspace{0.5em} y^2 = X^3-x$.
 
 We know that on E:
@@ -875,7 +957,7 @@ $ord_{(0,0)}(\frac{x}{y})=ord_{(0,0)}(y{\frac{1}{x^2-1}})=1$
 
 again $y$ being the uniformizer.
 
-** Function divisors (principal divisors)
+** TODO Function divisors (principal divisors)
 =Definition=
 
 A *divisor of a function* $f$ on an elliptic curve $E$ is a formal sum of the points on the elliptic curve, weighted by the orders of the function $f$ at those points.
@@ -897,7 +979,7 @@ It characterizes the function's zeros and poles and reflects its algebraic prope
 
 ---
 
-** Principal divisors: properties
+** TODO Principal divisors: properties
 - PairingsForBeginners p67
 
 A divisor $D=\sum_{P}n_{P}P$ is *principal* (i.e. it is the divisor of a function) if and only if $\sum_{P}n_{P}=0$ and $\sum_{P}[n_{P}]P=\mathcal{O}$ on $E$.
@@ -918,7 +1000,7 @@ Then using divisors, we can say all this concisely:
 
 $\text{div}g=(g)=3(P)-2(Q)-(\mathcal{O})$
 
-** Example: Principal divisor (divisor of a function)
+** TODO Example: Principal divisor (divisor of a function)
 
 $E: \hspace{.5em} y^2 = (x - e_1) \times (x - e_2) \times (x - e_3)$
 
@@ -929,8 +1011,8 @@ $\text{div}(x-e_1)=2\times P_{1} - 2 \times \mathcal{O}$
 
 (see [[*Example: order of vanishing of a function at a point][Example: order of vanishing of a function at a point]] for details).
 
-** Example: Principal divisor
-Consider a meromorphic function defined on an elliptic curve:
+** TODO Example: Principal divisor
+Consider a rational function defined on an elliptic curve:
 
 $f(X, Y) = \frac{Y}{X - a}$
 
@@ -955,14 +1037,7 @@ where:
 - Each point addition can be associated with a divisor. For instance, when you compute $R = P + Q$, this addition can be represented as a divisor:
 $D = P + Q - R$
 
-** Linear equivalence of divisors
-=Definition=
-
-Two divisors $D_p$ and $D_Q$ are said to be linearly equivalent if their difference is principal, i.e. they differ in a divisor of degree 0 (divisor with a sum of it's coefficients equal to 0).
-
-We write $D_P \sim D_Q$.
-
-** IN-PROGRESS Example 3.1.1 Pairings For Beginners
+** DONE Example 3.1.1 Pairings For Beginners
 #+begin_src sage :session . :exports both
 F = FiniteField(103)
 E = EllipticCurve(F, [20, 20])
@@ -987,43 +1062,6 @@ P+Q-R-T # == E(0) thus there is some function f on E such that (f) = (P) + (Q) -
 : (18 : 49 : 1)
 : (x - 26*z, y - 20*z) + (x + 40*z, y + 25*z) - (x + 44*z, y + 8*z) - (x + 26*z, y + 19*z)
 : (0 : 1 : 0)
-
-** Example: divisors
-#+begin_src sage :session . :exports both
-# Step 1: Define the finite field and the elliptic curve
-F = FiniteField(7)  # Example field F_7
-E = EllipticCurve(F, [1, 1])  # Elliptic curve y^2 = x^3 + x + 1
-
-# Step 2: Identify points on the curve
-P1 = E.points()[3]  # A point on the curve
-P2 = E.points()[4]  # Another point on the curve
-#O = E(0)      # Point at infinity (the identity element)
-
-# Step 3: Create divisors
-D1 = 2 * P1 + 3 * P2  # Effective divisor 2*P1 + 3*P2
-D2 = P1 - P2          # A divisor of degree 0 (principal)
-
-# Step 4: Display the divisors
-print(f"Divisor D1: {D1}")
-print(f"Divisor D2: {D2}")
-
-# Point addition
-P = E.points()[1]  # A point on the curve
-Q = E.points()[3]  # Another point on the curve
-R = P + Q  # Result of point addition
-
-# Divisor representation
-D = P + Q - R  # Construct the divisor from points
-
-print(f"Point P: {P}, Point Q: {Q}, Result R: {R}")
-print(f"Divisor D representing the addition: {D}")
-#+end_src
-
-#+RESULTS:
-: Divisor D1: (2 : 5 : 1)
-: Divisor D2: (0 : 1 : 1)
-: Point P: (0 : 1 : 1), Point Q: (2 : 2 : 1), Result R: (0 : 6 : 1)
-: Divisor D representing the addition: (0 : 1 : 0)
 
 ** IN-PROGRESS Example 5.0.1
 - p67 PairingsForBeginners
