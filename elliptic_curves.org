@@ -777,7 +777,7 @@ Elliptic Curve defined by y^2 = x^3 + 905*x + 100 over Finite Field of size 1021
 True
 #+end_example
 
-* TODO Elliptic Curves over prime field extensions
+* IN-PROGRESS Elliptic Curves over prime field extensions
 ** Prime field extensions
 ---
 *NOTES*
