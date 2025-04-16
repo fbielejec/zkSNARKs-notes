@@ -31,11 +31,14 @@
 - [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
   - [[#example][Example]]
 - [[#elliptic-curve-discrete-logarithm-problem-ecdlp][Elliptic Curve Discrete Logarithm Problem (ECDLP)]]
+  - [[#discrete-logarithm-problem-dlp][Discrete Logarithm Problem (DLP)]]
+  - [[#elliptic-curve-discrete-logarithm-problem][Elliptic Curve Discrete Logarithm Problem]]
   - [[#example-1][Example 1]]
   - [[#example-222-pairings-for-beginners][Example 2.2.2 Pairings for beginners]]
 - [[#elliptic-curves-over-prime-field-extensions][Elliptic Curves over prime field extensions]]
   - [[#prime-field-extensions][Prime field extensions]]
   - [[#example-extending-f_5-to-f_52][Example: Extending $F_5$ to $F_{5^2}$]]
+  - [[#example-visualizing-the-extension][Example: Visualizing the extension]]
   - [[#example-constructing-the-extension-field-f_4f_22][Example: Constructing the extension field $F_4=F_{2^2}$]]
   - [[#example-constructing-the-extension-field-f_32][Example: Constructing the extension field $F_{3^2}$.]]
 - [[#extending-elliptic-curves-to-prime-field-extensions][Extending Elliptic Curves to prime field extensions]]
@@ -809,7 +812,6 @@ $F_{p^m} := \{ a_{m-1}x^{m-1} + a_{m-2} x^{m-2} + \ldots + a_1 x + a_0 \hspace{.
 - It can be shown that $F_{p^m}$ is the set of all remainders when dividing *all* polynomials $Q \in F_p[x]$ by an irreducible polynomial $P$ of degree $m$. This is analogous to how $F_p$ is the set of all remainders when dividing integers by $p$.
 
 ---
-
 ** DONE Example: Extending $F_5$ to $F_{5^2}$
 Steps to Construct $\mathbb{F}_{5^2}$:
 
@@ -879,6 +881,27 @@ True
  3*a + 3,
  1]
 #+end_example
+
+** DONE Example: Visualizing the extension
+
+The elements of \( \mathbb{F}_{23^2} \) are linear combinations $c_0 + c_1 \cdot a$, where $c_0, c_1 \in \mathbb{F}_{23}$, and $a$ is a root of the irreducible polynomial.
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+Fq=GF(q)
+E=EllipticCurve(Fq, [-1,0])
+
+Fq2.<a> = GF(q^2, modulus='first_lexicographic') # let sage choose the modulus
+Fq2.modulus()
+
+Fq(3) + 2*a
+Fq(5) - a
+#+END_SRC
+
+#+RESULTS:
+: x^2 + 1
+: 2*a + 3
+: 22*a + 5
 
 ** IN-PROGRESS Example: Constructing the extension field $F_4=F_{2^2}$
 1. Choose the prime $p=2$
