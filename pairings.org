@@ -1631,7 +1631,7 @@ We will build $f_{3,P}$ using $f_{m+1,P}=f_{m,P} \cdot \frac{\ell_{[m]P,P}}{v_{[
 
 where:
 - $\ell_{P_1,P_2}$ is the line passing through $P_1$ and $P_2$ (chord line)
-  - $\ell_{P,P$ is the tangent line
+  - $\ell_{P,P}$ is the tangent line
 - $v_P$ is the vertical line passing through P
 
 We will do the same for $g_{3,Q}=3(Q)-3 \mathcal{O}$
