@@ -704,8 +704,8 @@ For $P \in E$, $(P)$ is a divisor with coefficient $1$ at $P$ and 0 elsewhere (a
 
 In fact every point $P \in E$, gives rise to a degree-1 divisor and the expression $(P)$ is exactly that, a degree-1 divisor.
 
-While every point defines a divisor, *not every divisor comes from a point*, they are formal linear combinations of such terms.
-For example $D = (P) - (Q)$ is not a single point but a formal difference.
+While every point defines a divisor, *not every divisor comes from a point*, rather they are linear combinations of points.
+For example $D = (P) - (Q)$ is not a single point but a difference.
 
 ---
 
@@ -1075,7 +1075,7 @@ E = EllipticCurve(Fq, [17, 6])
 E
 E.order() # curve order is 30
 
-# r =5 is the largest prime factor od the curves order
+# r =5 is the largest prime factor of the curves order
 r = list(factor(E.order()))[2][0]
 r
 
@@ -1413,16 +1413,6 @@ where:
 - $\mu_r$ is the group of $r-th$ roots of unity in the multiplicative group $F_{q^k}^{*}$.
 
 ** IN-PROGRESS Example 5.1.1: constructing the Weil pairing
-#+BEGIN_SRC sage :session . :exports both
-q=23
-Fq=GF(q)
-E=EllipticCurve(Fq, [-1,0])
-E
-#+END_SRC
-
-#+RESULTS:
-: Elliptic Curve defined by y^2 = x^3 + 22*x over Finite Field of size 23
-
 *** DONE $E/F_{23}: y^2=x^3-x$ is supersingular
 
 ---
@@ -1438,7 +1428,7 @@ E
 q=23
 Fq=GF(q)
 E=EllipticCurve(Fq, [-1,0])
-
+E
 # E is supersingular
 E.order() == q+1
 
@@ -1460,29 +1450,12 @@ print(f"Hasse invariant for E: {hasse_invariant}")
 #+END_SRC
 
 #+RESULTS:
+: Elliptic Curve defined by y^2 = x^3 + 22*x over Finite Field of size 23
 : True
 : E is supersingular: True
 : [(0 : 1 : 0)]
 : x^3 - x
 : Hasse invariant for E: 0
-
-#+begin_src python
-p = 23  # Characteristic
-F = GF(p)  # Finite field of size 23
-R.<x> = PolynomialRing(F)  # Polynomial ring over F
-f = x^3 - x  # Define f(x) = x³ - x
-
-# Compute f(x)^((p-1)/2) and extract the x^(p-1) coefficient
-power = f^((p-1)//2)
-hasse_invariant = power.coefficient(x^(p-1))
-
-print(f"Hasse invariant for E: {hasse_invariant}")
-#+end_src
-
-#+RESULTS:
-: True
-: E is supersingular: True
-: [(0 : 1 : 0)]
 
 *** DONE Point $P$ of order $r$, subgroup $<P>$ and pairing subgroup $\mathbb{G}_1[r]$.
 
@@ -1631,23 +1604,109 @@ print(f"Q={Q} is in the G1: {Q in G1}")
 : Q=(21 : 12*i : 1) is in the G2: True
 : Q=(21 : 12*i : 1) is in the G1: False
 
-*** IN-PROGRESS Weil pairing for P and Q
+*** IN-PROGRESS Miller’s Algorithm for finding $f_{3,P}$ and $g_{3,P}$
+
+---
+
+*NOTE*
+
+The Miller function $f_{m,P}$ is defined to have a divisor:
+
+$(f_{m,P}) = m(P) - m(\mathcal{O}) - (mP) + (\mathcal{O})$
+
+For $m = 1$, this simplifies to:
+
+$(f_{1,P}) = 1(P) - 1(\mathcal{O}) - (1P) + (\mathcal{O}) = (P) - (\mathcal{O}) - (P) + (\mathcal{O}) = 0$
+
+This would break the recursion in the Miller's algorithm.
+By convention, we therefore choose:
+
+$f_{1,P} = 1$
+
+---
+
+Given a divisor $(f_{r,P})=r(P)-r(\mathcal{O})$ (for $r=3$) we will find a corresponding rational function.
+
+We will build $f_{3,P}$ using $f_{m+1,P}=f_{m,P} \cdot \frac{\ell_{[m]P,P}}{v_{[m+1]P}}$
+
+where:
+- $\ell_{P_1,P_2}$ is the line passing through $P_1$ and $P_2$ (chord line)
+  - $\ell_{P,P$ is the tangent line
+- $v_P$ is the vertical line passing through P
+
+We will do the same for $g_{3,Q}=3(Q)-3 \mathcal{O}$
+
 #+BEGIN_SRC sage :session . :exports both
 q=23
 Fq=GF(q)
-E=EllipticCurve(Fq, [-1,0])
+a=-1
+b=0
+E=EllipticCurve(Fq, [a,b])
 k=2
 Fq2.<i> = GF(q^k, modulus=x^2 + 1)
-E2=EllipticCurve(Fq2, [-1,0])
+E2=EllipticCurve(Fq2, [a,b])
 
 P=E(2,11)
 Q=E2(21,12*i)
 
+Fxy.<x,y> = Fq[];
+
+def fDBL(P):
+  lbda = (3*P[0]^2 + a) / (2*P[1]);
+  c = P[1] - lbda*P[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - 2*P[0]);
+  return l/v;
+
+def fADD(P1,P2):
+  lbda = (P2[1] - P1[1]) / (P2[0] - P1[0]);
+  c = P[1] - lbda * P1[0];
+  l = y - (lbda*x + c);
+  v = x - (lbda^2 - P1[0] - P1[1]);
+  return l/v;
+
+f1P=1
+f2P=f1P * fDBL(P)
+#f2P
+# normally fADD(P,2*P) but since 3P=0 this is just the vertical line through P
+f3P=f2P*(x-P[0])
+
+print(f"Rational function f_3P = {f3P}") 
+
+# same for Q (Q is of order 3)
+g3Q=fDBL(Q)*(x-Q[0])
+print(f"Rational function g_3Q = {g3Q}") 
+
+# verify with a built-in function:
+E.divisor([(3,P), (3,E(0))])
+E2.divisor([(3,Q), (3,E2(0))])
+
 #+END_SRC
 
 #+RESULTS:
+: Rational function f_3P = 11*x + y - 10
+: Rational function g_3Q = (11*i)*x + y + (10*i)
+: 3*(x - 2*z, y - 11*z) + 3*(x, z)
+: 3*(x + 2*z, y + (11*i)*z) + 3*(x, z)
+*** TODO The Weil pairing for P and Q
 
+#+BEGIN_SRC sage :session . :exports both
+q=23
+a=-1
+b=0
+k=2
+Fq2.<i> = GF(q^k, modulus=x^2 + 1)
+E2=EllipticCurve(Fq2, [a,b])
 
+# verify with a built-in function:
+P=E2(2,11)
+Q=E2(21,12*i)
+
+P.weil_pairing(Q, 3) # Pairing value is in the \mu_3
+#+END_SRC
+
+#+RESULTS:
+: 15*i + 11
 
 * Teaser: pairings in ZK
 ** Example 1
