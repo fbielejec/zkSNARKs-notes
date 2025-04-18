@@ -1807,7 +1807,7 @@ g
 
 #+RESULTS:
 
-*** IN-PROGRESS The Weil pairing for P and Q
+*** DONE The Weil pairing for P and Q
 
 We can now compute the Weil pairing according to the definition as:
 
@@ -1863,6 +1863,8 @@ P.weil_pairing(Q, 3) # Pairing value is in the \mu_3
 #+RESULTS:
 : 15*i + 22
 : 15*i + 11
+
+*** TODO Bilinearity
 
 * Teaser: pairings in ZK
 ** Example 1
