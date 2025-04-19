@@ -7,8 +7,27 @@
 :TOC:      :include all :ignore this :depth 2
 :END:
 :CONTENTS:
+- [[#function-fields][Function Fields]]
 - [[#divisors][Divisors]]
 :END:
+
+* Function Fields
+#+BEGIN_SRC sage :session . :exports both
+K.<x> = FunctionField(GF(2))
+R.<y> = K[]
+
+K
+R
+
+#q=23
+#F.<x> = FunctionField(GF(q^2, modulus=i^2 + 1, name='i'));
+#_.<y> = F[];
+#F
+#+END_SRC
+
+#+RESULTS:
+: Rational function field in x over Finite Field of size 2
+: Univariate Polynomial Ring in y over Rational function field in x over Finite Field of size 2
 
 * IN-PROGRESS Divisors
 #+BEGIN_SRC sage  :session . :exports both

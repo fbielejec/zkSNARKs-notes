@@ -170,8 +170,8 @@ ePQ^((a*b) % 641)
 
 *NOTE*
 
-Since $e(P,Q) \neq 1$ in the roots of unity subgroup of $F_{q^2}$, $e([a]P,[b]Q)$ is trivial (equal to $\mathcal{O}$) only if $r | ab$, which implies that either $r|a$ or $r|b$, which in turn means aiter (or both) $[a]P$ or $[b]Q$ are equal to $\mathcal{O}$.
-This condition guarantees non-trivial (meaning $e([a]P,[b]Q) \neq 0$) pairings for non-trivial arguments. This property is called /non-degeneracy/ of the pairing.
+Since $e(P,Q) \neq 1$ in the roots of unity subgroup of $F_{q^2}$, $e([a]P,[b]Q)$ is trivial (equal to $\mathcal{O}$) only if $r | ab$, which implies that either $r|a$ or $r|b$, which in turn means that eiter (or both) $[a]P$ or $[b]Q$ are equal to $\mathcal{O}$.
+This condition guarantees non-trivial (meaning $e([a]P,[b]Q) \neq 0$) pairings for non-trivial arguments. This property is called *non-degeneracy* of the pairing.
 
 ---
 
@@ -1815,6 +1815,7 @@ $w_r(P,Q) = \frac{f(D_Q)}{g(D_P)} = \frac{f(Q+S) \cdot g(R)} {f(S) \cdot g(P+R)}
 
 #+BEGIN_SRC sage :session . :exports both
 q=23
+Fq=GF(q)
 a=-1
 b=0
 k=2
@@ -1822,6 +1823,9 @@ Fq2.<i> = GF(q^k, modulus=x^2 + 1)
 E2=EllipticCurve(Fq2, [a,b])
 
 Fxy.<x,y> = Fq[];
+
+P=E2(2,11)
+Q=E2(21,12*i)
 
 def fDBL(P):
   lbda = (3*P[0]^2 + a) / (2*P[1]);
@@ -1843,28 +1847,61 @@ g3Q=fDBL(Q)*(x-Q[0])
 R=E2(17*i, 2*i + 21)
 S=E2(10*i + 18, 13*i + 13)
 
-lPR=fADD(P,R);
-lQS=fADD(Q,S);
+lPR=fADD(P,R)
+lQS=fADD(Q,S)
 
 # same as f3P,R
-f=f3P/lPR^3;
-g=g3Q/lQS^3;
+f=f3P/lPR^3
+# same as g3
+g=g3Q/lQS^3
 
+eWr=f((Q+S).xy()) * g(R.xy()) / (f(S.xy())*g((P+R).xy()))
 
-f((Q+S).xy()) * g(R.xy()) / (f(S.xy())*g((P+R).xy()))
+print(f"The Weil pairing for P={P} and Q={Q}: {eWr}")
 
 # verify with a built-in function:
-P=E2(2,11)
-Q=E2(21,12*i)
+e=P.weil_pairing(Q, 3)
+e
 
-P.weil_pairing(Q, 3) # Pairing value is in the \mu_3
+# Pairing value is in the \mu_3
+e^3
+
 #+END_SRC
 
 #+RESULTS:
-: 15*i + 22
+: The Weil pairing for P=(2 : 11 : 1) and Q=(21 : 12*i : 1): 15*i + 22
 : 15*i + 11
+: 1
 
-*** TODO Bilinearity
+*** IN-PROGRESS Bilinearity of the pairing
+
+We will demonstrate that the computed Weil paitring is indeed a [[*Billinear map][billinear map]].
+
+#+BEGIN_SRC sage :session . :exports both
+q=23
+a=-1
+b=0
+k=2
+Fq2.<i> = GF(q^k, modulus=x^2 + 1)
+E2=EllipticCurve(Fq2, [a,b])
+
+P=E2(2,11)
+Q=E2(21,12*i)
+
+# e(P+P,Q) = e(P,Q) * e(P,Q)
+(P+P).weil_pairing(Q, 3) == P.weil_pairing(Q,3)^2
+
+# e(P,Q+Q) = e(P,Q) * e(P,Q)
+P.weil_pairing(Q+Q, 3) == P.weil_pairing(Q,3)^2
+
+# e(P+P,Q+Q) = e(P,Q) * e(P,Q) * e(P,Q) * e(P,Q)
+(P+P).weil_pairing(Q+Q, 3) == P.weil_pairing(Q,3)^4
+#+END_SRC
+
+#+RESULTS:
+: True
+: True
+: True
 
 * Teaser: pairings in ZK
 ** Example 1
@@ -1935,7 +1972,7 @@ and if the result is $1$ then $a^2+2027a+16152$ is equal to $0$ (with high proba
 *NOTE*
 
 In a zk-SNARK, elliptic curve pairings are used to check a system of quadratic constraints just like this one.
-The system of constraints is converted into a single, large polynomial that has particular roots is and only if each of the (quadratic) constraints is satisfied.
+The system of constraints is converted into a single, large polynomial that has particular roots if and only if each of the (quadratic) constraints is satisfied.
 
 ---
 
