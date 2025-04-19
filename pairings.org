@@ -1614,7 +1614,7 @@ print(f"Q={Q} is in the G1: {Q in G1}")
 : Q=(21 : 12*i : 1) is in the G2: True
 : Q=(21 : 12*i : 1) is in the G1: False
 
-*** DONE Miller’s Algorithm for finding $f_{3,P}$ and $g_{3,Q}$
+*** DONE Finding $f_{3,P}$ and $g_{3,Q}$
 
 ---
 
@@ -1807,7 +1807,7 @@ g
 
 #+RESULTS:
 
-*** DONE The Weil pairing for P and Q
+*** IN-PROGRESS The Weil pairing for P and Q
 
 We can now compute the Weil pairing according to the definition as:
 
@@ -1855,6 +1855,7 @@ f=f3P/lPR^3
 # same as g3
 g=g3Q/lQS^3
 
+# TODO: not the same, why?
 eWr=f((Q+S).xy()) * g(R.xy()) / (f(S.xy())*g((P+R).xy()))
 
 print(f"The Weil pairing for P={P} and Q={Q}: {eWr}")
@@ -1873,7 +1874,7 @@ e^3
 : 15*i + 11
 : 1
 
-*** IN-PROGRESS Bilinearity of the pairing
+*** DONE Bilinearity of the pairing
 
 We will demonstrate that the computed Weil paitring is indeed a [[*Billinear map][billinear map]].
 
