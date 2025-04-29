@@ -1,5 +1,5 @@
 #+STARTUP: overview
-#+latex_class_options: [12pt]
+#+latex_class_options: [14pt]
 
 * Contents
 :PROPERTIES:
@@ -7,44 +7,37 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
-- [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
 - [[#fundamental-theorem-of-arithmetics][Fundamental Theorem of Arithmetics]]
   - [[#example][Example]]
 - [[#coprime-integers][Coprime integers]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#modular-inverse][Modular inverse]]
   - [[#example][Example]]
-- [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
-  - [[#example][Example]]
-- [[#algebraic-closure][Algebraic closure]]
-  - [[#example][Example]]
+- [[#modular-arithmetic][Modular arithmetic]]
+  - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
+  - [[#example-clock][Example: clock]]
+  - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
+  - [[#example-crt][Example: CRT]]
+  - [[#remainder-class-representation][Remainder Class Representation]]
+  - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
 - [[#additional][Additional]]
   - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
-
-* Congruence (modular arithmetic)
-Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
-
-$a - b = k \times m$
-
-Congruence modulo $m$ is a congruence relation, meaning that it is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication. Congruence modulo $m$ is denoted:
-
-$a \equiv b \quad \text{(mod m)}$
 
 * IN-PROGRESS Fundamental Theorem of Arithmetics
 The *Fundamental Theorem of Arithmetic* states that every integer greater than 1 can be uniquely expressed as a product of prime numbers, up to the order of the factors.
 
 =Definition=
 
-Any integer \( n \) can be written in the form:
+Any integer $n$ can be written in the form:
 
-\[
-   n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}
-   \]
+
+$n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$
+
 where:
 
-- \( p_1, p_2, \ldots, p_k \) are distinct prime numbers,
-- \( e_1, e_2, \ldots, e_k \) are positive integers that represent the multiplicities of the primes.
+- $p_1, p_2, \ldots, p_k$ are distinct prime numbers,
+- $e_1, e_2, \ldots, e_k$ are positive integers that represent the multiplicities of the primes.
 
 ** Example
 Consider the number 30:
@@ -67,7 +60,7 @@ $ax \equiv 1 \pmod{m}$
 
 $ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
 
-A modular multiplicative inverse of a modulo \( m \) can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
+A modular multiplicative inverse of a modulo $m$ can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
 
 ---
 
@@ -75,7 +68,42 @@ A modular multiplicative inverse of a modulo \( m \) can be found by using the [
 Let $m = 5$ and $a = 2$.
 $gcd(2,5) = 1$ so there exists a multiplicative inverse.
 Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
-* Chinese Remainder Theorem
+* IN-PROGRESS Modular arithmetic
+** DONE Congruence (modular arithmetic)
+Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
+
+$a - b = k \times m$
+
+Congruence modulo $m$ is denoted:
+
+$a \equiv b \quad \text{(mod m)}$
+
+which is the same as writing:
+
+$a \hspace{.5em} \text{mod m} \equiv b \hspace{.5em} \text{mod m }$
+
+It is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication
+
+** DONE Example: clock
+
+#+BEGIN_SRC sage :session . :exports both
+
+# starting at 5 and adding 12 we are at 5 again (as on the clock face)
+(5 + 12) % 12
+
+# when we subtract 12 hours, we are at 5 o’clock again, representing the number −7
+(5 - 12) % 12
+
+# all these integers are congruent modulo 12 (euclidean division remainder is the same)
+[n % 12 for n in [-7,5,17,29] ]
+
+#+END_SRC
+
+#+RESULTS:
+: [5, 5, 5, 5]
+: 5
+: 5
+** DONE Chinese Remainder Theorem
 *Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise [[Coprime integers][coprime]] (no two divisors share a common factor other than 1).
 
 Suppose we have a system of simultaneous congruences:
@@ -86,18 +114,21 @@ $x \equiv a_2 \pmod{m_2}$
 $x \equiv a_k \pmod{m_k}$
 
 where:
+
 - $a_1,...,a_k$ are integers.
 - $m_1,...,m_k$ are pairwise coprime integers, i.e. $\forall i\neq j \hspace{.5em} gcd(m_i,m_j)=1$.
 
-The Chinese Remainder Theorem states that there exists a unique solution
+The Chinese Remainder Theorem states that there exists a unique solution:
+
 x modulo $M=m_1 m_2 \cdot \cdot \cdot m_k$.
-In other words there is an integer $x$ such that
+
+In other words there is an integer $x$ such that:
 
 $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
-** Example
+** DONE Example: CRT
 $x \equiv 2 \pmod{3}$
 $x \equiv 3 \pmod{5}$
 $x \equiv 2 \pmod{7}$
@@ -122,13 +153,58 @@ $15 y_3 =1 \pmod{7} \leftrightarrow y_3=1$
 
 $x = (2 \cdot 35 \cdot 2) + (3 \cdot 32 \cdot 1) + (2 \cdot 15 \cdot 1) \pmod{105}$
 $x = 233 \pmod{105} = 23$
-* Algebraic closure
+
+The solution set consists of all the integers that have the remainder 23 under euclidean divison mod 105 (are congruent mod 105).
+
+#+BEGIN_SRC sage :session . :exports both
+x=CRT_list([2,3,2], [3,5,7])
+x
+
+# example range
+[x + (i * (3*5*7)) for i in range(-2, 3) ]
+#+END_SRC
+
+#+RESULTS:
+: 23
+: [-187, -82, 23, 128, 233]
+
+** DONE Remainder Class Representation
+The *remainder class* (or *residue class*) modulo $m$ is the set of all integers that share the same remainder when divided by $m$.
+
 =Definition=
 
-A subset of a given set is *closed* under an operation of the larger set if performing that operation on members of the subset always produces a member of that subset.
+Given an integer $r$ and modulus $m$, the residue class $[r]_m$ is:
 
-** Example
-The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
+$[r]_m = \{ x \in \mathbb{Z} \mid x \equiv r \pmod{m} \}$
+
+- All integers in $[r]_m$ differ by multiples of $m$.
+- There are exactly $m$ distinct residue classes modulo $m$, denoted as $[0]_m, [1]_m, \dots, [m-1]_m$.
+
+** DONE Example 11 MoonMath (Arithmetic modulo $6$)
+
+Choosing $n=6$ we have six remainder classes o fintegers that are congruent mod 6 (they have the same remainder when divided mod 6). Let's list them:
+
+#+BEGIN_SRC sage :session . :exports both
+m = 6
+# init map to store classes 
+remainder_classes = {r: [] for r in range(m)}
+
+# example range
+for x in range(-6, 18):
+    remainder_classes[x % m].append(x)
+
+remainder_classes
+
+#+END_SRC
+
+#+RESULTS:
+: {0: [-6, 0, 6, 12],
+:  1: [-5, 1, 7, 13],
+:  2: [-4, 2, 8, 14],
+:  3: [-3, 3, 9, 15],
+:  4: [-2, 4, 10, 16],
+:  5: [-1, 5, 11, 17]}
+
 * Additional
 ** Chain rule differentiation
 In order to differentiate a function of a function, $y = f(g(x))$, that is to find \frac{dy}{dx}

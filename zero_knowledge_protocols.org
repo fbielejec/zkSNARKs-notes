@@ -2,11 +2,37 @@
 #+latex_class_options: [14pt]
 
 * IN-PROGRESS Statements
-** IN-PROGRESS Formal Languages
+** DONE Formal Languages
 
-=Definition=
+=General definition: Language=
 
-Let $\sum$ be any set. Let $\sum^{*}$ be the set of all string of a finite length $<x_1, \ldots,x_n>$ of elements $x_j \in \sum$, including the empty string $<> \in \sum^{*}$.
+Let $\sum$ be any set. Let $\sum^{*}$ be the set of all string of a finite length $<x_1, \ldots,x_n>$ of elements $x_j \in \sum$, including the empty string $<> \in \sum^{*}$. The a *language* $L$ is a subset of the set of all finite strings $\sum^{*}$. In this context:
+- The set $\sum$ is called the *alphabet* of the language *L*.
+- Elements from $\sum$ are called letters.
+- Elements from $L$ are called *words*.
+- If there are rules that specify which strings from $\sum^{*}$ belong to the language, thise rules are called the *grammar* of the language.
+
+** IN-PROGRESS Decision functions
+
+*Decison function* $R$:
+
+$R: \hspace{.5em} \sum^{*} \rightarrow \{true, false \}$
+
+decides whether a given string $x \in \sum^{*}$ is an element of the language or not.
+The associated language can be written as the set off all strings decided by $R$:
+
+$L_R:=\{ x \in \sum^{*} \hspace{.5em} | \hspace{.5em} R(x) = true \}$
+
+=Definiton: statement=
+
+*Statement* $S$ is the claim that language $L$ contains a word $x$.
+A *proof* for statement $S$ is given by some string $P \in \sum^{*}$.
+Such proof is *verified* by checking if:
+
+$R(P)=true$
+
+In this case $P$ is called an *instance* of the statement $S$.
+
 
 
 * TODO Groth16

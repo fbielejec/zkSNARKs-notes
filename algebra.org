@@ -7,6 +7,8 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
+- [[#algebraic-closure][Algebraic closure]]
+  - [[#example][Example]]
 - [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
 - [[#roots-of-unity][Roots of unity]]
   - [[#n-th-roots-of-unity][n-th Roots of Unity]]
@@ -22,6 +24,15 @@
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
 :END:
+
+* Algebraic closure
+
+=Definition=
+
+A subset of a given set is *closed* under an operation of the larger set if performing that operation on members of the subset always produces a member of that subset.
+
+** Example
+The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
 
 * Square roots and quadratic residue
 In the context of prime fields, an element that is a square of another element is called a *quadratic residue*,
@@ -184,14 +195,19 @@ $k^{p - 1} \equiv 1  \quad \text{( mod p )}$
 $k$ = 64 and $p$ = 137 ($k$ is coprime to $p$):
 
 #+BEGIN_SRC sage :session . :exports both
+137.is_prime()
+
 ZZ(64)^ZZ(137) % ZZ(137) == ZZ(64) % ZZ(137)
+
 # k is coprime to p
+
 ZZ(64).gcd(137)
 # hence
 ZZ(64)^ZZ(137-1) % ZZ(137) == ZZ(1) % ZZ(137)
 #+END_SRC
 
 #+RESULTS:
+: True
 : True
 : 1
 : True
