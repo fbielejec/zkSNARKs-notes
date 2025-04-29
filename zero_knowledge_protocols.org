@@ -13,7 +13,7 @@ In this context:
 - Elements from $L$ are called *words*.
 - If there are rules that specify which strings from $\Sigma^{*}$ belong to the language, thise rules are called the *grammar* of the language.
 
-** IN-PROGRESS Decision functions
+** DONE Decision functions
 
 *Decison function* $R$:
 
