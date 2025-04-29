@@ -1,0 +1,13 @@
+#+STARTUP: overview
+#+latex_class_options: [14pt]
+
+* IN-PROGRESS Statements
+** IN-PROGRESS Formal Languages
+
+=Definition=
+
+Let $\sum$ be any set. Let $\sum^{*}$ be the set of all string of a finite length $<x_1, \ldots,x_n>$ of elements $x_j \in \sum$, including the empty string $<> \in \sum^{*}$.
+
+
+* TODO Groth16
+* TODO PLONK

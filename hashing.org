@@ -1,0 +1,4 @@
+* TODO Hashing to groups
+** TODO Pedersen hashes
+* TODO Hashing into modular arithmetic
+* TODO Hashing to elliptic curves
