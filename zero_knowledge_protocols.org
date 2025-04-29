@@ -47,5 +47,28 @@ $R(x) =  \begin{cases}
 
 Since $0^=0, 1^2=1, 2^2=4, 3^2=3, 4^2=4, 5^2=1$ no element has it's square equa to 2 (mod 6), the language is empty.
 
+#+BEGIN_SRC sage :session . :exports both
+Z6 = Integers(6)
+
+def R(x):
+    """
+    Decision function for whether x * x \\equiv 2 mod 6.
+    """
+    return Z6(x)^2 == Z6(2)
+
+for x in range(6):
+    print(f"R({x}) = {R(x)}")
+#+END_SRC
+
+#+RESULTS:
+: R(0) = False
+: R(1) = False
+: R(2) = False
+: R(3) = False
+: R(4) = False
+: R(5) = False
+
+** TODO Example: 3-Factorization (Example 115 MoonMath)
+
 * TODO Groth16
 * TODO PLONK
