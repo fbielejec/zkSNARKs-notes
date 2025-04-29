@@ -11,8 +11,6 @@
   - [[#example][Example]]
 - [[#coprime-integers][Coprime integers]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
-- [[#modular-inverse][Modular inverse]]
-  - [[#example][Example]]
 - [[#modular-arithmetic][Modular arithmetic]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
@@ -20,6 +18,8 @@
   - [[#example-crt][Example: CRT]]
   - [[#remainder-class-representation][Remainder Class Representation]]
   - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
+  - [[#modular-multiplicative-inverses][Modular multiplicative inverses]]
+    - [[#example-modular-inverse][Example: modular inverse]]
 - [[#additional][Additional]]
   - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
@@ -50,24 +50,6 @@ In this case, the prime factorization involves the primes 2, 3, and 5.
 * Coprime integers
 Coprime integers are pairs of integers that do not have any common factor other than 1.
 * TODO Euclidean Algorithm
-* Modular inverse
-A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
-
-$ax \equiv 1 \pmod{m}$
-
----
-*NOTE*
-
-$ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
-
-A modular multiplicative inverse of a modulo $m$ can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
-
----
-
-** Example
-Let $m = 5$ and $a = 2$.
-$gcd(2,5) = 1$ so there exists a multiplicative inverse.
-Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
 * IN-PROGRESS Modular arithmetic
 ** DONE Congruence (modular arithmetic)
 Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
@@ -171,6 +153,17 @@ x
 ** DONE Remainder Class Representation
 The *remainder class* (or *residue class*) modulo $m$ is the set of all integers that share the same remainder when divided by $m$.
 
+---
+
+*NOTE*
+
+The notation $\mathbb{Z}/m\mathbb{Z}$ (read as *"Z mod mZ"*) represents the *ring of integers modulo m*, where:
+- $\mathbb{Z}$ Set of all integers.
+- $m\mathbb{Z}$ Set of all integer multiples of m (e.g. for $m=6$ this is $\{\dots, -12, -6, 0, 6, 12, \dots\}$).
+- $\mathbb{Z}/m\mathbb{Z}$ Quotient ring formed by "wrapping $\mathbb{Z}$ around a circle with m positions," collapsing all integers into *m residue classes* based on their remainder when divided by m.
+
+---
+
 =Definition=
 
 Given an integer $r$ and modulus $m$, the residue class $[r]_m$ is:
@@ -185,7 +178,7 @@ $[r]_m = \{ x \in \mathbb{Z} \mid x \equiv r \pmod{m} \}$
 
 ** DONE Example 11 MoonMath (Arithmetic modulo $6$)
 
-Choosing $n=6$ we have six remainder classes o fintegers that are congruent mod 6 (they have the same remainder when divided mod 6). Let's list them:
+Choosing $n=6$ we have six remainder classes of integers that are congruent mod 6 (they have the same remainder when divided mod 6). Let's list them:
 
 #+BEGIN_SRC sage :session . :exports both
 m = 6
@@ -209,9 +202,83 @@ remainder_classes
 
 Remainder classes simplify modular artihmetic, for example to compute $2+5 \hspace{.5em} \text{mod 6}$:
 
-1) Choose arbitrary element from each class e.g $14$ (for $2$) and $-1$ (for $5$)
-2) Add those numbers (in the usual way): $14 + (-1) = 13$
-3) 13 is in the remiander class $r_1$, hence $2+5 \hspace{.5em} \text{mod 6} = 1$:
+1) Choose arbitrary element from each class e.g $14$ (for $2$) and $-1$ (for $5$).
+2) Add those numbers (in the usual way): $14 + (-1) = 13$.
+3) $13$ is in the remainder class $r_1$, hence $2+5 \hspace{.5em} \text{mod 6} = 1$:
+
+#+BEGIN_SRC sage :session . :exports both
+# ring Z/6Z
+Z6=Integers(6)
+Z6
+Z6(2)+Z6(5)
+#+END_SRC
+
+#+RESULTS:
+: Ring of integers modulo 6
+: 1
+
+Applying the same reasoning to all the remainder classes, addition and multiplication can be transferred to the representatives of the remainder classes:
+
+#+BEGIN_SRC sage :session . :exports both
+# ring Z/6Z
+Z6 = Integers(6)
+add_table = [[Z6(i) + Z6(j) for j in range(6)] for i in range(6)]
+mul_table = [[Z6(i) * Z6(j) for j in range(6)] for i in range(6)]
+
+# Print the tables
+print("Addition Table in Z6:")
+print("+ | " + " ".join(f"{i:2}" for i in range(6)))
+print("-" * 20)
+for i in range(6):
+    print(f"{i} | " + " ".join(f" {add_table[i][j]}" for j in range(6)))
+
+print("\nMultiplication Table in Z6:")
+print(". | " + " ".join(f"{i:2}" for i in range(6)))
+print("-" * 20)
+for i in range(6):
+    print(f"{i} | " + " ".join(f" {mul_table[i][j]}" for j in range(6)))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Addition Table in Z6:
++ |  0  1  2  3  4  5
+--------------------
+0 |  0  1  2  3  4  5
+1 |  1  2  3  4  5  0
+2 |  2  3  4  5  0  1
+3 |  3  4  5  0  1  2
+4 |  4  5  0  1  2  3
+5 |  5  0  1  2  3  4
+
+Multiplication Table in Z6:
+. |  0  1  2  3  4  5
+--------------------
+0 |  0  0  0  0  0  0
+1 |  0  1  2  3  4  5
+2 |  0  2  4  0  2  4
+3 |  0  3  0  3  0  3
+4 |  0  4  2  0  4  2
+5 |  0  5  4  3  2  1
+#+end_example
+** Modular multiplicative inverses
+A *modular multiplicative inverse* of an integer $a$ is an integer $x$ such that the product $ax$ is congruent to $1$ with respect to the modulus $m$:
+
+$ax \equiv 1 \pmod{m}$
+
+---
+*NOTE*
+
+$ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
+
+A modular multiplicative inverse of a modulo $m$ can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
+
+---
+
+*** Example: modular inverse
+Let $m = 5$ and $a = 2$.
+$gcd(2,5) = 1$ so there exists a multiplicative inverse.
+Since $2 * 3 \equiv 1 \pmod{5}$ the multiplicative inverse of 2 modulo 5 is 3.
 
 * Additional
 ** Chain rule differentiation

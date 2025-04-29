@@ -6,34 +6,46 @@
 
 =General definition: Language=
 
-Let $\sum$ be any set. Let $\sum^{*}$ be the set of all string of a finite length $<x_1, \ldots,x_n>$ of elements $x_j \in \sum$, including the empty string $<> \in \sum^{*}$. The a *language* $L$ is a subset of the set of all finite strings $\sum^{*}$. In this context:
-- The set $\sum$ is called the *alphabet* of the language *L*.
-- Elements from $\sum$ are called letters.
+Let $\Sigma$ be any set. Let $\Sigma^{*}$ be the set of all strings of a finite length $<x_1, \ldots,x_n>$ of elements $x_j \in \Sigma$, including the empty string $<> \in \Sigma^{*}$. The *language* $L$ is a subset of the set of all finite strings $\Sigma^{*}$.
+In this context:
+- The set $\Sigma$ is called the *alphabet* of the language *L*.
+- Elements from $\Sigma$ are called letters.
 - Elements from $L$ are called *words*.
-- If there are rules that specify which strings from $\sum^{*}$ belong to the language, thise rules are called the *grammar* of the language.
+- If there are rules that specify which strings from $\Sigma^{*}$ belong to the language, thise rules are called the *grammar* of the language.
 
 ** IN-PROGRESS Decision functions
 
 *Decison function* $R$:
 
-$R: \hspace{.5em} \sum^{*} \rightarrow \{true, false \}$
+$R: \hspace{.5em} \Sigma^{*} \rightarrow \{true, false \}$
 
-decides whether a given string $x \in \sum^{*}$ is an element of the language or not.
+decides whether a given string $x \in \Sigma^{*}$ is an element of the language or not.
 The associated language can be written as the set off all strings decided by $R$:
 
-$L_R:=\{ x \in \sum^{*} \hspace{.5em} | \hspace{.5em} R(x) = true \}$
+$L_R:=\{ x \in \Sigma^{*} \hspace{.5em} | \hspace{.5em} R(x) = true \}$
 
 =Definiton: statement=
 
 *Statement* $S$ is the claim that language $L$ contains a word $x$.
-A *proof* for statement $S$ is given by some string $P \in \sum^{*}$.
+A *proof* for statement $S$ is given by some string $P \in \Sigma^{*}$.
 Such proof is *verified* by checking if:
 
 $R(P)=true$
 
 In this case $P$ is called an *instance* of the statement $S$.
+** DONE Example: The empty language (Example 114 MoonMath)
+Consider the alphabet $\Sigma=\mathbb{Z}_6$ , where $\mathbb{Z}_6$ is the ring of modular 6 arithmetic as derived in [[file:arithmetics.org::*Example 11 MoonMath (Arithmetic modulo $6$)][Arithmetic modulo $6$]].
 
+- *Alphabet*: $\Sigma = \mathbb{Z}_6 = \{ 0, 1, 2, 3, 4, 5 \}$.
+- *Language*: $L = \{ x \in (\mathbb{Z}_6)^* \mid x \times x \equiv 2 \pmod{6} \}$
+  - where $x$ is a single element in $\mathbb{Z}_6$
+- *Decision Function*:
+$R(x) =  \begin{cases}
+\text{True} & \text{if } x \times x \equiv 2 \pmod{6}, \\
+\text{False} & \text{otherwise.}
+\end{cases}$
 
+Since $0^=0, 1^2=1, 2^2=4, 3^2=3, 4^2=4, 5^2=1$ no element has it's square equa to 2 (mod 6), the language is empty.
 
 * TODO Groth16
 * TODO PLONK
