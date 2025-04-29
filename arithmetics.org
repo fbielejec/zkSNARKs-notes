@@ -15,7 +15,7 @@
   - [[#example][Example]]
 - [[#modular-arithmetic][Modular arithmetic]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
-  - [[#example-clock][Example: clock]]
+  - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
   - [[#example-crt][Example: CRT]]
   - [[#remainder-class-representation][Remainder Class Representation]]
@@ -84,7 +84,7 @@ $a \hspace{.5em} \text{mod m} \equiv b \hspace{.5em} \text{mod m }$
 
 It is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication
 
-** DONE Example: clock
+** DONE Example: clock (example 8 MoonMath)
 
 #+BEGIN_SRC sage :session . :exports both
 
@@ -179,6 +179,9 @@ $[r]_m = \{ x \in \mathbb{Z} \mid x \equiv r \pmod{m} \}$
 
 - All integers in $[r]_m$ differ by multiples of $m$.
 - There are exactly $m$ distinct residue classes modulo $m$, denoted as $[0]_m, [1]_m, \dots, [m-1]_m$.
+- Each residue class $[r]_m$ is countably infinite (has infinite cardinality).
+- The set of residue classes $\mathbb{Z} / m \mathbb{Z}$  forms a *ring* under addition and multiplication.
+- If $m$ is prime, $\mathbb{Z} / m \mathbb{Z}$ is a *field*.
 
 ** DONE Example 11 MoonMath (Arithmetic modulo $6$)
 
@@ -186,7 +189,7 @@ Choosing $n=6$ we have six remainder classes o fintegers that are congruent mod 
 
 #+BEGIN_SRC sage :session . :exports both
 m = 6
-# init map to store classes 
+# init map to store classes
 remainder_classes = {r: [] for r in range(m)}
 
 # example range
@@ -194,7 +197,6 @@ for x in range(-6, 18):
     remainder_classes[x % m].append(x)
 
 remainder_classes
-
 #+END_SRC
 
 #+RESULTS:
@@ -204,6 +206,12 @@ remainder_classes
 :  3: [-3, 3, 9, 15],
 :  4: [-2, 4, 10, 16],
 :  5: [-1, 5, 11, 17]}
+
+Remainder classes simplify modular artihmetic, for example to compute $2+5 \hspace{.5em} \text{mod 6}$:
+
+1) Choose arbitrary element from each class e.g $14$ (for $2$) and $-1$ (for $5$)
+2) Add those numbers (in the usual way): $14 + (-1) = 13$
+3) 13 is in the remiander class $r_1$, hence $2+5 \hspace{.5em} \text{mod 6} = 1$:
 
 * Additional
 ** Chain rule differentiation
