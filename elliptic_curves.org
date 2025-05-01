@@ -59,12 +59,13 @@
 :END:
 
 * Affine Short Weierstrass form
-An *Elliptic Curve* (using short Weierstrass form) is an equation of the form:
+An *Elliptic Curve* (using short Weierstrass form and affine coordinates) is an equation of the form:
 
 $y^2=x^3+a \cdot x +b$
 
 where:
 - $a,b,x$ and $y$ are elements of some finite field.
+- the so called discriminant $4a^3+27b^2$ is not equal to $0$ (ensures that the curve is non-singular aka the curve has no cusps or self-intersections).
 
 Any $(x,y)$ satisfying the equation are points on the curve.
 
@@ -570,7 +571,7 @@ print(f"r | k: {r.divides(k)}")
 : (0 : 1 : 1)
 : (0 : 1 : 1)
 * TODO The exponential map
-- [ ] 39
+- p39
 * Elliptic Curve scalar multiplication
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $P$ a generator of $E(F)$.
 Then the elliptic curve scalar multiplication with base $P$ is defined as follows:
