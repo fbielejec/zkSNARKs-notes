@@ -2,6 +2,8 @@
 #+latex_class_options: [14pt]
 
 * IN-PROGRESS Statements
+- In the formal language context *statements* provide membership claims.
+ - *instances* are constructive proofs of the statements.
 ** DONE Formal Languages
 
 =General definition: Language=
@@ -100,7 +102,7 @@ print(f"R{x1,x2,x3,x4} = {R(x1,x2,x3,x4)}")
 
 #+RESULTS:
 : R(2, 12, 4, 5) = True
-** IN-PROGRESS Example: Tiny-jubjub Membership (Example 116 MoonMath)
+** DONE Example: Tiny-jubjub Membership (Example 116 MoonMath)
 /Language where word are points on the Tiny-jubjub curve (in it's Twisted Edwards form)./
 
 Formalizing the description:
@@ -131,6 +133,43 @@ ETJJ
 #+RESULTS:
 : {(0, 1), (8, 8), (11, 7), (1, 2), (2, 7), (1, 11), (6, 4), (7, 9), (10, 0), (12, 2), (12, 11), (7, 4), (5, 5), (5, 8), (3, 0), (11, 6), (0, 12), (2, 6), (6, 9), (8, 5)}
 
-** TODO Instance and witness
+** IN-PROGRESS Instance and witness
+- in the context of a zero-knowledge proof system it is possible to hide parts of the proof instance and still be able to prove the statement.
+- the proof is split into a public part called the *instance* and a private part called the *witness*.
+
+=Definition: decision function with an instance and a witness=
+
+$R: \hspace{.5em} \Sigma_{I}^{*} \times \Sigma_{W}^{*} \rightarrow \{\text{true, false} \}; \hspace{.5em} (i,w) \mapsto R(i,w)$
+
+where:
+- words are strings $(i,w)\in \Sigma_I^{*} \times \Sigma_W^{*}$ for which $R(i,w)=true$.
+- the input $i \in \Sigma_{I}$ is called an instance.
+- the input $w \in \Sigma_{W}$ is called a witness.
+
+=Definition: language with an instance and a witness=
+
+$L_R := \{ (i,w) \in \Sigma_{I}^{*} \times \Sigma_{W}^{*} \hspace{.5em} | \hspace{.5em} R(i,w) = true \}$
+
+In this context *statement* $S$ is a claim that given an instance $i$ there is a witness $w$ such that the language $L$ contains a word $(i,w)$.
+A constructive proof for $S$ is a string $P=(i,w)$ and it is verified by $R(P)=true$.
+*** IN-PROGRESS Example: SHA256 - Knowledge of Preimage (Example 117 MoonMath)
+/Given a digest $i$ there is a preimage $w$ such that SHA256(w)=i$/
+
+SHA256 maps arbitary length binary strings to binary strings of length 256:
+
+$\text{SHA256}: \hspace{.5em} | \hspace{.5em} \{0,1\}^{*} \rightarrow \{0,1\}^{256}$
+
+Formal description of the language:
+
+- *Alphabet*: 
+  - for the set of all instances: $\Sigma_I = \{0,1\}$
+  - for the set of all witnesses: $\Sigma_W = \{0,1\}$
+- *Decision function:*
+$R_{SHA256}: \hspace{.5em} | \hspace{.5em} \{0,1\}^{*} times \{0,1\}^{*} \rightarrow \{true,false\};$ s.t.
+$(i;w) \mapsto \begin{cases}
+\text{True} & |i|=256, i=SHA256(w) \\
+\text{False} & \text{otherwise.}
+\end{cases}$
+
 * TODO Groth16
 * TODO PLONK
