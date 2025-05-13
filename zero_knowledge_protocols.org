@@ -336,7 +336,7 @@ $c_{0}^{2}=0 \hspace{.5em} c_{1}^{2}=0 \hspace{.5em} c_{2}^{2}=0 \hspace{.5em} c
 $c_{0}^{3}=0 \hspace{.5em} c_{1}^{3}=0 \hspace{.5em} c_{2}^{3}=0 \hspace{.5em} c_{3}^{3}=0 \hspace{.5em} c_{4}^{3}=0 \hspace{.5em} c_{5}^{3}=1$
 $c_{0}^{4}=0 \hspace{.5em} c_{1}^{4}=0 \hspace{.5em} c_{2}^{4}=0 \hspace{.5em} c_{3}^{4}=0 \hspace{.5em} c_{4}^{4}=0 \hspace{.5em} c_{5}^{4}=0$
 
-** IN-PROGRESS R1CS for Edwards Addition on Tiny-jubjub (Exercise 99 and 100 MoonMath)
+** IN-PROGRESS R1CS for Edwards Addition on the Tiny-jubjub curve (Exercise 99 and 100 MoonMath)
 
 ---
 
@@ -358,23 +358,23 @@ $(x_1, y_1) + (x_2, y_2) = \left( \frac{x_1y_2 + y_1x_2}{1 + dx_1x_2y_1y_2}, \fr
 
 /Define an instance alphabet $\Sigma_I$, a witness alphabet $\Sigma_W$ and a decision function $R_{add}$ such that a string $(i;w) \in \Sigma_{I}^{*} \times \Sigma_{W}^{*}$ is a word in $L_{add}$ if and only if $i$ is a pair of curve points on the Tiny-jubjub curve in Edwards form and $w$ is a sum of those points/.
 
-=instance alphabet=
+=Instance alphabet=
 
-*Instance alphabet* in this case is the set of all possible pairs of points (affine coordinates):
+*Instance alphabet* in this case is the set of all possible pairs of field elements from $F_{13}$ (potential affine coordinates):
 
-$\Sigma_{I}: \hspace{.5em} \{ (x_{1},x_{2}) \times (x_{3},x_{4}): \hspace{.5em} x_{1},x_{2},x_{3},x_{4} \in F_{13} \}$
+$\Sigma_{I} = \hspace{.5em} \{ (x_{1},x_{2}): \hspace{.5em} x_{1},x_{2}} \in F_{13} \}=(F_{13})^{2}$
 
-=witness alphabet=
+=Witness alphabet=
 
-*Witness alphabet* is the set of all possible points (affine coordinates):
+Similarly the *Witness alphabet* is the set of all possible points:
 
-$\Sigma_{W}: \hspace{.5em} \{ (x,y)): \hspace{.5em} x,y \in F_{13} \}$
+$\Sigma_{W} = (F_{13})^{2}$
 
 =Decision function=
 
-Maps an instance (a pair of points with coordinates in $F_{13}$) and a witness (a point) to /true/ if the instance points sum to the witness point on the Tinyy-jubjub curve:
+Maps an instance (a pair of points with coordinates in $F_{13}$) and a witness (a point) to /true/ if the instance points sum to the witness point on the Tinyy-jubjub curve (using Edwards group law):
 
-$R_{add}: \hspace{.5em} ((F_{13} \times F_{13}), (F_{13} \times F_{13}))^{*} \times (F_{13} \times F_{13})^{*}  \rightarrow \{ true, false \};$
+$R_{add}: \hspace{.5em} ((F_{13})^2,(F_{13})^2)^{*} \times ((F_{13})^2)^{*}  \rightarrow \{ true, false \};$
 
 $(<I_1,I_2,I_3,I_4>;<W_1.W_2>) \mapsto \begin{cases}
 \text{True} & (W_{1}, W_{2}) = \left( \frac{I_{1} \cdot I_{4} + I_{2} \cdot I_{3}}{1 + d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4}}, \frac{I_{2} \cdot I_{4} - a \cdot I_{1} \cdot I_{3}}{1 - d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4}} \right) \\
@@ -432,7 +432,6 @@ $w=(1,11)$ is a witness such that together with an instance $i=((8,8),(1,2))$ $(
 /Find some instance  $i \in \Sigma_{I}^{*}$ such that $i$ has no knowledge proof in $L_{add}$/
 
 #+BEGIN_SRC sage :session . :exports both
-
 done = False
 for i_1 in range(1,12):
   for i_2 in range(1,12):
@@ -452,6 +451,30 @@ for i_1 in range(1,12):
 
 #+RESULTS:
 : add(((1, 1), (13, 1))) = (1, 1)
+
+/Define an R1CS such that the words in $L_add$ are in 1:1 correspondence with the solutions to this R1CS./
+
+We need to write the following computation as an R1CS:
+
+$(W_0, W_1) = \left( \frac{I_{1} \cdot I_{4} + I_{2} \cdot I_{3}}{1 + d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4}}, \frac{I_{2} \cdot I_{4} - a \cdot I_{1} \cdot I_{3}}{1 - d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4}} \right)$
+
+$\begin{cases}
+W_0 \cdot (1 + d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4} ) = I_{1} \cdot I_{4} + I_{2} \cdot I_{3} \\
+W_1 \cdot (1 - d \cdot I_{1} \cdot I_{3} \cdot I_{2} \cdot I_{4}) = I_{2} \cdot I_{4} - a \cdot I_{1} \cdot I_{3}
+\end{cases}$
+
+$\begin{cases}
+I_1 \cdot I_4 = W_2 \\
+I_2 \cdot I_3 = W_3 \\
+I_1 \cdot I_3 = W_4 \\
+I_2 \cdot I_4 = W_5 \\
+(d W_2) \cdot W_3 = W_6 \\
+W_0 \cdot (1 + W_6) = W_2 + W_3 \\
+W_1 \cdot (1 - W_6) = W_5 - aW_4 \\
+\end{cases}$
+
+
+
 
 * TODO Groth16
 * TODO PLONK
