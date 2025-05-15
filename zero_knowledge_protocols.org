@@ -173,7 +173,7 @@ $(i;w) \mapsto \begin{cases}
 - *Language*:
 $L_{SHA256} := \{ (i;w) \in \{0,1\}^{*} \times \{0,1\}^{*} \hspace{.5em} | \hspace{.5em} R_{SHA256}(i,w) = true \}$
 *** DONE Example: 3-factorization (Example 118 MoonMath)
-/Given an instance field element $x_4$ there are three witness factors $x_1,x_2,x_3.$/
+/Given an instance field element $x_4$ there are three witness factors $x_1,x_2,x_3$/
 
 - *Alphabet*:
   - $\Sigma_I = F_{13}$.
@@ -184,7 +184,7 @@ $(<i_1,...,i_n>;<w_1,...,w_m>) \mapsto \begin{cases}
 \text{True} & n=1, m=3, i_1=w_1 \cdot x_2 \cdot w_3 \\
 \text{False} & \text{otherwise.}
 \end{cases}$
-- *Language*: all strings from $(F_{13})^{*} \times (F_{13})^{*}$ that are mapped to $true$ by the decisio function $R_{3, fac\_zk}$
+- *Language*: all strings from $(F_{13})^{*} \times (F_{13})^{*}$ that are mapped to $true$ by the decision function $R_{3, fac\_zk}$.
 
 *** DONE Example: Tiny-jubjub (Example 119 MoonMath)
 /Constructive proof is given by a pair $(x_1,x_2)$ of field elements from $F_{13}$ such that the pair is a point of the Tiny-jubjub curve in it's Edwards form./
@@ -234,10 +234,10 @@ where:
 
 *NOTE : R1CS in vector and matrix notation*
 
-$Ax \odot Bx=Cx$
+$A\mathbf{x} \odot B\mathbf{x}=C\mathbf{x}$
 
 where:
-- $x=(1,I,W) \in F^{1+n+m}$ is an $(n+m+1)$-dimensional vector.
+- $\mathbf{x}=(1,I,W) \in F^{1+n+m}$ is an $(n+m+1)$-dimensional vector.
 - $A,B,C$ are $(n+m+1) \times k$-dimensional matrices
 
 ---
@@ -336,7 +336,7 @@ $c_{0}^{2}=0 \hspace{.5em} c_{1}^{2}=0 \hspace{.5em} c_{2}^{2}=0 \hspace{.5em} c
 $c_{0}^{3}=0 \hspace{.5em} c_{1}^{3}=0 \hspace{.5em} c_{2}^{3}=0 \hspace{.5em} c_{3}^{3}=0 \hspace{.5em} c_{4}^{3}=0 \hspace{.5em} c_{5}^{3}=1$
 $c_{0}^{4}=0 \hspace{.5em} c_{1}^{4}=0 \hspace{.5em} c_{2}^{4}=0 \hspace{.5em} c_{3}^{4}=0 \hspace{.5em} c_{4}^{4}=0 \hspace{.5em} c_{5}^{4}=0$
 
-** IN-PROGRESS R1CS for Edwards Addition on the Tiny-jubjub curve (Exercise 99 and 100 MoonMath)
+** DONE R1CS for Edwards Addition on the Tiny-jubjub curve (Exercise 99 and 100 MoonMath)
 
 ---
 
@@ -569,17 +569,70 @@ C[7][10]: -3$ /* -3W5 */
 
 print(A[7].X * B[7].X, "=", C[7].X);
 
+/* Display the matrices */
+print("Matrix A:")$
+disp(A)$
+print("Matrix B:")$
+disp(B)$
+print("Matrix C:")$
+disp(C)$
+
 #+END_SRC
 
 #+RESULTS:
-: I1 I4 = W3
-: I2 I3 = W4
-: I1 I3 = W5
-: I2 I4 = W6
-: 8 W3 W4 = W7
-: W1 (W7 + 1) = W4 + W3
-: W2 (1 - W7) = W6 - 3 W5
+#+begin_example
+I1 I4 = W3
+I2 I3 = W4
+I1 I3 = W5
+I2 I4 = W6
+8 W3 W4 = W7
+W1 (W7 + 1) = W4 + W3
+W2 (1 - W7) = W6 - 3 W5
+Matrix A:
+                    [ 0  1  0  0  0  0  0  0  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  0  1  0  0  0  0  0  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  1  0  0  0  0  0  0  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  0  1  0  0  0  0  0  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  0  0  0  0  0  0  8  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  0  0  0  0  1  0  0  0  0  0  0 ]
+                    [                                    ]
+                    [ 0  0  0  0  0  0  1  0  0  0  0  0 ]
+Matrix B:
+                   [ 0  0  0  0  1  0  0  0  0  0  0   0  ]
+                   [                                      ]
+                   [ 0  0  0  1  0  0  0  0  0  0  0   0  ]
+                   [                                      ]
+                   [ 0  0  0  1  0  0  0  0  0  0  0   0  ]
+                   [                                      ]
+                   [ 0  0  0  0  1  0  0  0  0  0  0   0  ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  1  0  0   0  ]
+                   [                                      ]
+                   [ 1  0  0  0  0  0  0  0  0  0  0   1  ]
+                   [                                      ]
+                   [ 1  0  0  0  0  0  0  0  0  0  0  - 1 ]
+Matrix C:
+                   [ 0  0  0  0  0  0  0  1  0   0   0  0 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  1   0   0  0 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  0   1   0  0 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  0   0   1  0 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  0   0   0  1 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  1  1   0   0  0 ]
+                   [                                      ]
+                   [ 0  0  0  0  0  0  0  0  0  - 3  1  0 ]
+#+end_example
 
+* IN-PROGRESS Algebraic Circuits
 
 * TODO Groth16
 * TODO PLONK
