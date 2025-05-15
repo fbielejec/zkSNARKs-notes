@@ -209,7 +209,7 @@ $R(I;W) =  \begin{cases}
 \text{False} & \text{otherwise.}
 \end{cases}$
 
-* IN-PROGRESS Rank-1 Quadratic Constraint Systems (R1CS)
+* DONE Rank-1 Quadratic Constraint Systems (R1CS)
 
 =Definition: R1CS=
 
@@ -632,7 +632,69 @@ Matrix C:
                    [ 0  0  0  0  0  0  0  0  0  - 3  1  0 ]
 #+end_example
 
+* DONE R1CS Satisfiability
+- Rank-1 Constraint Systems define [[*Formal Languages][Formal Languages]].
+- Every R1CS over a field $F$ defines a decision function over the alphabet $\Sigma_{I} \times \Sigma_{W}=F \times F$ in the following way:
+
+$R_{R1CS}: \hspace{.5em} (F)^{*} \times (F)^{*} \rightarrow {true,false};$
+
+$(I;W) \mapsto
+\begin{cases}
+\text{True} & \text{if } (I;W) \text{ satisfies R1CS}, \\
+\text{False} & \text{otherwise.}
+\end{cases}$
+
+This is equivalent to saying that every R1CS defines a formal language:
+- The grammar of the language is the constraints.
+- words are solutions to the constraints equations.
+- *statement* is a knowledge claim: "Given instance $I$ there is a witness $W$ such that $(I;W)$ is a solution to the R1CS."
+
+---
+
+*NOTE: R1CS satisfiability*
+
+- Every R1CS defines it's own language (since the constraints, aka the grammar, can be different).
+- This is why often times we talk about another language called *R1CS satisfiability*, that is a *union* of the R1CS languages that define the problem:
+  - Let the alphabet $\Sigma=F$ be a field.
+  - the R1CS satisfiability language* is defined as follows:
+
+$L_{R1CS\_SAT(F)} = \{ (i;w) \in \Sigma^{*} \times \Sigma^{*} \hspace{.5em} | \hspace{.5em} \text{there is a R1CS R such that } R(i;w) = true  \}$
+
+---
+** DONE Example: 3-Factorization
+To prove a statement "There exists a witness $W$ such that $(I_{1};W)$ is a word in $L_{3.fac\_zk}$" constructively, a proof has to be provide a solution to [[*Example: R1CS for 3-factorization (Example 120 MoonMath)][R1CS for 3-factorization]].
+That is an assignment to all witness variables $W_1,W_2,W_3,W_4$.
+
+#+BEGIN_SRC sage :session . :exports both
+F=GF(13)
+
+def R(I,W):
+  i1 = I;
+  w1,w2,w3,w4 = W[0],W[1],W[2],W[3]
+
+  constraint1 = F(w1)*F(w2)==F(w4);
+  constraint2 = F(w4)*F(w3)==F(i1);
+  return (constraint1 & constraint2)
+
+I=(11);W=(2,3,4,6);
+
+print(f"R(I={I};W={W}) = {R(I,W)}")
+
+# another proof (factorization is not unique in a field in general)
+R((11),(3,5,12,2))
+
+#+END_SRC
+
+#+RESULTS:
+: R(I=11;W=(2, 3, 4, 6)) = True
+: True
+
 * IN-PROGRESS Algebraic Circuits
+- Rank-1 Constraint Systems are quadratic equations such that solutions are knowledge proofs for the existence of words in associated languages.
+- No general methods are known that solve systems of quadratic equations efficiently.
+- Auxiliary information is needed to help compute solutions efficiently.
+- A class of [[*Decision functions][Decision Functions]] called *algebraic circuits* bridges that gap.
+  - Every algebraic circuit defines an associated R1CS and also provides an efficient way to compute solutions for that R1CS.
 
 * TODO Groth16
 * TODO PLONK
