@@ -475,11 +475,12 @@ W_2 \cdot (1 - W_7) = W_6 - aW_5 \\
 
 We have an R1CS with $n=4$ instances, $m=7$ witness values (2 field values for the sum point and 5 intermediate witness values) and $k=7$ constraints.
 
-For the first constraint we have (unofficial notation):
+For example, for the first constraint we have (unofficial notation):
 
 $A[0] \odot \mathbf{X} \times B[0] \odot \mathbf{X} = C[0] \odot \mathbf{X}$
 
 where:
+
 - $A[0], B[0], C[0]$ is the first row of the coefficient matrix.
 - $\odot$ denotes element-wise multiplication (Hadamard product).
 - $\times$ is standard multiplication.
@@ -495,10 +496,10 @@ $B[0] \odot \mathbf{X} = \begin{bmatrix}
 \end{bmatrix} \odot  \begin{bmatrix} 1 \\ I_{1} \\ I_{2} \\ I_{3} \\ I_{4} \\ W_{1} \\ W_{2} \\ W_{3} \\ W_{4} \\ W_{5} \\ W_{6} \\ W_{7} \end{bmatrix} = 1 \times I_{4}$
 
 $C[0] \odot \mathbf{X} = \begin{bmatrix}
-0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0
-\end{bmatrix} \odot  \begin{bmatrix} 1 \\ I_{1} \\ I_{2} \\ I_{3} \\ I_{4} \\ W_{1} \\ W_{2} \\ W_{3} \\ W_{4} \\ W_{5} \\ W_{6} \\ W_{7} \end{bmatrix} = 1 \times W_{2}$
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix} \odot  \begin{bmatrix} 1 \\ I_{1} \\ I_{2} \\ I_{3} \\ I_{4} \\ W_{1} \\ W_{2} \\ W_{3} \\ W_{4} \\ W_{5} \\ W_{6} \\ W_{7} \end{bmatrix} = 1 \times W_{3}$
 
-- Using maxima to simplify calculations:
+Using maxima to simplify the calculations for all of the quadratic constraints:
 
 #+BEGIN_SRC maxima :exports both :results output replace
 /* Define the column vector X */
@@ -527,13 +528,57 @@ A[2][3]: 1$  /* I2 */
 B[2][4]: 1$  /* I3 */
 C[2][9]: 1$  /* W4 */
 
+print(A[2].X * B[2].X, "=", C[2].X);
+
+/* Constraint 3: I1*I3 = W5 */
+A[3][2]: 1$  /* I1 */
+B[3][4]: 1$  /* I3 */
+C[3][10]: 1$ /* W5 */
+
+print(A[3].X * B[3].X, "=", C[3].X);
+
+/* Equation 4: I2*I4 = W6 */
+A[4][3]: 1$  /* I2 */
+B[4][5]: 1$  /* I4 */
+C[4][11]: 1$ /* W6 */
+
+print(A[4].X * B[4].X, "=", C[4].X);
+
+/* Equation 5: (8 W3)*W4 = W7 */
+A[5][8]: 8$  /* 8*W3 */
+B[5][9]: 1$  /* W4 */
+C[5][12]: 1$ /* W7 */
+
+print(A[5].X * B[5].X, "=", C[5].X);
+
+/* Equation 6: W1*(1 + W7) = W3 + W4 */
+A[6][6]: 1$   /* W1 */
+B[6][1]: 1$   /* 1 */
+B[6][12]: 1$  /* W7 */
+C[6][8]: 1$   /* W3 */
+C[6][9]: 1$   /* W4 */
+
+print(A[6].X * B[6].X, "=", C[6].X);
+
+/* Equation 7: W2*(1 - W7) = W6 - 3W5 */
+A[7][7]: 1$   /* W2 */
+B[7][1]: 1$   /* 1 */
+B[7][12]: -1$ /* -W7 */
+C[7][11]: 1$  /* W6 */
+C[7][10]: -3$ /* -3W5 */
+
+print(A[7].X * B[7].X, "=", C[7].X);
 
 #+END_SRC
 
 #+RESULTS:
-: I1 I4 = W3 
-
-
+: I1 I4 = W3
+: I2 I3 = W4
+: I1 I3 = W5
+: I2 I4 = W6
+: 8 W3 W4 = W7
+: W1 (W7 + 1) = W4 + W3
+: W2 (1 - W7) = W6 - 3 W5
 
 
 * TODO Groth16
