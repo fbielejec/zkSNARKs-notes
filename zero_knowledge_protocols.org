@@ -698,3 +698,4 @@ R((11),(3,5,12,2))
 
 * TODO Groth16
 * TODO PLONK
+- [ ] https://www.cryptologie.net/article/527/understanding-plonk/
