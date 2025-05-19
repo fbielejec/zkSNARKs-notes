@@ -148,7 +148,7 @@ where:
 
 =Definition: language with an instance and a witness=
 
-$L_R := \{ (i,w) \in \Sigma_{I}^{*} \times \Sigma_{W}^{*} \hspace{.5em} | \hspace{.5em} R(i,w) = true \}$
+$L_R := \{ (i;w) \in \Sigma_{I}^{*} \times \Sigma_{W}^{*} \hspace{.5em} | \hspace{.5em} R(i;w) = true \}$
 
 In this context *statement* $S$ is a claim that given an instance $i$ there is a witness $w$ such that the language $L$ contains a word $(i,w)$.
 A constructive proof for $S$ is a string $P=(i,w)$ and it is verified by $R(P)=true$.
@@ -179,12 +179,13 @@ $L_{SHA256} := \{ (i;w) \in \{0,1\}^{*} \times \{0,1\}^{*} \hspace{.5em} | \hspa
   - $\Sigma_I = F_{13}$.
   - $\Sigma_W = F_{13}$.
 - *Decision function:*
-$R_{3,fac\_zk}= (F_{13})^{*} \times (F_{13})^{*} \rightarrow \{true, false\};$ s.t.
+$R_{3.fac\_zk}= (F_{13})^{*} \times (F_{13})^{*} \rightarrow \{true, false\};$ s.t.
 $(<i_1,...,i_n>;<w_1,...,w_m>) \mapsto \begin{cases}
 \text{True} & n=1, m=3, i_1=w_1 \cdot x_2 \cdot w_3 \\
 \text{False} & \text{otherwise.}
 \end{cases}$
-- *Language*: all strings from $(F_{13})^{*} \times (F_{13})^{*}$ that are mapped to $true$ by the decision function $R_{3, fac\_zk}$.
+- *Language*: all strings from $(F_{13})^{*} \times (F_{13})^{*}$ that are mapped to $true$ by the decision function $R_{3.fac\_zk}$:
+$L_{3.fac\_zk}=\{ (i;w) \in \Sigma_{I}^{*} \times \Sigma_{W}^{*} \hspace{.5em} | \hspace{.5em} R_{3.fac\_zk}(i;w) = true \}$
 
 *** DONE Example: Tiny-jubjub (Example 119 MoonMath)
 /Constructive proof is given by a pair $(x_1,x_2)$ of field elements from $F_{13}$ such that the pair is a point of the Tiny-jubjub curve in it's Edwards form./
@@ -336,7 +337,7 @@ $c_{0}^{2}=0 \hspace{.5em} c_{1}^{2}=0 \hspace{.5em} c_{2}^{2}=0 \hspace{.5em} c
 $c_{0}^{3}=0 \hspace{.5em} c_{1}^{3}=0 \hspace{.5em} c_{2}^{3}=0 \hspace{.5em} c_{3}^{3}=0 \hspace{.5em} c_{4}^{3}=0 \hspace{.5em} c_{5}^{3}=1$
 $c_{0}^{4}=0 \hspace{.5em} c_{1}^{4}=0 \hspace{.5em} c_{2}^{4}=0 \hspace{.5em} c_{3}^{4}=0 \hspace{.5em} c_{4}^{4}=0 \hspace{.5em} c_{5}^{4}=0$
 
-** DONE R1CS for Edwards Addition on the Tiny-jubjub curve (Exercise 99 and 100 MoonMath)
+** DONE Exercise: R1CS for Edwards Addition on the Tiny-jubjub curve (Exercise 99 and 100 MoonMath)
 
 ---
 
@@ -695,6 +696,182 @@ R((11),(3,5,12,2))
 - Auxiliary information is needed to help compute solutions efficiently.
 - A class of [[*Decision functions][Decision Functions]] called *algebraic circuits* bridges that gap.
   - Every algebraic circuit defines an associated R1CS and also provides an efficient way to compute solutions for that R1CS.
+
+=Definition: Algebraic Circuit=
+
+A directed acyclic multi-graph $\mathbb{C}(\mathbb{F})$ over field $\mathbb{F}$ is called an *algebraic circuit* if the following holds:
+
+- The set of edges has a total order.
+- Every source node has a label that represents either a variable or a constant from the field
+$\mathbb{F}$.
+- Every sink node has exactly one incoming edge and a label that represents either a variableor a constant from the field $\mathbb{F}$.
+- Every node that is neither a source nor a sink has exactly two incoming edges and a label
+from the set $\{+,*\}$ that represents either addition or multiplication in $\mathbb{F}$.
+- All outgoing edges from a node have the same label.
+- Outgoing edges from a node with a label that represents a variable have a label.
+- Outgoing edges from a node with a label that represents multiplication have a label, if
+there is at least one labeled edge in both input paths.
+- All incoming edges to sink nodes have a label.
+- If an edge has two labels $S_i$ and $S_j$ it gets a new label $S_i = S_j$ .
+- No other edge has a label.
+- Incoming edges to labeled sink nodes, where the label is a constant $c \in \mathbb{F}$ are labeled with the same constant. Every other edge label is taken from the set $\{W, I\}$ and indexed compatible with the order of the edge set.
+
+where:
+- Source nodes are the inputs to the circuit and either represent variables or constants.
+- Sink nodes represent termination points of the circuit and are either output variables or constants.
+  - Constant sink nodes enforce computational outputs to take on certain values.
+
+** DONE Example: Generalized 3-factorization SNARK (Example 124 MoonMath)
+
+Revisiting the [[*Example: 3-factorization (Example 118 MoonMath)][zero-knowledge 3-factorization]] problem, let's consider the following function:
+
+$f_{3.fac} : \mathbb{F}_{13} \times \mathbb{F}_{13} \mathbb{F}_{13} \rightarrow \mathbb{F}_{13}; \hspace{.5em} (x_1,x_2,x_3) \rightarrow x_1 \cdot x_2 \cdot x_3$
+
+Using it we can describe the problem in the following way:
+
+"Given an instance $I_1 \in \mathbb{F}_{13}$ a valid witness consists of three values $W_1,W_2,W_3$ from \mathbb{F}_13 such that $f_3.fac(W_1,W_2,W_3)=I_1$ (valid witness is a preimage of $f_{3.fac}$ at the point I1)"
+
+This function can be transformed into an algebraic circuit over $\mathbb{F}_13$ as follows:
+
+\begin{align*}
+f_{3.fac}(x_1,x_2,x_3) & = x_1 \cdot x_2 \cdot x_3 \\
+                       & = (x_1 \cdot x_2 ) \cdot x_3 \\
+                       & = MUL(MUL(x_1,x_2),x_3)
+\end{align*}
+
+Following the [[*Algebraic Circuits][Algebraic Circuits]] definition:
+- We first constrain the variables to edge labels $W_1 = x_1$, W_2 = x_2, W_3 = x_3$ as well as I_1 = $f_{3.fac\_zk}$.
+  - The order follows depth-first right-to-left traversal algorithm.
+- We then rewrite the operator representation of $f_{3.fac}$ into circuit nodes.
+
+We get the following:
+
+#+BEGIN_SRC dot :file 3.fac_zk.png :exports results
+digraph G1 {
+        graph [forcelabels=true,
+                nodesep=2.0,
+                splines=ortho
+        ];
+        n1	[label=x_2,
+                shape=box];
+        n3	[label="*"];
+        n1 -> n3	[xlabel="W_2 "];
+        n5	[label="*"];
+        n3 -> n5	[label=W_4];
+        n2	[label=x_1,
+                shape=box];
+        n2 -> n3	[xlabel=" W_1"];
+        n6	[label="f_(3.fac_zk)",
+                shape=box];
+        n5 -> n6	[label=" I_1"];
+        n4	[label=x_3,
+                shape=box];
+        n4 -> n5	[label=" W_3"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:3.fac_zk.png]]
+
+** IN-PROGRESS Example: Tiny-jubjub membership (Example 125 MoonMath)
+
+A pair of field elements $(x,y) \in \mathbb{F}_{13}$ is a curve point if:
+
+$3 \cdot x^2 + y^2 = 1+ 8 \cdot x^2 \cdot y^2$
+
+To transform the following into an algebraic circuit:
+
+\begin{align*}
+3 \cdot x^2 + y^2 & = 1 + 8 \cdot x^2 \cdot y^2 \\
+0 & = 1 + 8 \cdot x^2 \cdot y^2 - 3 \cdot x^2 - y^2 \\
+0 & = 1 + 8 \cdot x^2 \cdot y^2 +10 \cdot x^2 + 12 y^2 \\
+\end{align*}
+
+We then use this expression to define a function such that all points on the Tiny-jubjub curve are preimages of this function at 0:
+
+$f_{tiny\_jj}: \mathbb{F}_{13} \times \mathbb{F}_{13} \rightarrow \mathbb{F}_{13}; \hspace{.5em} (x,y) \mapsto  1 + 8 \cdot x^2 \cdot y^2 +10 \cdot x^2 + 12 y^2$
+
+Every pair of field elements $(x,y) \in \mathbb{F}_{13}^{2}$ with $f_{tiny\_jj}=0$ is a point on the curve.
+The preimage $f_{tiny\_jj}^{-1}(0)$ is therefore a complete description of the curve (there are no other curve points).
+
+To transform this function into an algebraic circuit:
+
+\begin{align*}
+f_{tiny\_jj} & = 1 + 8 \cdot x^2 \cdot y^2 +10 \cdot x^2 + 12 y^2 \\
+             & = ((8 \cdot ((x \cdot x) \cdot (y \cdot y))) + (1 + 10 \cdot (x \cdot x))) + (12 \cdot (y \cdot y)) \\
+             & = ADD(ADD(MUL(8,MUL(MUL(x,x),MUL(y,y))),ADD(1,MUL(10,MUL(x,x)))),MUL(12,MUL(y,y)))
+\end{align*}
+
+Constraining all variables to edge labels we get the following circuit:
+
+---
+
+*NOTE*
+
+The circuit shape is dependent on our choice of bracketing above.
+
+---
+
+#+BEGIN_SRC dot :file f_tiny_jj.png :exports results
+digraph G2 {
+        graph [forcelabels=true,
+                nodesep=2.0,
+                splines=ortho
+        ];
+        n1	[label=x,
+                shape=box];
+        n4	[label="*"];
+        n1 -> n4	[xlabel=I_1];
+        n1 -> n4;
+        n8	[label="*"];
+        n4 -> n8	[labeldistance=2,
+                taillabel=W_3];
+        n10	[label="*"];
+        n4 -> n10	[labeldistance=4,
+                taillabel=W_3];
+        n2	[label=y,
+                shape=box];
+        n5	[label="*"];
+        n2 -> n5	[xlabel=I_2];
+        n2 -> n5;
+        n5 -> n10	[xlabel=W_4];
+        n13	[label="*"];
+        n5 -> n13	[xlabel=W_4];
+        n3	[label=10,
+                shape=box];
+        n3 -> n8;
+        n11	[label="+"];
+        n8 -> n11;
+        n12	[label="*"];
+        n10 -> n12	[labeldistance=4,
+                taillabel=W_5];
+        n15	[label="+"];
+        n13 -> n15;
+        n6	[label=12,
+                shape=box];
+        n6 -> n13;
+        n7	[label=1,
+                shape=box];
+        n7 -> n11;
+        n14	[label="+"];
+        n11 -> n14;
+        n9	[label=8,
+                shape=box];
+        n9 -> n12;
+        n12 -> n14;
+        n14 -> n15;
+        n16	[label="0",
+                shape=box];
+        n15 -> n16	[label=" 0",
+                labeldistance=2];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:f_tiny_jj.png]]
+
+The circuit defines the inputs to be instances, while all other labels represent witnesses.
+It also constrain the output to be zero.
 
 * TODO Groth16
 * TODO PLONK
