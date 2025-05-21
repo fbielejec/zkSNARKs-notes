@@ -690,7 +690,7 @@ R((11),(3,5,12,2))
 : R(I=11;W=(2, 3, 4, 6)) = True
 : True
 
-* IN-PROGRESS Algebraic Circuits
+* Algebraic Circuits
 - Rank-1 Constraint Systems are quadratic equations such that solutions are knowledge proofs for the existence of words in associated languages.
 - No general methods are known that solve systems of quadratic equations efficiently.
 - Auxiliary information is needed to help compute solutions efficiently.
@@ -746,7 +746,7 @@ Following the [[*Algebraic Circuits][Algebraic Circuits]] definition:
 
 We get the following:
 
-#+BEGIN_SRC dot :file 3.fac_zk.png :exports results
+#+BEGIN_SRC dot :file c_3.fac_zk.png :exports results
 digraph G1 {
         graph [forcelabels=true,
                 nodesep=2.0,
@@ -771,7 +771,7 @@ digraph G1 {
 #+END_SRC
 
 #+RESULTS:
-[[file:3.fac_zk.png]]
+[[file:c_3.fac_zk.png]]
 
 ** DONE Example: Tiny-jubjub membership (Example 125 MoonMath)
 
@@ -873,7 +873,7 @@ digraph G2 {
 The circuit defines the inputs to be instances, while all other labels represent witnesses.
 It also constrain the output to be zero.
 
-* Circuit Execution
+* IN-PROGRESS Circuit Execution
 ** Example: Executing Tiny-jubjub circuit $C_{tiny-jj}(\mathbb{F}_{13})$
 We know from [[*Example: Tiny-jubjub membership (Example 125 MoonMath)][Tiny-jubjub circuit]] that any valid assignment with $S1 = x, S2 = y and S6 = 0$ means that $(x,y)$ is a point on the Tiny-jubjub curve.
 
@@ -940,7 +940,7 @@ digraph G2C {
 #+RESULTS:
 [[file:c_tiny-jj.png]]
 
-* IN-PROGRESS Circuit satisfiability
+* IN-PROGRESS Circuit Satisfiability
 
 Algebraic circuits give rise to [[*Formal Languages][Formal Languages]].
 Every algebraic circuit $\mathbf{C}(\mathbb{F})$ over a field $\mathbb{F}$ defines a decision function over the alphabet $\Sigma_{I} \times \Sigma_{W} = F \times F$:
@@ -962,13 +962,13 @@ A constructive *proof* to this claim is therefore an assignment of a field eleme
 Consider the circuit $C_{tiny-jj}(\mathbb{F}_{13})$ from [[*Example: Tiny-jubjub membership (Example 125 MoonMath)][Tiny-jubjub membership]], with its associated language $L_{tiny-jj}$.
 Construct a proof $\Pi$ for the instance $<11,6>$ and verify the proof.
 
-To construct a proof for a statement "there exists a witness W such that (I1,I2,W) is a word in $L_{tiny-jj}$" we need to find input values for $W=(W_2,W_3,W_4,W_5)$
+To construct a proof for a statement "there exists a witness W such that (I1,I2,W) is a word in $L_{tiny-jj}$" we need to find input values for $W=(W_2,W_3,W_4,W_5, W_6)$
 
-From [[*Example: Executing Tiny-jubjub circuit $C_{tiny-jj}(\mathbb{F}_{13})$][Executing Tiny-jubjub circuit]] we know that $(I_1, I_2, W_3, W_4, W_5>=<11, 6, 4, 10, 1>$ is a valid assignment.
+From [[*Example: Executing Tiny-jubjub circuit $C_{tiny-jj}(\mathbb{F}_{13})$][Executing Tiny-jubjub circuit]] we know that $(I_1, I_2, W_3, W_4, W_5, W_6=0>=<11, 6, 4, 10, 1, 0>$ is a valid assignment.
 
 Prover then executes the circuit with instance $I_1=11,I_2=6$ and inputs $W$ to decide whether the proof is a valid assignment or not:
 
-# TODO: properly execute the graph in Rust
+# TODO: properly execute the graph
 
 #+BEGIN_SRC sage :session . :exports both
 F=GF(13)
@@ -976,13 +976,72 @@ I1,I2,W3,W4,W5,W6 = (F(11), F(6), F(4), F(10), F(1), F(0));
 
 I1*I1 == W3
 I2*I2 == W4
+
 1+8*W3*W4+10*W3+12*W4 == W6
 #+END_SRC
 
 #+RESULTS:
 : True
 : True
+: 1
 : True
+
+* IN-PROGRESS Associated R1CS Constraint Systems
+- If the edge label $S_j$ is an *outgoing edge* of a *multiplication gate*, the R1CS gets a new quadratic constraint:
+
+$(\text{left input}) \cdot (\text{right input}) = S_j$
+
+- If the edge label $S_j$ is an *outgoing edge* of an *addition gate*, the R1CS gets a new quadratic constraint:
+
+$(\text{left input}) + (\text{right input}) \cdot 1 = S_j$
+
+- No other edge label adds a constraint to the system.
+
+
+---
+
+*NOTE: cost of gates*
+
+To understand the contribution of algebraic gates to the number of constraints, note that,
+According to the construction of [[*Algebraic Circuits][Algebraic Circuits]] *multiplication gates* have labels on their outgoing edges if and only if:
+
+- There is at least one labeled edge in both input paths,
+- or if the outgoing edge is an input to a sink node.
+
+This implies that multiplication with a constant is essentially free (it doesn't add new constraint to the system) as long as that multiplication gate is not an input to an output node.
+
+Moreover, *addition gates* have labels on their outgoing edges if and only if they are inputs to sink nodes.
+
+This implies that addition is essentially free (it doesn't add a new constraint to the system), as long as that addition gate is not an input to an output node.
+
+---
+
+** DONE Example: 3-factorization, transforming the circuit into an associated R1CS
+
+We will take the circuit from [[*Example: Generalized 3-factorization SNARK (Example 124 MoonMath)][3-factorization circuit]] and generate the associated R1CS constraints.
+We start with an empty R1CS, and iterate over the set of edge labels $<I1; W1, W2, W3, W4>$.
+
+- Starting with the edge label $I1$:
+  - it is an outgoing edge of a multiplication gate
+  - both input edges are labeled
+  - therefore we add the following constraint:
+
+$(\text{left input}) \cdot (\text{right input}) = I_1 \hspace{1em} \Leftrightarrow \hspace{1em} W_4 \cdot W_3 = I_1$
+
+- Next we consider the edge label $W_1$:
+  - it is not an outgoing edge of a multiplication or addition gate
+  - we don’t add a constraint to the system.
+
+- Same holds for $W_2$ and $W_3$
+
+- For $W_4$:
+  - it is an outgoing edge of a multiplication gate
+  - both input edges are labeled
+  - we add the following constraint:
+
+$W_2\cdot W_1= W_4$
+
+- there are no more labeled edges
 
 * TODO Groth16
 * TODO PLONK
