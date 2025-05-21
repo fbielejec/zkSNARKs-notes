@@ -313,7 +313,7 @@ We start by rewriting the defining equation:
 $1+8\cdot I_{1}^{2} \cdot I_{2}^{2} +10 \cdot I_{1}^{2} +12 \cdot I_{2}^{2}  = 0$
 
 Now to express it as R1CS we introduce new variables that constrain the intermediate steps in the computation.
-On possible choice is to declare all as witness values:
+One possible choice is to declare all as witness values:
 
 $I_{1} \cdot I_{1} = W_{1} \hspace{2em} \text{constraint 1}$
 $I_{2} \cdot I_{2} = W_{2}  \hspace{2em} \text{constraint 2}$
@@ -773,7 +773,7 @@ digraph G1 {
 #+RESULTS:
 [[file:3.fac_zk.png]]
 
-** IN-PROGRESS Example: Tiny-jubjub membership (Example 125 MoonMath)
+** DONE Example: Tiny-jubjub membership (Example 125 MoonMath)
 
 A pair of field elements $(x,y) \in \mathbb{F}_{13}$ is a curve point if:
 
@@ -872,6 +872,117 @@ digraph G2 {
 
 The circuit defines the inputs to be instances, while all other labels represent witnesses.
 It also constrain the output to be zero.
+
+* Circuit Execution
+** Example: Executing Tiny-jubjub circuit $C_{tiny-jj}(\mathbb{F}_{13})$
+We know from [[*Example: Tiny-jubjub membership (Example 125 MoonMath)][Tiny-jubjub circuit]] that any valid assignment with $S1 = x, S2 = y and S6 = 0$ means that $(x,y)$ is a point on the Tiny-jubjub curve.
+
+From [[*Example: Tiny-jubjub Membership (Example 116 MoonMath)][Tiny-jubjub Membership Language]] we know that for example that $(11,6)$ is a vaid point on the curve.
+Executing the circuit we get the assignments:
+
+$S_{tiny\-jj}=<S_1,S_2,S_3,S_4,S_5>=<11, 6, 4, 10, 1>$
+
+#+BEGIN_SRC dot :file c_tiny-jj.png :exports results
+digraph G2C {
+        graph [forcelabels=true,
+                nodesep=2.0,
+                splines=ortho
+        ];
+        n1	[label=x,
+                shape=box];
+        n4	[label="*"];
+        n1 -> n4	[label="S_1=11",
+                labeldistance=4];
+        n1 -> n4;
+        n8	[label="*"];
+        n4 -> n8	[taillabel="S_3=4 "];
+        n10	[label="*"];
+        n4 -> n10	[labeldistance=4,
+                taillabel="S_3=4"];
+        n2	[label=y,
+                shape=box];
+        n5	[label="*"];
+        n2 -> n5	[label="S_2=6"];
+        n2 -> n5;
+        n5 -> n10	[xlabel="S_4=10 "];
+        n13	[label="*"];
+        n5 -> n13	[headlabel="S_4=10",
+                labeldistance=4];
+        n3	[label=10,
+                shape=box];
+        n3 -> n8;
+        n11	[label="+"];
+        n8 -> n11	[headlabel="[10*4=1] "];
+        n12	[label="*"];
+        n10 -> n12	[taillabel="S_5=1 "];
+        n15	[label="+"];
+        n13 -> n15	[headlabel=" [10*12=3]"];
+        n6	[label=12,
+                shape=box];
+        n6 -> n13;
+        n7	[label=1,
+                shape=box];
+        n7 -> n11;
+        n14	[label="+"];
+        n11 -> n14	[headlabel="[1+1=2] "];
+        n9	[label=8,
+                shape=box];
+        n9 -> n12;
+        n12 -> n14	[label=" [8*1=8]"];
+        n14 -> n15	[taillabel=" [2+8=10]"];
+        n16	[label=0,
+                shape=box];
+        n15 -> n16	[label=" S_6=0",
+                labeldistance=2];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:c_tiny-jj.png]]
+
+* IN-PROGRESS Circuit satisfiability
+
+Algebraic circuits give rise to [[*Formal Languages][Formal Languages]].
+Every algebraic circuit $\mathbf{C}(\mathbb{F})$ over a field $\mathbb{F}$ defines a decision function over the alphabet $\Sigma_{I} \times \Sigma_{W} = F \times F$:
+
+$R_{\mathbf{C}(\mathbb{F})}: \mathbb{F}^{*} \times \mathbb{F}^{*} \rightarrow \{true,false \};$
+$(I,W) \mapsto \begin{cases}
+\text{True} & \text{if } (I;W) \text{ is a valid assignment to  } \mathbf{C}(\mathbb{F})}, \\
+\text{False} & \text{else.}
+\end{cases}$
+
+where:
++ The grammar of this language is encoded in the shape of the circuit.
++ Words are assignments to edge labels that are derived from circuit execution.
++ Statements are knowledge claims "Given instance $$I, there is a witness $W$ such that $(I;W)$ is a valid assignment to the circuit".
+
+A constructive *proof* to this claim is therefore an assignment of a field element to every witness variable, which is *verified* by executing the circuit to see if the assignment of the execution meets the assignment of the proof.
+
+** TODO Exercise: Tiny-jubjub membership (Exercise 101 MoonMath)
+Consider the circuit $C_{tiny-jj}(\mathbb{F}_{13})$ from [[*Example: Tiny-jubjub membership (Example 125 MoonMath)][Tiny-jubjub membership]], with its associated language $L_{tiny-jj}$.
+Construct a proof $\Pi$ for the instance $<11,6>$ and verify the proof.
+
+To construct a proof for a statement "there exists a witness W such that (I1,I2,W) is a word in $L_{tiny-jj}$" we need to find input values for $W=(W_2,W_3,W_4,W_5)$
+
+From [[*Example: Executing Tiny-jubjub circuit $C_{tiny-jj}(\mathbb{F}_{13})$][Executing Tiny-jubjub circuit]] we know that $(I_1, I_2, W_3, W_4, W_5>=<11, 6, 4, 10, 1>$ is a valid assignment.
+
+Prover then executes the circuit with instance $I_1=11,I_2=6$ and inputs $W$ to decide whether the proof is a valid assignment or not:
+
+# TODO: properly execute the graph in Rust
+
+#+BEGIN_SRC sage :session . :exports both
+F=GF(13)
+I1,I2,W3,W4,W5,W6 = (F(11), F(6), F(4), F(10), F(1), F(0));
+
+I1*I1 == W3
+I2*I2 == W4
+1+8*W3*W4+10*W3+12*W4 == W6
+#+END_SRC
+
+#+RESULTS:
+: True
+: True
+: True
 
 * TODO Groth16
 * TODO PLONK
