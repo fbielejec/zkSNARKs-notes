@@ -976,14 +976,14 @@ I1,I2,W3,W4,W5,W6 = (F(11), F(6), F(4), F(10), F(1), F(0));
 
 I1*I1 == W3
 I2*I2 == W4
-
-1+8*W3*W4+10*W3+12*W4 == W6
+W4*W3 == W5
+(1 + 8*W5 + 10*W3 + 12*W4) * 1 == W6
 #+END_SRC
 
 #+RESULTS:
 : True
 : True
-: 1
+: True
 : True
 
 * IN-PROGRESS Associated R1CS Constraint Systems
@@ -1042,6 +1042,18 @@ $(\text{left input}) \cdot (\text{right input}) = I_1 \hspace{1em} \Leftrightarr
 $W_2\cdot W_1= W_4$
 
 - there are no more labeled edges
+
+* IN-PROGRESS Quadratic Arithmetic Programs (QAP)
+
+=Definition: Quadratic Arithmetic Program (QAP)=
+
+Let $\mathbb{F}$ be a field and let $R$ be a [[*Rank-1 Quadratic Constraint Systems (R1CS)][R1CS]] over $\mathbb{F}$ such that the number of non-zero elements in $\mathbb{F}$ is strictly greater than the number $k$ of constraints in $R$ .
+Let $a_{j}^{i}, b_{j}^{i},c_{j}^i \in \mathbb{F}$ for every index $0 \leq j \leq n+m$ and $1 \leq i \leq k$ be the defining constants of the R1CS.
+Let $m_1,\ldots,m_k$ be arbitrary, invertible and distinct elements from $\mathbb{F}$.
+
+Then the *Quadratic Arithmetic Program (QAP)* associated with the R1CS $R$ is the following set of polynomials over $\mathbb{F}$:
+
+$QAP(R)=\{ T \in \mathbb{F}[x], \{ A_j,B_j,C_j \in \mathbb{F}[x] \}_{j=0}^{n+m} \}$
 
 * TODO Groth16
 * TODO PLONK
