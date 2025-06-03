@@ -39,6 +39,16 @@ where:
 - $p_1, p_2, \ldots, p_k$ are distinct prime numbers,
 - $e_1, e_2, \ldots, e_k$ are positive integers that represent the multiplicities of the primes.
 
+---
+
+*NOTE*
+
+This theorem is one of the main reasons why 1 is not considered a prime number: if 1 were prime, then factorization into primes would not be unique, for example:
+
+$2 = 2 \cdot 1 = 2 \cdot 1 \cdot 1 = \ldots$
+
+---
+
 ** Example
 Consider the number 30:
 
