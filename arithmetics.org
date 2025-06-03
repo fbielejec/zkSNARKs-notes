@@ -24,7 +24,7 @@
   - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
 
-* IN-PROGRESS Fundamental Theorem of Arithmetics
+* DONE Fundamental Theorem of Arithmetic
 The *Fundamental Theorem of Arithmetic* states that every integer greater than 1 can be uniquely expressed as a product of prime numbers, up to the order of the factors.
 
 =Definition=
@@ -42,11 +42,18 @@ where:
 ** Example
 Consider the number 30:
 
-\[
-     30 = 2^1 \cdot 3^1 \cdot 5^1
-     \]
+$30 = 2^1 \cdot 3^1 \cdot 5^1$
 
 In this case, the prime factorization involves the primes 2, 3, and 5.
+
+Consider the number 1200
+
+$1200=2^{4} \cdot 3^{1} \cdot 5^{2} = (2\cdot 2\cdot 2\cdot 2) \cdot 3 \cdot (5\cdot 5) = 5\cdot 2\cdot 5\cdot 2\cdot 3\cdot 2\cdot 2=\ldots$
+
+The theorem says two things about this example:
+- 1200 can be represented as a product of primes 2,3 and 5.
+- no matter how this is done, there will always be exactly four 2s, one 3, two 5s and *no other primes in the product*.
+
 * Coprime integers
 Coprime integers are pairs of integers that do not have any common factor other than 1.
 * TODO Euclidean Algorithm
