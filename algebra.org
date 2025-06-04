@@ -26,8 +26,12 @@
 :END:
 
 * TODO Group
+** TODO Abelian Group
 ** TODO Cyclic Group
-** TODO Primitive n-th Roots
+- TODO: Group generator, definition,examples
+- TODO: If a group is cyclic, then it is abelian
+** TODO Primitive Roots
+- TODO: Primitive Root (modulo n). Definition, examples
 * TODO Ring
 * TODO Field
 ** TODO Finite Field
@@ -152,9 +156,9 @@ where $1$ is the multiplicative identity in $\mathbb{F}_q$.
 2. *Primitive Condition*:
 - The order of $\zeta$ must be exactly $n$, meaning that:
 
-$\zeta^k = 1$
+$\zeta^k = 1$ for any positive integer $k < n$ must not hold.
 
-for any positive integer $k < n$ must not hold. In other words, $\zeta$ should not equal 1 until raised to the power of $n$.
+In other words, $\zeta$ should *not equal 1 until raised to the power of $n$.*
 This implies that $\zeta$ generates the group of $n$-th roots of unity.
 
 =Properties=
