@@ -25,6 +25,12 @@
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
 :END:
 
+* TODO Group
+** TODO Cyclic Group
+** TODO Primitive n-th Roots
+* TODO Ring
+* TODO Field
+** TODO Finite Field
 * Algebraic closure
 
 =Definition=
@@ -60,8 +66,8 @@ In a finite field $F_q$, the n-th roots of unity are the solutions to the equati
 $x^n=1$
 
 where :
-- x is an element of the field,
-- n is a positive integer.
+- $x$ is an element of the field,
+- $n$ is a positive integer.
 
 =Key points=
 
