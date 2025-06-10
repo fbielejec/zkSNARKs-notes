@@ -69,7 +69,7 @@ Coprime integers are pairs of integers that do not have any common factor other 
 * TODO Euclidean Algorithm
 * IN-PROGRESS Modular arithmetic
 ** DONE Congruence (modular arithmetic)
-Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is $a$ divisor of their difference; that is, if there is an integer $k$ such that:
+Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is the divisor of their difference; that is, if there is an integer $k$ such that:
 
 $a - b = k \times m$
 
