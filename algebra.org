@@ -43,7 +43,6 @@
 - TODO: Primitive Root (modulo n). Definition, examples
 * TODO Ring
 ** TODO Ring Ideal
-
 * TODO Field
 ** TODO Finite Field
 * Algebraic closure
