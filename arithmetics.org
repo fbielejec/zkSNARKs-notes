@@ -95,7 +95,6 @@ It is an equivalence relation that is compatible with the operations of addition
 
 # all these integers are congruent modulo 12 (euclidean division remainder is the same)
 [n % 12 for n in [-7,5,17,29] ]
-
 #+END_SRC
 
 #+RESULTS:
@@ -217,7 +216,7 @@ remainder_classes
 :  4: [-2, 4, 10, 16],
 :  5: [-1, 5, 11, 17]}
 
-Remainder classes simplify modular artihmetic, for example to compute $2+5 \hspace{.5em} \text{mod 6}$:
+Remainder classes simplify modular arithmetic, for example to compute $2+5 \hspace{.5em} \text{mod 6}$:
 
 1) Choose arbitrary element from each class e.g $14$ (for $2$) and $-1$ (for $5$).
 2) Add those numbers (in the usual way): $14 + (-1) = 13$.

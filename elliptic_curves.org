@@ -1,4 +1,5 @@
 #+STARTUP: overview
+#+STARTUP: latexpreview
 #+latex_class_options: [12pt]
 
 * Contents

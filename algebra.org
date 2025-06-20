@@ -1,4 +1,5 @@
 #+STARTUP: overview
+#+STARTUP: latexpreview
 #+latex_class_options: [12pt]
 
 * Contents
@@ -7,6 +8,14 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
+- [[#group][Group]]
+  - [[#abelian-group][Abelian Group]]
+  - [[#cyclic-group][Cyclic Group]]
+  - [[#primitive-roots][Primitive Roots]]
+- [[#ring][Ring]]
+  - [[#ring-ideal][Ring Ideal]]
+- [[#field][Field]]
+  - [[#finite-field][Finite Field]]
 - [[#algebraic-closure][Algebraic closure]]
   - [[#example][Example]]
 - [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
@@ -33,6 +42,8 @@
 ** TODO Primitive Roots
 - TODO: Primitive Root (modulo n). Definition, examples
 * TODO Ring
+** TODO Ring Ideal
+
 * TODO Field
 ** TODO Finite Field
 * Algebraic closure
@@ -57,8 +68,8 @@ if $x$ is a solution to the following:
 $x^2 = y$
 
 In this case, $y$ is called a *quadratic residue* of $x$.
-On the other hand, if $y$ is given and the quadratic equation has no solution $x$,
-we call $y$ a *quadratic non-residue*.
+
+On the other hand, if $y$ is given and the quadratic equation has no solution $x$, we call $y$ a *quadratic non-residue*.
 * DONE Roots of unity
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
@@ -231,6 +242,7 @@ Equivalent definition but in the context of Elliptic Curve is here: [[file:ellip
 
 * IN-PROGRESS Polynomials
 ** Polynomial factorization
+
 =Definition=
 
 Let $P \in R[x]$ be a polynomial.
@@ -245,7 +257,7 @@ Each factor $F_i$ is called a prime factor of $P$.
 
 *NOTE*
 
-The above is an analog to the [[file:arithmetics.org::*Fundamental Theorem of Arithmetics][Fundamental Theorem of Arithmetics]] but applied to the ring of univariate polynomials $R[x]$.
+The above is an analog to the [[file:arithmetics.org::*Fundamental Theorem of Arithmetic][Fundamental Theorem of Arithmetic]] but applied to the ring of univariate polynomials $R[x]$.
 
 ---
 
