@@ -540,6 +540,8 @@ False
 
 * Lagrange's theorem for Elliptic Curves
 
+- See also [[file:algebra.org::*Lagrange's theorem][Basic Lagrange's theorem]]
+
 =Theorem=
 
 If $P$ is a point on the curve $E$ then the order of $P$ $k$ divides the order of the curve:
