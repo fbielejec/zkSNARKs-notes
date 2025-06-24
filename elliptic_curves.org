@@ -1,5 +1,4 @@
 #+STARTUP: overview
-#+STARTUP: latexpreview
 #+latex_class_options: [12pt]
 
 * Contents
@@ -12,7 +11,7 @@
   - [[#example][Example]]
 - [[#point-at-infinity][Point at infinity]]
 - [[#ec-group-law][EC group law]]
-  - [[#geometric-interpretation-point-addition-chord-rule][Geometric interpretation: Point addition (chord rule)]]
+  - [[#geometric-interpretation-elliptic-curve-point-addition-chord-rule][Geometric interpretation: Elliptic curve point addition (chord rule)]]
   - [[#geometric-interpretation-point-doubling-tangent-rule][Geometric interpretation: Point doubling (tangent rule)]]
   - [[#explicit-formulas-for-the-group-law][Explicit formulas for the group law]]
   - [[#deriving-group-law-for-ecs-example-211][Deriving group law for ECs: Example 2.1.1]]
@@ -86,10 +85,11 @@ E
 #+RESULTS:
 : Elliptic Curve defined by y^2 = x^3 + 3 over Finite Field of size 101
 
-* TODO Point at infinity
+* Point at infinity
 - [ ] A question that may arise from this description is what happens if the line that is drawn between the two points does not intersect the curve again? In this case the line is said to intersect the curve at "infinity", and the result of the addition is the point
+[[id:e7c740fb-6ec2-428b-9e47-2fa8ddd3a643][Point at infinity]]
 * IN-PROGRESS EC group law
-** DONE Geometric interpretation: Point addition (chord rule)
+** DONE Geometric interpretation: Elliptic curve point addition (chord rule)
 Over any field a line (a degree one equation in $x$ and $y$) intersects a cubic equation (a degree three equation in $x$ and $y$) in three places.
 In other words if we run a line:
 
@@ -539,8 +539,11 @@ False
 #+end_example
 
 * Lagrange's theorem for Elliptic Curves
+:PROPERTIES:
+:ID:       2a523cd8-b0c4-481c-92b4-cddc426df3c2
+:END:
 
-- See also [[file:algebra.org::*Lagrange's theorem][Basic Lagrange's theorem]]
+- See also [[id:874070dc-6425-409d-9f1d-c5dc791c0196][Basic Lagrange's theorem]]
 
 =Theorem=
 
@@ -572,11 +575,11 @@ print(f"r | k: {r.divides(k)}")
 #+END_SRC
 
 #+RESULTS:
-: kP: 9 * (0 : 1 : 1) = (0 : 1 : 0)
-: rP: 9 * (0 : 1 : 1) = (0 : 1 : 0)
+: kP: 9 * (4 : 3 : 1) = (0 : 1 : 0)
+: rP: 9 * (4 : 3 : 1) = (0 : 1 : 0)
 : r | k: True
-: (0 : 1 : 1)
-: (0 : 1 : 1)
+: (4 : 3 : 1)
+: (4 : 3 : 1)
 * TODO The exponential map
 - p39
 * Elliptic Curve scalar multiplication

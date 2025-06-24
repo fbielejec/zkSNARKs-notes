@@ -1,5 +1,4 @@
 #+STARTUP: overview
-#+STARTUP: latexpreview
 #+latex_class_options: [12pt]
 
 * Contents
@@ -25,16 +24,20 @@
   - [[#primitive-n-th-roots-of-unity][Primitive n-th Roots of Unity]]
   - [[#example][Example]]
 - [[#eulers-totient-function][Euler's totient function]]
-- [[#fermats-little-theorem][Fermats Little Theorem]]
+- [[#fermats-little-theorem][Fermat's Little Theorem]]
   - [[#example][Example]]
 - [[#lagranges-theorem][Lagrange's theorem]]
 - [[#polynomials][Polynomials]]
+  - [[#bezouts-theorem][Bezout's theorem]]
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
 :END:
 
 * TODO Group
+:PROPERTIES:
+:ID:       4c9d3fac-53fc-40a3-9dfd-1014ffb633a2
+:END:
 ** TODO Abelian Group
 ** TODO Cyclic Group
 - TODO: Group generator, definition,examples
@@ -42,9 +45,12 @@
 ** TODO Primitive Roots
 - TODO: Primitive Root (modulo n). Definition, examples
 * TODO Ring
+see [[id:df288eea-70b8-46b7-b31e-4d2545f25c89][Ring]]
 ** TODO Ring Ideal
 * TODO Field
+[[id:129fd124-8c31-4023-b569-752acac1cf1c][Field]]
 ** TODO Finite Field
+[[id:d90a640f-3419-4b13-a272-919d6e03dd57][Finite field (Galois Field)]]
 * Algebraic closure
 
 =Definition=
@@ -199,7 +205,10 @@ print(f"Primitive {n}-th roots of unity in F_7: {roots}")
 #+RESULTS:
 : Primitive 3-th roots of unity in F_7: [2, 4]
 * TODO Euler's totient function
-* Fermats Little Theorem
+* Fermat's Little Theorem
+:PROPERTIES:
+:ID:       bfc4c13f-a0cf-4772-bdf9-1802b3ba7080
+:END:
 
 =Theorem=
 
@@ -210,6 +219,10 @@ $k^p \equiv k \quad \text{( mod p )}$
 If $k$ is coprime to $p$, then we can divide both sides of this congruence by $k$ and get:
 
 $k^{p - 1} \equiv 1  \quad \text{( mod p )}$
+
+=Properties=
+
+Fermat's Little Theorem can be used to find [[id:479ea448-94c4-438e-98dc-2920ffe5fac8][Multiplicative inverses]].
 
 ** Example
 $k$ = 64 and $p$ = 137 ($k$ is coprime to $p$):
@@ -232,14 +245,21 @@ ZZ(64)^ZZ(137-1) % ZZ(137) == ZZ(1) % ZZ(137)
 : 1
 : True
 * Lagrange's theorem
+:PROPERTIES:
+:ID:       874070dc-6425-409d-9f1d-c5dc791c0196
+:END:
 If $H$ is a subgroup of any finite group $G$, then the sub-groups *order* (the number of elements) $|H|$ is a divisor of $|G|$,
 i.e. the order (number of elements) of every subgroup $H$ divides the order of group $G$:
 
 $\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]$
 
-Equivalent definition but in the context of Elliptic Curve is here: [[file:elliptic_curves.org::*Lagrange's theorem for Elliptic Curves][Lagrange's theorem for Elliptic Curves]]
+- Equivalent theorem in the context Elliptic Curves is here: [[id:2a523cd8-b0c4-481c-92b4-cddc426df3c2][Lagrange's theorem for Elliptic Curves]].
 
 * IN-PROGRESS Polynomials
+** TODO Bezout's theorem
+:PROPERTIES:
+:ID:       d65be3c6-88b2-4c93-9ba5-f1551ba8a8c0
+:END:
 ** Polynomial factorization
 
 =Definition=
