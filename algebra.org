@@ -8,9 +8,10 @@
 :END:
 :CONTENTS:
 - [[#group][Group]]
+  - [[#additive-group][Additive Group]]
+  - [[#multiplicative-group][Multiplicative Group]]
   - [[#abelian-group][Abelian Group]]
   - [[#group-order][Group order]]
-  - [[#group-charactreistic][Group charactreistic]]
   - [[#cyclic-group][Cyclic Group]]
   - [[#primitive-roots][Primitive Roots]]
 - [[#ring][Ring]]
@@ -42,15 +43,22 @@
 :PROPERTIES:
 :ID:       4c9d3fac-53fc-40a3-9dfd-1014ffb633a2
 :END:
+** TODO Additive Group
+:PROPERTIES:
+:ID:       191caddb-b1ac-43c9-91b5-90aff10a58b7
+:END:
+** TODO Multiplicative Group
+:PROPERTIES:
+:ID:       29aa6523-2349-4d90-8bb5-8c4f589f7c4a
+:END:
 ** TODO Abelian Group
-** TODO Group order
-** TODO Group charactreistic
-** TODO Cyclic Group
-- TODO: Group generator, definition,examples
-- TODO: If a group is cyclic, then it is abelian
+** DONE Group order
+See [[id:97c172ec-93ae-487c-902c-32491b36a6f0][Group Order]]
+** DONE Cyclic Group
+See [[id:f5f80632-6c31-4065-9470-33d7ea93c025][Cyclic groups]]
 ** TODO Primitive Roots
 - TODO: Primitive Root (modulo n). Definition, examples
-* TODO Ring
+* DONE Ring
 see [[id:df288eea-70b8-46b7-b31e-4d2545f25c89][Ring]]
 ** TODO Ring Ideal
 * TODO Field
@@ -301,7 +309,7 @@ Each factor $F_i$ is called a prime factor of $P$.
 
 *NOTE*
 
-The above is an analog to the [[file:arithmetics.org::*Fundamental Theorem of Arithmetic][Fundamental Theorem of Arithmetic]] but applied to the ring of univariate polynomials $R[x]$.
+The above is an analog to the [[id:6402bede-282d-4b6a-a4f9-31092fc00739][Fundamental Theorem of Arithmetic]] but applied to the ring of univariate polynomials $R[x]$.
 
 ---
 

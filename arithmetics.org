@@ -9,6 +9,7 @@
 :CONTENTS:
 - [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
   - [[#example][Example]]
+- [[#greatest-common-divisor-gcd][Greatest Common Divisor (GCD)]]
 - [[#coprime-integers][Coprime integers]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#extended-euclidean-algorithm][Extended Euclidean Algorithm]]
@@ -16,9 +17,9 @@
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
-  - [[#example-crt][Example: CRT]]
+    - [[#example-crt][Example: CRT]]
   - [[#remainder-classes][Remainder Classes]]
-  - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
+    - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
   - [[#modular-multiplicative-inverses][Modular multiplicative inverses]]
     - [[#example-modular-inverse][Example: modular inverse]]
 - [[#additional][Additional]]
@@ -26,9 +27,13 @@
 :END:
 
 * DONE Fundamental Theorem of Arithmetic
+:PROPERTIES:
+:ID:       6402bede-282d-4b6a-a4f9-31092fc00739
+:END:
+
 The *Fundamental Theorem of Arithmetic* states that every integer greater than 1 can be uniquely expressed as a product of prime numbers, up to the order of the factors.
 
-=Definition=
+=Theorem=
 
 Any integer $n$ can be written in the form:
 
@@ -65,8 +70,15 @@ The theorem says two things about this example:
 - 1200 can be represented as a product of primes 2,3 and 5.
 - no matter how this is done, there will always be exactly four 2s, one 3, two 5s and *no other primes in the product*.
 
+* TODO Greatest Common Divisor (GCD)
+:PROPERTIES:
+:ID:       0877b2d8-5757-46d5-b2db-f95628b0ccea
+:END:
 * Coprime integers
-Coprime integers are pairs of integers that do not have any common factor other than 1.
+:PROPERTIES:
+:ID:       91547919-6be2-47a2-b684-672779b56bc5
+:END:
+Coprime integers are pairs of integers that do not have any common factor other than 1 (their [[id:0877b2d8-5757-46d5-b2db-f95628b0ccea][Greatest Common Divisor (GCD)]] is 1)
 * TODO Euclidean Algorithm
 * TODO Extended Euclidean Algorithm
 :PROPERTIES:
@@ -107,7 +119,10 @@ It is an equivalence relation that is compatible with the operations of addition
 : 5
 : 5
 ** DONE Chinese Remainder Theorem
-*Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise [[Coprime integers][coprime]] (no two divisors share a common factor other than 1).
+:PROPERTIES:
+:ID:       454687bb-fa64-44d6-8f94-109611459f29
+:END:
+*Chinese Remainder Theorem* states that if one knows the remainders of the Euclidean division of an integer $x$ by several integers, then one can determine uniquely the remainder of the division of $x$ by the product of these integers, under the condition that the divisors are pairwise [[id:91547919-6be2-47a2-b684-672779b56bc5][Coprime]] (no two divisors share a common factor other than 1).
 
 Suppose we have a system of simultaneous congruences:
 
@@ -131,7 +146,7 @@ $x \equiv a_i \pmod{m_i} \forall i=1,2,\ldots,k$
 
 and any other solutions $x'$ is congruent to x modulo $M$ ($x' \equiv x \pmod{M}$).
 
-** DONE Example: CRT
+*** DONE Example: CRT
 $x \equiv 2 \pmod{3}$
 $x \equiv 3 \pmod{5}$
 $x \equiv 2 \pmod{7}$
@@ -207,7 +222,7 @@ $[r]_m = \{ x \in \mathbb{Z} \mid x \equiv r \pmod{m} \}$
 - The set of residue classes $\mathbb{Z} / m \mathbb{Z}$  forms a *ring* under addition and multiplication.
 - If $m$ is prime, $\mathbb{Z} / m \mathbb{Z}$ is a *field*.
 
-** DONE Example 11 MoonMath (Arithmetic modulo $6$)
+*** DONE Example 11 MoonMath (Arithmetic modulo $6$)
 
 Choosing $n=6$ we have six remainder classes of integers that are congruent mod 6 (they have the same remainder when divided mod 6). Let's list them:
 

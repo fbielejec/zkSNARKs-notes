@@ -26,7 +26,7 @@
   - [[#example][Example]]
 - [[#lagranges-theorem-for-elliptic-curves][Lagrange's theorem for Elliptic Curves]]
   - [[#example-lagranges-theorem-for-ecs][Example: Lagrange's theorem for ECs]]
-- [[#the-exponential-map][The exponential map]]
+- [[#exponential-map][Exponential map]]
 - [[#elliptic-curve-scalar-multiplication][Elliptic Curve scalar multiplication]]
 - [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
   - [[#example][Example]]
@@ -583,8 +583,8 @@ print(f"r | k: {r.divides(k)}")
 : r | k: True
 : (4 : 3 : 1)
 : (4 : 3 : 1)
-* TODO The exponential map
-- p39
+* TODO Exponential map
+- p40 MM
 * Elliptic Curve scalar multiplication
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $P$ a generator of $E(F)$.
 Then the elliptic curve scalar multiplication with base $P$ is defined as follows:
