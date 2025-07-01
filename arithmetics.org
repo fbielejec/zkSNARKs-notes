@@ -17,7 +17,7 @@
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
   - [[#example-crt][Example: CRT]]
-  - [[#remainder-class][Remainder Class]]
+  - [[#remainder-classes][Remainder Classes]]
   - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
   - [[#modular-multiplicative-inverses][Modular multiplicative inverses]]
     - [[#example-modular-inverse][Example: modular inverse]]
@@ -171,7 +171,7 @@ x
 : 23
 : [-187, -82, 23, 128, 233]
 
-** DONE Remainder Class
+** DONE Remainder Classes
 :PROPERTIES:
 :ID:       770696d2-1294-4e86-ac3c-6803f9053537
 :END:
