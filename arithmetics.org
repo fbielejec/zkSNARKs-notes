@@ -11,6 +11,7 @@
   - [[#example][Example]]
 - [[#greatest-common-divisor-gcd][Greatest Common Divisor (GCD)]]
 - [[#coprime-integers][Coprime integers]]
+- [[#cofactors][Cofactors]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#extended-euclidean-algorithm][Extended Euclidean Algorithm]]
 - [[#modular-arithmetic][Modular arithmetic]]
@@ -79,6 +80,10 @@ The theorem says two things about this example:
 :ID:       91547919-6be2-47a2-b684-672779b56bc5
 :END:
 Coprime integers are pairs of integers that do not have any common factor other than 1 (their [[id:0877b2d8-5757-46d5-b2db-f95628b0ccea][Greatest Common Divisor (GCD)]] is 1)
+* TODO Cofactors
+:PROPERTIES:
+:ID:       5cf1c4ca-35a9-425c-8fe9-ccdbd78d7d4d
+:END:
 * TODO Euclidean Algorithm
 * TODO Extended Euclidean Algorithm
 :PROPERTIES:
@@ -317,7 +322,7 @@ $ax \equiv 1 \pmod{m}$
 
 $ax \equiv 1 \pmod{m} \iff gcd(a,m)=1$
 
-A modular multiplicative inverse of a modulo $m$ can be found by using the [[Euclidean Algorithm][Extended Euclidean Algorithm]].
+A modular multiplicative inverse of a modulo $m$ can be found by using the [[id:9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0][Extended Euclidean Algorithm]].
 
 ---
 

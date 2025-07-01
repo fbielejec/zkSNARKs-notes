@@ -13,9 +13,11 @@
   - [[#abelian-group][Abelian Group]]
   - [[#group-order][Group order]]
   - [[#cyclic-group][Cyclic Group]]
+  - [[#cofactor-clearing][Cofactor Clearing]]
   - [[#primitive-roots][Primitive Roots]]
 - [[#ring][Ring]]
   - [[#ring-ideal][Ring Ideal]]
+- [[#discrete-logarithm][Discrete Logarithm]]
 - [[#field][Field]]
   - [[#finite-field][Finite Field]]
 - [[#algebraic-closure][Algebraic closure]]
@@ -56,11 +58,21 @@
 See [[id:97c172ec-93ae-487c-902c-32491b36a6f0][Group Order]]
 ** DONE Cyclic Group
 See [[id:f5f80632-6c31-4065-9470-33d7ea93c025][Cyclic groups]]
+** TODO Cofactor Clearing
+:PROPERTIES:
+:ID:       717783f4-2954-4d7b-8d44-8fcb8f877834
+:END:
+- p42 MM
 ** TODO Primitive Roots
 - TODO: Primitive Root (modulo n). Definition, examples
 * DONE Ring
 see [[id:df288eea-70b8-46b7-b31e-4d2545f25c89][Ring]]
 ** TODO Ring Ideal
+* Discrete Logarithm
+:PROPERTIES:
+:ID:       d5cb3cab-c38d-430a-bd0d-391eee096c6e
+:END:
+See [[id:3c27760c-b520-472e-a56e-4e6faf54b5eb][Logarithm map]]
 * TODO Field
 [[id:129fd124-8c31-4023-b569-752acac1cf1c][Field]]
 ** TODO Finite Field
@@ -319,6 +331,7 @@ The above is an analog to the [[id:6402bede-282d-4b6a-a4f9-31092fc00739][Fundame
 An *Irreducible polynomial* ss defined as a polynomial that cannot be factored into the product of two non-constant polynomials using Euclidean Division.
 
 ** Roots of the polynomial
+
 =Definition=
 
 Points where a polynomial evaluates to zero are called roots of the polynomial.
