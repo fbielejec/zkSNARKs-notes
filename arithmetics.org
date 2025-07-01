@@ -7,16 +7,17 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
-- [[#fundamental-theorem-of-arithmetics][Fundamental Theorem of Arithmetics]]
+- [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
   - [[#example][Example]]
 - [[#coprime-integers][Coprime integers]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
+- [[#extended-euclidean-algorithm][Extended Euclidean Algorithm]]
 - [[#modular-arithmetic][Modular arithmetic]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
   - [[#example-crt][Example: CRT]]
-  - [[#remainder-class-representation][Remainder Class Representation]]
+  - [[#remainder-class][Remainder Class]]
   - [[#example-11-moonmath-arithmetic-modulo-6][Example 11 MoonMath (Arithmetic modulo $6$)]]
   - [[#modular-multiplicative-inverses][Modular multiplicative inverses]]
     - [[#example-modular-inverse][Example: modular inverse]]
@@ -67,6 +68,10 @@ The theorem says two things about this example:
 * Coprime integers
 Coprime integers are pairs of integers that do not have any common factor other than 1.
 * TODO Euclidean Algorithm
+* TODO Extended Euclidean Algorithm
+:PROPERTIES:
+:ID:       9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0
+:END:
 * IN-PROGRESS Modular arithmetic
 ** DONE Congruence (modular arithmetic)
 Given an integer $m \geq 1$, called a modulus, two integers $a$ and $b$ are said to be *congruent modulo $m$*, if $m$ is the divisor of their difference; that is, if there is an integer $k$ such that:
@@ -166,7 +171,10 @@ x
 : 23
 : [-187, -82, 23, 128, 233]
 
-** DONE Remainder Class Representation
+** DONE Remainder Class
+:PROPERTIES:
+:ID:       770696d2-1294-4e86-ac3c-6803f9053537
+:END:
 The *remainder class* (or *residue class*) modulo $m$ is the set of all integers that share the same remainder when divided by $m$.
 
 ---
@@ -177,6 +185,13 @@ The notation $\mathbb{Z}/m\mathbb{Z}$ (read as *"Z mod mZ"*) represents the *rin
 - $\mathbb{Z}$ Set of all integers.
 - $m\mathbb{Z}$ Set of all integer multiples of m (e.g. for $m=6$ this is $\{\dots, -12, -6, 0, 6, 12, \dots\}$).
 - $\mathbb{Z}/m\mathbb{Z}$ Quotient ring formed by "wrapping $\mathbb{Z}$ around a circle with m positions," collapsing all integers into *m residue classes* based on their remainder when divided by m.
+
+$(\mathbb{Z}_6, +)$ and $\mathbb{Z}/m\mathbb{Z}$ are *the same algebraic object*:
+- $(\mathbb{Z}_6, +)$ emphasizes the /additive group/ structure.
+  - Elements are equivalence classes \([0], [1], \dots, [5]\).
+  - The operation is *addition modulo 6*.
+- $\mathbb{Z}/6\mathbb{Z}$ stresses the /quotient ring/ construction (integers modulo the ideal $6\mathbb{Z}$.
+  - Still forms an additive group under the same operation.
 
 ---
 
@@ -201,7 +216,7 @@ m = 6
 # init map to store classes
 remainder_classes = {r: [] for r in range(m)}
 
-# example range
+# example range, it's infinite in reality
 for x in range(-6, 18):
     remainder_classes[x % m].append(x)
 

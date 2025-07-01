@@ -55,6 +55,9 @@
   - [[#example-91-moonmath-finding-full-r-torsion-group][Example 91 MoonMath: Finding full r-torsion group]]
   - [[#example-411-pairings-for-beginners-finding-full-r-torsion-group][Example 4.1.1 Pairings For Beginners: Finding full r-torsion group]]
   - [[#example-412-pairings-for-beginners][Example 4.1.2 Pairings For Beginners]]
+- [[#ecdsa][ECDSA]]
+  - [[#materials][materials]]
+  - [[#notes][notes]]
 - [[#additional-materials][Additional materials]]
 :END:
 
@@ -1549,6 +1552,113 @@ print(f"E{r} torsion: {r_torsion}");
 : r^2=25 divides #E_F31=25: True
 : E_F31 embedding degree for r=5: 1
 : E5 torsion: [(0 : 1 : 0), (1 : 13 : 1), (1 : 18 : 1), (3 : 3 : 1), (3 : 28 : 1), (5 : 13 : 1), (5 : 18 : 1), (12 : 6 : 1), (12 : 25 : 1), (13 : 3 : 1), (13 : 28 : 1), (15 : 3 : 1), (15 : 28 : 1), (17 : 11 : 1), (17 : 20 : 1), (21 : 6 : 1), (21 : 25 : 1), (22 : 11 : 1), (22 : 20 : 1), (23 : 11 : 1), (23 : 20 : 1), (25 : 13 : 1), (25 : 18 : 1), (29 : 6 : 1), (29 : 25 : 1)]
+
+* IN-PROGRESS [#A] ECDSA
+** materials
+- [ ] https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
+- [ ] Digital Signatures (chap 4) from An Introduction to Mathematical Cryptography
+- [ ] Authentication and digital signatures from Cryptography Algorithms
+- [ ] https://www.rareskills.io/post/ecdsa-tutorial
+** IN-PROGRESS notes
+- why?
+- components
+- EC discrete log
+- two attempts at creating a scheme
+ - differrent private and public parts
+ - both lead to undersirable outcomes: one is underconstrained (Q can be picked at random, as the discrete log relation Q=qG is not veriofied)
+ - another leads to revealing the private key p
+- It turns out that proving we know the discrete log of two points without revealing them is easier than proving we know the discrete log of one point without revealing the single discrete log
+- this protocol is interactive: Fiat-Shamir Transform to make it non-interactive
+
+#+BEGIN_SRC sage :session . :exports both
+
+# TODO P+O and P+(-P)
+def add(P1,P2):
+  x1=P1[0];x2=P2[0];y1=P1[1];y2=P2[1];
+  lbda = (y2-y1) / (x2-x1);
+  x3 = lbda^2 - x1 - x2
+  return (x3, lbda*(x1 - x3) - y1);
+
+def double(P,a):
+  # doubling a point at infty = infty
+  if ((P[0] == 0) and (P[1] == 1)):
+    return (0, 1)
+  # doubling a point of order 2 (tangent is vertical)
+  if P[1] == 0:
+    return (0, 1)
+  x=P[0];y=P[1];
+  lbda = (3*x^2 + a) / (2*y);
+  x3 = lbda^2 - 2*x;
+  return (x3,lbda*(x-x3) - y);
+
+# double-and-add multiplication
+def mult(n, P, a):
+    Q = (0, 1)
+    while n > 0:
+        if n % 2 == 1:
+            if Q == (0, 1):
+                Q = P
+            else:
+                Q = add(Q, P)
+        P = double(P, a)
+        n = n // 2
+    return Q
+
+q=13
+Fq = GF(q)
+a=8;b=8
+E_Fq = EllipticCurve(Fq, [a,b])
+E_Fq
+
+# enumerate all cyclic subgroups of E/F
+subgroup_orders = {}
+for P in E_Fq:
+  r=P.order();
+  subgroup_orders.setdefault(r, []).append(P)
+
+print(f"All cyclic subgroups of {E_Fq} and their orders:")
+subgroup_orders
+
+#print(f"Prime order subgroups:")
+# choose the biggest prime
+r = max([x for x in filter(lambda x: is_prime(x), list(subgroup_orders.keys()))])
+
+# scalar field (but actually a ring with prime order)
+Fr=Integers(r)
+
+P=E_Fq.random_point()
+print(f"P={P}")
+
+n = 6
+
+#print(f"{n} * {P} = {n*P}")
+#print(f"F{r}({n}) = {Fr(n)}, F{r}({n}) * {P} = {Fr(n) * P}")
+
+(n)*P
+mult(n, P, a)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Elliptic Curve defined by y^2 = x^3 + 8*x + 8 over Finite Field of size 13
+All cyclic subgroups of Elliptic Curve defined by y^2 = x^3 + 8*x + 8 over Finite Field of size 13 and their orders:
+{1: [(0 : 1 : 0)],
+ 10: [(1 : 2 : 1), (1 : 11 : 1), (5 : 2 : 1), (5 : 11 : 1)],
+ 2: [(4 : 0 : 1)],
+ 4: [(6 : 5 : 1), (6 : 8 : 1)],
+ 5: [(7 : 2 : 1), (7 : 11 : 1), (8 : 5 : 1), (8 : 8 : 1)],
+ 20: [(9 : 4 : 1),
+  (9 : 9 : 1),
+  (10 : 3 : 1),
+  (10 : 10 : 1),
+  (11 : 6 : 1),
+  (11 : 7 : 1),
+  (12 : 5 : 1),
+  (12 : 8 : 1)]}
+P=(12 : 5 : 1)
+(5 : 11 : 1)
+(5, 11)
+#+end_example
 
 * IN-PROGRESS Additional materials
 - [ ] Attacks on ECC (also excellent introduction to ECs): https://github.com/elikaski/ECC_Attacks

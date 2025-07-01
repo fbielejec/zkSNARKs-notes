@@ -9,6 +9,8 @@
 :CONTENTS:
 - [[#group][Group]]
   - [[#abelian-group][Abelian Group]]
+  - [[#group-order][Group order]]
+  - [[#group-charactreistic][Group charactreistic]]
   - [[#cyclic-group][Cyclic Group]]
   - [[#primitive-roots][Primitive Roots]]
 - [[#ring][Ring]]
@@ -17,7 +19,9 @@
   - [[#finite-field][Finite Field]]
 - [[#algebraic-closure][Algebraic closure]]
   - [[#example][Example]]
-- [[#square-roots-and-quadratic-residue][Square roots and quadratic residue]]
+- [[#quadratic-residues-and-square-roots][Quadratic Residues and Square Roots]]
+  - [[#example][Example]]
+- [[#eulers-criterion][Euler's criterion]]
 - [[#roots-of-unity][Roots of unity]]
   - [[#n-th-roots-of-unity][n-th Roots of Unity]]
   - [[#example][Example]]
@@ -39,6 +43,8 @@
 :ID:       4c9d3fac-53fc-40a3-9dfd-1014ffb633a2
 :END:
 ** TODO Abelian Group
+** TODO Group order
+** TODO Group charactreistic
 ** TODO Cyclic Group
 - TODO: Group generator, definition,examples
 - TODO: If a group is cyclic, then it is abelian
@@ -60,21 +66,40 @@ A subset of a given set is *closed* under an operation of the larger set if perf
 ** Example
 The natural numbers are closed under addition (but ot under subtraction, 1-2 is not a natural number although both 1 and 2 are).
 
-* Square roots and quadratic residue
-In the context of prime fields, an element that is a square of another element is called a *quadratic residue*,
-and an element that is not a square of another element is called a *quadratic non-residue*.
+* Quadratic Residues and Square Roots
+:PROPERTIES:
+:ID:       f6f0e7d8-d44a-4f89-a5e8-1f91bd7fd3e2
+:END:
+
+In the context of prime fields, an element that is a square of another element is called a *quadratic residue*.
+Element that is not a square of another element is called a *quadratic non-residue*.
 
 =Definition=
 
 Let $p \in P$ be a prime number and $F_p$ it's associated prime field.
-Then a number $x \in F_p$ is called a square root of another number $y \in F_p$,
-if $x$ is a solution to the following:
+Then a number $x \in F_p$ is called a *square root* of another number $y \in F_p$ if $x$ is a solution to the following:
 
 $x^2 = y$
 
 In this case, $y$ is called a *quadratic residue* of $x$.
-
 On the other hand, if $y$ is given and the quadratic equation has no solution $x$, we call $y$ a *quadratic non-residue*.
+
+The [[id:c47a6a82-210a-4f26-b875-27f7ba758aaa][Euler's criterion]] is easily generalized to yield a test for squareness $\text{mod } n$ but in practice the
+in practice, it is more efficient to use the [[id:9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0][Extended Euclidean Algorithm]] to calculate the Jacobi symbol.
+If n is an odd prime, this is equal to the Legendre symbol, and decides whether y is a quadratic residue modulo n
+
+** TODO Example
+#+BEGIN_SRC sage :session . :exports both
+q=13
+F=GF(q)
+
+
+#+END_SRC
+* TODO Euler's criterion
+:PROPERTIES:
+:ID:       c47a6a82-210a-4f26-b875-27f7ba758aaa
+:END:
+https://en.wikipedia.org/wiki/Euler%27s_criterion
 * DONE Roots of unity
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
