@@ -27,7 +27,6 @@
 - [[#lagranges-theorem-for-elliptic-curves][Lagrange's theorem for Elliptic Curves]]
   - [[#example-lagranges-theorem-for-ecs][Example: Lagrange's theorem for ECs]]
 - [[#exponential-map-for-elliptic-curves][Exponential map for Elliptic curves]]
-- [[#elliptic-curve-scalar-multiplication][Elliptic Curve scalar multiplication]]
 - [[#projective-short-weierstrass-form][Projective Short Weierstrass form]]
   - [[#example][Example]]
 - [[#elliptic-curve-discrete-logarithm-problem-ecdlp][Elliptic Curve Discrete Logarithm Problem (ECDLP)]]
@@ -62,6 +61,9 @@
 :END:
 
 * Affine Short Weierstrass form
+:PROPERTIES:
+:ID:       b16e1eda-0749-48cf-b621-59376de04f9d
+:END:
 An *Elliptic Curve* (using short Weierstrass form and affine coordinates) is an equation of the form:
 
 $y^2=x^3+a \cdot x +b$
@@ -76,6 +78,8 @@ Thus Elliptic curve in affine space as a set of affine points together with the 
 
 $E={(x,y) \in A^2(K) : y^2 = x^3 + ax +b} \hspace{.5em} \bigcup \hspace{.5em} {\mathcal{\{O\}}}$
 
+See also [[id:37c60c61-c719-466a-a6a8-5677303a74ce][Elliptic Curve: Short Weierstrass Form]]
+
 ** Example
 We will define an EC over $F_{101}$ and set $a=0$.
 
@@ -89,8 +93,7 @@ E
 : Elliptic Curve defined by y^2 = x^3 + 3 over Finite Field of size 101
 
 * Point at infinity
-- [ ] A question that may arise from this description is what happens if the line that is drawn between the two points does not intersect the curve again? In this case the line is said to intersect the curve at "infinity", and the result of the addition is the point
-[[id:e7c740fb-6ec2-428b-9e47-2fa8ddd3a643][Point at infinity]]
+See also [[id:e7c740fb-6ec2-428b-9e47-2fa8ddd3a643][Point at infinity]]
 * IN-PROGRESS EC group law
 ** DONE Geometric interpretation: Elliptic curve point addition (chord rule)
 Over any field a line (a degree one equation in $x$ and $y$) intersects a cubic equation (a degree three equation in $x$ and $y$) in three places.
@@ -550,7 +553,7 @@ False
 
 =Theorem=
 
-If $P$ is a point on the curve $E$ then the order of $P$ $k$ divides the order of the curve:
+If $P$ is a point on the curve $E$ then the order $k$ of $P$ divides the order $r$ of the curve:
 
  $r=|E|$: $k \hspace{.5em} \text{divides} \hspace{.5em}  r$.
 
@@ -584,17 +587,10 @@ print(f"r | k: {r.divides(k)}")
 : (4 : 3 : 1)
 : (4 : 3 : 1)
 * Exponential map for Elliptic curves
-See [[id:77d52c07-a41e-42c5-8069-2be5eaf576b2][Exponential map for EC]]
-* Elliptic Curve scalar multiplication
-Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $P$ a generator of $E(F)$.
-Then the elliptic curve scalar multiplication with base $P$ is defined as follows:
-
-$[\cdot]P: Z_n \rightarrow E(F): m \mapsto [m]P$
-
-where:
-$[0]P=\mathcal{O}$ and $[m]P=P+P+...+P$ is the $m$-fold sum of $P$ with itself.
-
-Therefore, elliptic curve scalar multiplication is an instantiation of the general [[*The exponential map][exponential map]] using additive instead of multiplicative notation.
+:PROPERTIES:
+:ID:       2f91d7f3-1f7d-4c76-ba98-4edd4df9db01
+:END:
+See [[id:77d52c07-a41e-42c5-8069-2be5eaf576b2][Elliptic Curve scalar multiplication]]
 * Projective Short Weierstrass form
 ---
 

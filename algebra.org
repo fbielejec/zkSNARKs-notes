@@ -13,6 +13,7 @@
   - [[#abelian-group][Abelian Group]]
   - [[#group-order][Group order]]
   - [[#cyclic-group][Cyclic Group]]
+  - [[#finite-group][Finite Group]]
   - [[#cofactor-clearing][Cofactor Clearing]]
   - [[#primitive-roots][Primitive Roots]]
 - [[#ring][Ring]]
@@ -57,6 +58,11 @@
 ** DONE Group order
 See [[id:97c172ec-93ae-487c-902c-32491b36a6f0][Group Order]]
 ** DONE Cyclic Group
+See [[id:f5f80632-6c31-4065-9470-33d7ea93c025][Cyclic groups]]
+** DONE Finite Group
+:PROPERTIES:
+:ID:       11ce20d5-3d9b-4f61-b520-7a907fbf678a
+:END:
 See [[id:f5f80632-6c31-4065-9470-33d7ea93c025][Cyclic groups]]
 ** TODO Cofactor Clearing
 :PROPERTIES:
