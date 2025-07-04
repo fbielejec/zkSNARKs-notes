@@ -36,7 +36,7 @@
   - [[#example][Example]]
 - [[#lagranges-theorem][Lagrange's theorem]]
 - [[#polynomials][Polynomials]]
-  - [[#bezouts-theorem][Bezout's theorem]]
+  - [[#bezouts-identity][Bezout's identity]]
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
@@ -256,6 +256,9 @@ print(f"Primitive {n}-th roots of unity in F_7: {roots}")
 #+RESULTS:
 : Primitive 3-th roots of unity in F_7: [2, 4]
 * TODO Euler's totient function
+:PROPERTIES:
+:ID:       108230aa-cb69-4484-8afa-92af3f6c0818
+:END:
 * Fermat's Little Theorem
 :PROPERTIES:
 :ID:       bfc4c13f-a0cf-4772-bdf9-1802b3ba7080
@@ -307,7 +310,7 @@ $\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]$
 - Equivalent theorem in the context Elliptic Curves is here: [[id:2a523cd8-b0c4-481c-92b4-cddc426df3c2][Lagrange's theorem for Elliptic Curves]].
 
 * IN-PROGRESS Polynomials
-** TODO Bezout's theorem
+** TODO Bezout's identity
 :PROPERTIES:
 :ID:       d65be3c6-88b2-4c93-9ba5-f1551ba8a8c0
 :END:
