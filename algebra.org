@@ -16,6 +16,7 @@
   - [[#finite-group][Finite Group]]
   - [[#cofactor-clearing][Cofactor Clearing]]
   - [[#primitive-roots][Primitive Roots]]
+- [[#isomorphism][Isomorphism]]
 - [[#ring][Ring]]
   - [[#ring-ideal][Ring Ideal]]
 - [[#discrete-logarithm][Discrete Logarithm]]
@@ -40,6 +41,8 @@
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
+- [[#homomorphisms][Homomorphisms]]
+  - [[#example][Example]]
 :END:
 
 * TODO Group
@@ -71,6 +74,10 @@ See [[id:f5f80632-6c31-4065-9470-33d7ea93c025][Cyclic groups]]
 - p42 MM
 ** TODO Primitive Roots
 - TODO: Primitive Root (modulo n). Definition, examples
+* TODO Isomorphism
+:PROPERTIES:
+:ID:       4a93116b-94b3-4774-afdd-e7c486dd56fb
+:END:
 * DONE Ring
 see [[id:df288eea-70b8-46b7-b31e-4d2545f25c89][Ring]]
 ** TODO Ring Ideal
@@ -118,8 +125,6 @@ If n is an odd prime, this is equal to the Legendre symbol, and decides whether 
 #+BEGIN_SRC sage :session . :exports both
 q=13
 F=GF(q)
-
-
 #+END_SRC
 * TODO Euler's criterion
 :PROPERTIES:
@@ -346,3 +351,50 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
+* IN-PROGRESS Homomorphisms
+:PROPERTIES:
+:ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2
+:END:
+- https://www.rareskills.io/post/homomorphisms
+
+=Definition (Group Homomorphism)=
+
+Let $G$ and $H$ be [[id:4c9d3fac-53fc-40a3-9dfd-1014ffb633a2][Groups]]. Function $\phi: G \rightarrow H$ is a *group homomorphism* if for all $a,b \in G$
+
+$\phi(a \cdot b)=\phi(a) \odot \phi(b)$
+
+where:
+- $a \cdot b$ is the group operation in the domain group $G$.
+- \phi(a) \odot \phi(b) is the group operation in the codomain group $H$.
+
+This means that $\phi$ respects the group operation.
+
+=Example=
+
+Let $G=(\mathbb{Z},+)$, (the group of integers under addition) and $H=(\mathbb{Z}_6,+)$ (the group of integers mod 6 under addition).
+Let $\phi: \mathbb{Z} \rightarrow \mathbb{Z}_{6}$ be s.t:
+
+$\phi(n) = n \quad \text{mod } 6$.
+
+The for any $a,b \in mathbb{Z}$:
+
+$\phi(a+b)=a+b \quad \text{mod } 6 = (a \quad \text{mod } 6) + (b \quad \text{mod } 6) = \phi(a)+\phi(b)$.
+
+** Example
+#+BEGIN_SRC sage :session . :exports both
+Z=IntegerRing()
+Z6=Integers(6)
+
+phi = lambda n: Z6(n)
+
+a = 7
+b = 10
+
+lhs = phi(a+b)
+rhs = phi(a) + phi(b)
+
+print(f"phi({a}+{b})={lhs} == phi({a})+phi({b})={rhs}: {lhs == rhs}")
+#+END_SRC
+
+#+RESULTS:
+: phi(7+10)=5 == phi(7)+phi(10)=5: True
