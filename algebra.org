@@ -41,7 +41,7 @@
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
-- [[#homomorphisms][Homomorphisms]]
+- [[#homomorphism][Homomorphism]]
   - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
 :END:
@@ -352,12 +352,10 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
-* Homomorphisms
+* Homomorphism
 :PROPERTIES:
 :ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2
 :END:
-- https://www.rareskills.io/post/homomorphisms
-
 Homomorphism is a structure-preserving map between two algebraic structures of the same type (such as two groups, two rings, two monoids etc).
 
 =Definition (Group Homomorphism)=
@@ -432,25 +430,35 @@ For all $a,b\in \mathbb{Z}_r$:
 $\phi(a+b)=[a+b]P=[a]P +[b]P = \phi(a) + \phi(b)$
 
 #+BEGIN_SRC sage :session . :exports both
-p=11
+p=97
 F = GF(p)
-E = EllipticCurve(F, [-2,0])
-r = E.order()
+E = EllipticCurve(F, [2,3])
 
-Z=Integers(r)
+P = E.random_point()
+while not P.order().is_prime():
+  P = E.random_point()
+
+r = P.order()
+
+Zr=Integers(r)
 
 phi = lambda n,P: n*P
 
-a = Z(1)
-b = Z(2)
-
-P=E.random_point()
+a = Zr(1)
+b = Zr(2)
 
 lhs = phi((a+b),P)
 rhs = phi(a,P) + phi(b,P)
 
 print(f"phi({a}+{b})={lhs} == phi({a})+phi({b})={rhs}: {lhs == rhs}")
+
+# Check bijectivity
+image_set = set(phi(n,P) for n in Zr)
+print(f"Size of image set: {len(image_set)} (should be {r})")
+print("Is bijective?", len(image_set) == r)
 #+END_SRC
 
 #+RESULTS:
-: phi(1+2)=(8 : 1 : 1) == phi(1)+phi(2)=(8 : 1 : 1): True
+: phi(1+0)=(30 : 0 : 1) == phi(1)+phi(0)=(30 : 0 : 1): True
+: Size of image set: 2 (should be 2)
+: Is bijective? True
