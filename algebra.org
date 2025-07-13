@@ -42,7 +42,8 @@
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
 - [[#homomorphisms][Homomorphisms]]
-  - [[#example][Example]]
+  - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
+  - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
 :END:
 
 * TODO Group
@@ -351,7 +352,7 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
-* IN-PROGRESS Homomorphisms
+* Homomorphisms
 :PROPERTIES:
 :ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2
 :END:
@@ -410,4 +411,46 @@ print(f"phi({a}+{b})={lhs} == phi({a})+phi({b})={rhs}: {lhs == rhs}")
 
 #+RESULTS:
 : phi(7+10)=5 == phi(7)+phi(10)=5: True
-** TODO
+** Example: [[id:77d52c07-a41e-42c5-8069-2be5eaf576b2][Elliptic Curve Scalar Multiplication]]
+
+Let $E$ be an elliptic curve defined over a finite field $\mathbb{F}_p$ (with a prime characteristic $p$).
+Let $r$ be the order of some subgroup of $E(\mathbb{F}_p)$, and $r \quad | \quad \#E(\mathbb{F}_p)$.
+Let $P \in E(\mathbb{F}_p)$ be a point of order $r$.
+
+[[id:77d52c07-a41e-42c5-8069-2be5eaf576b2][Elliptic Curve Scalar Multiplication]] is defined as:
+
+Let $\phi: \mathbb{Z}_{r} \rightarrow <P> \subseteq E(\mathbb{F}_p), \quad \phi(n)=[n]P$
+
+where:
+
+- $[n]P=P + P + \ldots + P (\text{n times})$
+- $\mathbb{Z}_r$ is the domain.
+- The cyclic [[id:34778683-5d8a-4242-87c5-06fc72f31135][subgroup]] $<P>$ is the codomain.
+
+For all $a,b\in \mathbb{Z}_r$:
+
+$\phi(a+b)=[a+b]P=[a]P +[b]P = \phi(a) + \phi(b)$
+
+#+BEGIN_SRC sage :session . :exports both
+p=11
+F = GF(p)
+E = EllipticCurve(F, [-2,0])
+r = E.order()
+
+Z=Integers(r)
+
+phi = lambda n,P: n*P
+
+a = Z(1)
+b = Z(2)
+
+P=E.random_point()
+
+lhs = phi((a+b),P)
+rhs = phi(a,P) + phi(b,P)
+
+print(f"phi({a}+{b})={lhs} == phi({a})+phi({b})={rhs}: {lhs == rhs}")
+#+END_SRC
+
+#+RESULTS:
+: phi(1+2)=(8 : 1 : 1) == phi(1)+phi(2)=(8 : 1 : 1): True
