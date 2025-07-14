@@ -387,7 +387,7 @@ Let $\phi: \mathbb{Z} \rightarrow \mathbb{Z}_{6}$ be s.t:
 
 $\phi(n) = n \quad \text{mod } 6$.
 
-The for any $a,b \in mathbb{Z}$:
+The for any $a,b \in \mathbb{Z}$:
 
 $\phi(a+b)=a+b \quad \text{mod } 6 = (a \quad \text{mod } 6) + (b \quad \text{mod } 6) = \phi(a)+\phi(b)$.
 

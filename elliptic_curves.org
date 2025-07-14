@@ -54,9 +54,6 @@
   - [[#example-91-moonmath-finding-full-r-torsion-group][Example 91 MoonMath: Finding full r-torsion group]]
   - [[#example-411-pairings-for-beginners-finding-full-r-torsion-group][Example 4.1.1 Pairings For Beginners: Finding full r-torsion group]]
   - [[#example-412-pairings-for-beginners][Example 4.1.2 Pairings For Beginners]]
-- [[#ecdsa][ECDSA]]
-  - [[#materials][materials]]
-  - [[#notes][notes]]
 - [[#additional-materials][Additional materials]]
 :END:
 
@@ -799,6 +796,7 @@ True
 * IN-PROGRESS Elliptic Curves over prime field extensions
 ** Prime field extensions
 ---
+
 *NOTES*
 
 - $F_p[x]$ is a ring of polynomials with coefficients in $F_p$.
@@ -806,8 +804,7 @@ True
 
 ---
 
-Given some prime $p \in P$ a natural number $m \in N$ and an irreducible polynomial $P \in F_p[x]$
-of degree $m$ with coefficients from the prime field $F_p$ a prime field extension $(F_{p^m}, +, \cdot)$ is defined as follows:
+Given some prime $p \in P$ a natural number $m \in N$ and an irreducible polynomial $P \in F_p[x]$ of degree $m$ with coefficients from the prime field $F_p$ a prime field extension $(F_{p^m}, +, \cdot)$ is defined as follows:
 
 - The set $F_{p^m}$ of the prime field extension is given by the set of all polynomials with degree less than $m$:
 
@@ -1030,14 +1027,16 @@ $(t + 2) + (2t + 2) = (1 + 2)t + (2 + 2) = 1$
 TODO
 
 * DONE Extending Elliptic Curves to prime field extensions
-Suppose that $p$ is a prime number, and $F_p$ its associated prime field. We know from [[PrimeFieldExtension][Prime Field Extension]]
-that the fields $F_{p^m}$ are extensions of $F_p$ in the sense that $F_p$ is a subfield of $F_{p^m}$.
+Suppose that $p$ is a prime number, and $F_p$ its associated prime field. 
+We know from [[PrimeFieldExtension][Prime Field Extension]] that the fields $F_{p^m}$ are extensions of $F_p$ in the sense that $F_p$ is a subfield of $F_{p^m}$.
 
 This implies that we can extend the affine plane that an elliptic curve is defined on by changing the base field to any extension field.
 
-Let $E(F) = \{(x, y) \in F \times F \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + a · x + b\}$
+Let:
+ $E(F) = \{(x, y) \in F \times F \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + a · x + b\}$
 
 be an affine Short Weierstrass curve, with parameters $a$ and $b$ taken from $F$.
+
 If $F'$ is an extension field of $F$, then we extend the domain of the curve by defining $E(F')$ as follows:
 
 $E(F') = \{(x, y) \in F' \times F' \hspace{0.5em} | \hspace{0.5em} y^2 = x^3 + ax + b\}$
@@ -1213,7 +1212,7 @@ In other words, P has finite order $r$ or less.
 =Definition=
 
 Let $F$ be a finite field, $E(F)$ an elliptic curve of order $n$ and $r$ a factor of $n$.
-The $r$-torsion group of the elliptic curve $E(F)$ is defined as the set:
+The r-torsion group of the elliptic curve $E(F)$ is defined as the set:
 
 $E(F)[r] := \{P \in E(F) \hspace{0.5em} | \hspace{0.5em} [r]P=\mathcal{O} \}$
 
@@ -1332,6 +1331,7 @@ Embedding degree $k$ is the smallest integer such that:
 $E(F_{p^k})[r]=E(\overline{F_p})[r]$
 
 ---
+
 *NOTE*
 
 - We note that the embedding degree is actually a function k(q, r) of q and r
@@ -1369,6 +1369,7 @@ This implies that the remainder of the integer division of $q^{r-1} - 1$ by $r$ 
 # - find the embedding degree
 # - find all roots of unity in the extension fields with extension < r
 * r-torsion group $E(F_{q^{k(r)}})[r]$ (the "full" r-torsion group)
+
 =Definition=
 
 Let $F_q$ be a prime field and let $E(F_q)$ be an elliptic curve of order $n$, such that $r$ is a factor of $n$, with the [[*Embedding degree][Embedding degree]] $k(r)$ and $r$-torsion group $E(F_q)[r]$.
@@ -1554,113 +1555,6 @@ print(f"E{r} torsion: {r_torsion}");
 : r^2=25 divides #E_F31=25: True
 : E_F31 embedding degree for r=5: 1
 : E5 torsion: [(0 : 1 : 0), (1 : 13 : 1), (1 : 18 : 1), (3 : 3 : 1), (3 : 28 : 1), (5 : 13 : 1), (5 : 18 : 1), (12 : 6 : 1), (12 : 25 : 1), (13 : 3 : 1), (13 : 28 : 1), (15 : 3 : 1), (15 : 28 : 1), (17 : 11 : 1), (17 : 20 : 1), (21 : 6 : 1), (21 : 25 : 1), (22 : 11 : 1), (22 : 20 : 1), (23 : 11 : 1), (23 : 20 : 1), (25 : 13 : 1), (25 : 18 : 1), (29 : 6 : 1), (29 : 25 : 1)]
-
-* IN-PROGRESS [#A] ECDSA
-** materials
-- [ ] https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
-- [ ] Digital Signatures (chap 4) from An Introduction to Mathematical Cryptography
-- [ ] Authentication and digital signatures from Cryptography Algorithms
-- [ ] https://www.rareskills.io/post/ecdsa-tutorial
-** IN-PROGRESS notes
-- why?
-- components
-- EC discrete log
-- two attempts at creating a scheme
- - differrent private and public parts
- - both lead to undersirable outcomes: one is underconstrained (Q can be picked at random, as the discrete log relation Q=qG is not veriofied)
- - another leads to revealing the private key p
-- It turns out that proving we know the discrete log of two points without revealing them is easier than proving we know the discrete log of one point without revealing the single discrete log
-- this protocol is interactive: Fiat-Shamir Transform to make it non-interactive
-
-#+BEGIN_SRC sage :session . :exports both
-
-# TODO P+O and P+(-P)
-def add(P1,P2):
-  x1=P1[0];x2=P2[0];y1=P1[1];y2=P2[1];
-  lbda = (y2-y1) / (x2-x1);
-  x3 = lbda^2 - x1 - x2
-  return (x3, lbda*(x1 - x3) - y1);
-
-def double(P,a):
-  # doubling a point at infty = infty
-  if ((P[0] == 0) and (P[1] == 1)):
-    return (0, 1)
-  # doubling a point of order 2 (tangent is vertical)
-  if P[1] == 0:
-    return (0, 1)
-  x=P[0];y=P[1];
-  lbda = (3*x^2 + a) / (2*y);
-  x3 = lbda^2 - 2*x;
-  return (x3,lbda*(x-x3) - y);
-
-# double-and-add multiplication
-def mult(n, P, a):
-    Q = (0, 1)
-    while n > 0:
-        if n % 2 == 1:
-            if Q == (0, 1):
-                Q = P
-            else:
-                Q = add(Q, P)
-        P = double(P, a)
-        n = n // 2
-    return Q
-
-q=13
-Fq = GF(q)
-a=8;b=8
-E_Fq = EllipticCurve(Fq, [a,b])
-E_Fq
-
-# enumerate all cyclic subgroups of E/F
-subgroup_orders = {}
-for P in E_Fq:
-  r=P.order();
-  subgroup_orders.setdefault(r, []).append(P)
-
-print(f"All cyclic subgroups of {E_Fq} and their orders:")
-subgroup_orders
-
-#print(f"Prime order subgroups:")
-# choose the biggest prime
-r = max([x for x in filter(lambda x: is_prime(x), list(subgroup_orders.keys()))])
-
-# scalar field (but actually a ring with prime order)
-Fr=Integers(r)
-
-P=E_Fq.random_point()
-print(f"P={P}")
-
-n = 6
-
-#print(f"{n} * {P} = {n*P}")
-#print(f"F{r}({n}) = {Fr(n)}, F{r}({n}) * {P} = {Fr(n) * P}")
-
-(n)*P
-mult(n, P, a)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-Elliptic Curve defined by y^2 = x^3 + 8*x + 8 over Finite Field of size 13
-All cyclic subgroups of Elliptic Curve defined by y^2 = x^3 + 8*x + 8 over Finite Field of size 13 and their orders:
-{1: [(0 : 1 : 0)],
- 10: [(1 : 2 : 1), (1 : 11 : 1), (5 : 2 : 1), (5 : 11 : 1)],
- 2: [(4 : 0 : 1)],
- 4: [(6 : 5 : 1), (6 : 8 : 1)],
- 5: [(7 : 2 : 1), (7 : 11 : 1), (8 : 5 : 1), (8 : 8 : 1)],
- 20: [(9 : 4 : 1),
-  (9 : 9 : 1),
-  (10 : 3 : 1),
-  (10 : 10 : 1),
-  (11 : 6 : 1),
-  (11 : 7 : 1),
-  (12 : 5 : 1),
-  (12 : 8 : 1)]}
-P=(12 : 5 : 1)
-(5 : 11 : 1)
-(5, 11)
-#+end_example
 
 * IN-PROGRESS Additional materials
 - [ ] Attacks on ECC (also excellent introduction to ECs): https://github.com/elikaski/ECC_Attacks

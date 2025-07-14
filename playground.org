@@ -9,6 +9,7 @@
 :CONTENTS:
 - [[#function-fields][Function Fields]]
 - [[#divisors][Divisors]]
+- [[#tate-pairings][(T)ate pairings]]
 :END:
 
 * Function Fields
@@ -74,3 +75,39 @@ r
 : Multivariate Polynomial Ring in x, y over Finite Field of size 5
 : Affine Plane Curve over Finite Field of size 5 defined by -x^3 + y^2 - x
 : 1/x
+* IN-PROGRESS (T)ate pairings
+
+- Documentation:
+  - https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/ell_point.html#sage.schemes.elliptic_curves.ell_point.EllipticCurvePoint_field.ate_pairing
+
+#+BEGIN_SRC sage  :session . :exports both
+p = 7549;
+A = 0;
+B = 1;
+
+n = 157;
+k = 6;
+t = 14
+
+
+F = GF(p);
+E = EllipticCurve(F, [A, B])
+
+R.<x> = F[];
+K.<a> = GF((p,k), modulus=x^k+2)
+
+EK = E.base_extend(K)
+P = EK(3050, 5371);
+Q = EK(6908*a^4, 3231*a^3)
+
+P.ate_pairing(Q, n, k, t)
+
+s = Integer(randrange(1, n))
+(s*P).ate_pairing(Q, n, k, t) == P.ate_pairing(s*Q, n, k, t)
+P.ate_pairing(s*Q, n, k, t) == P.ate_pairing(Q, n, k, t)^s
+#+END_SRC
+
+#+RESULTS:
+: 6708*a^5 + 4230*a^4 + 4350*a^3 + 2064*a^2 + 4022*a + 6733
+: True
+: True

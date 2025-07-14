@@ -1400,7 +1400,9 @@ f5P
 
 =Definition=
 
-Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions f and g such that $(f)=rD_P$ and $(g)=rD_Q$. The *Weil pairing* $w_r$ is a map:
+Let $P,Q \in E(F_{q^k})[r]$ and let $D_P$ and $D_q$ be degree zero divisors with disjoint supports, such that $D_P \sim (P)-(\mathcal{O})$ and $D_Q \sim (Q)-(\mathcal{O})$. There exist functions $f$ and $g$ such that $(f)=rD_P$ and $(g)=rD_Q$. 
+
+The *Weil pairing* $w_r$ is a map:
 
 $w_r: E(F_{q^k})[r] \times E(F_{q^k})[r] \rightarrow \mu_r$
 
@@ -1430,7 +1432,7 @@ Note that the curve is supersingular.
 *NOTES*
 
 - Supersingular curve E defined over field F with characteristic p has no (non-trivial) *p-torsion points*
-- it's *Hasse invariant = 0* (coefficient of \( x^{p-1} \) in \( f^{(p-1)/2} \), where \( y^2 = f(x) \)) vanishes.
+- it's *Hasse invariant = 0* (coefficient of $x^{p-1}$ in  $f^{(p-1)/2}$, where  $y^2 = f(x)$) vanishes.
 
 ---
 
@@ -1520,7 +1522,7 @@ P == pi(P,E,q)
 : True
 : True
 
-*** DONE Embedding degree $k(r)$, field extension  $F_{q^{k(r)}}$ and the extended elliptic curve
+*** DONE Embedding degree $k(r)$, field extension $F_{q^{k(r)}}$ and the extended elliptic curve
 
 #+BEGIN_SRC sage :session . :exports both
 q=23
