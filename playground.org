@@ -10,6 +10,7 @@
 - [[#function-fields][Function Fields]]
 - [[#divisors][Divisors]]
 - [[#tate-pairings][(T)ate pairings]]
+- [[#pairings-bn128-interop][pairings: bn128 interop]]
 :END:
 
 * Function Fields
@@ -85,9 +86,9 @@ p = 7549;
 A = 0;
 B = 1;
 
-n = 157;
+n = 157; # P.order()
 k = 6;
-t = 14
+t = 14 # E.trace_of_frobenius()
 
 
 F = GF(p);
@@ -111,3 +112,103 @@ P.ate_pairing(s*Q, n, k, t) == P.ate_pairing(Q, n, k, t)^s
 : 6708*a^5 + 4230*a^4 + 4350*a^3 + 2064*a^2 + 4022*a + 6733
 : True
 : True
+: 157
+* IN-PROGRESS pairings: bn128 interop
+
+#+BEGIN_SRC sage  :session . :exports both
+import py_ecc.bn128 as bn128
+from py_ecc.fields import (
+    bn128_FQ as FQ,
+    bn128_FQ2 as FQ2,
+    #bn128_FQ6 as FQ6,
+    bn128_FQ12 as FQ12
+)
+
+p=21888242871839275222246405745257275088696311157297823662689037894645226208583
+Fp=GF(p)
+E = EllipticCurve(Fp, [0,3])
+G1 = E(1,2)
+
+n=G1.order()
+# embedding degree
+#k=2
+#t=E.trace_of_frobenius()
+
+# ring of all polynomials with coefficients in Fp
+Rx.<x> = Fp[]
+Fp2 = GF((p,k), name='i', modulus=Rx(x^k + 1))
+
+#https://github.com/ethereum/py_ecc/blob/main/py_ecc/fields/field_properties.py#L31
+#(82, 0, 0, 0, 0, 0, -18, 0, 0, 0, 0, 0) Implied + 1
+# 82*x^12 + 0*x^11 + 0*x^10 + 0*x^9 + 0*x^8 + 0*x^7 + (-18)*x^6 + 0*x^5 + 0*x^4 + 0*x^3 + 0*x^2 + 0*x + 1
+p_mod = 82*x^12-18 * x^6 + 1
+Fp12 = GF((p,12), name='i', modulus = p_mod)
+
+# https://eips.ethereum.org/EIPS/eip-197#:~:text=q%20%3D%2021888242871839275222246405745257275088548364400416034343698204186575808495617.-,Definition%20of%20the%20groups,-The%20groups%20G_1
+a=0
+TwistB=3*Fp2([9,1])^(-1) # 3/(i+9)
+E2 = EllipticCurve(Fp2, [a,TwistB])
+
+# [a,b] -> a + i*b
+x_G2 = Fp2([
+  10857046999023057135944570762232829481370756359578518086990519993285655852781,
+  11559732032986387107991004021392285783925812861821192530917403151452391805634
+])
+
+y_G2 = Fp2([
+  8495653923123431417604973247489272438418190587263600148770280649306958101930,
+  4082367875863433681332203403145435568316851327593401208105741076214120093531
+])
+
+G2 = E2(x_G2, y_G2)
+
+# G2 is of the same order as G1
+assert(n*G2 == E2(0))
+
+# Show the generators
+#G1, G2, g
+
+# computes e(Q \in G2, P \in G1)
+def pairing(P,Q):
+  ePQ = bn128.pairing( (bn128.FQ2([int(Q[0][0]), int(Q[0][1])]),
+                        bn128.FQ2([int(Q[1][0]), int(Q[1][1])])),
+                       (bn128.FQ(int(P[0])), bn128.FQ(int(P[1]))) );
+  # returns an element in FQ12 (extension tower 2*2*3)
+  #return ePQ
+  coeff = ePQ.coeffs;
+  # TODO: this should return the extension tower construction
+  return Fp12(int(coeff[11]) * x^11 + int(coeff[10]) * x^10 + int(coeff[9]) * x^9 + \
+              int(coeff[8]) * x^8 + int(coeff[7]) * x^7 + int(coeff[6]) * x^6 + \
+              int(coeff[5]) * x^5 + int(coeff[4]) * x^4 + int(coeff[3]) * x^3 + \
+              int(coeff[2]) * x^2 + int(coeff[1]) * x^1 + int(coeff[0]))
+
+# a*b = c
+#a=3; b=4; c=12;
+#aG1 = a * G1
+#bG2 = b * G2
+#cG1 = 12 * G1
+#
+#lhs = pairing(aG1,bG2)
+#rhs = pairing(cG1, G2)
+#lhs == rhs
+
+# a*b + c*d = 24
+a=2;b=3;c=2;d=9
+
+#(pairing(b*G1,a*G2)*pairing(d*G1,c*G2))==pairing(G1,24*G2)
+
+# or
+g=pairing(G1,G2)
+
+# this is the neutral element of target group FP12 ( G_T)
+g^0
+FQ12.one()
+
+# TODO : fix (extension field is wrong?)
+pairing(b*G1,a*G2) * pairing(d*G1,c*G2) == g**24
+#+END_SRC
+
+#+RESULTS:
+: 1
+: (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+: False

@@ -82,6 +82,9 @@ where $1$ is the identity element in the target group, $g_0,g_1$ are the generat
 
 There exists an efficient algorithm to compute $e$.
 * Pairing
+:PROPERTIES:
+:ID:       60a188c8-08e2-4fa5-a182-f9dccfafc64c
+:END:
 =Definition=
 
 Pairing is a [[BilinearMap][bilinear map]] on an abelian group M taking values in some other abelian group R:
@@ -1980,6 +1983,7 @@ The system of constraints is converted into a single, large polynomial that has 
 ---
 
 * Additional materials
+- [ ] https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627
 - Divisor [0/2]
   - [ ] https://crypto.stanford.edu/pbc/notes/elliptic/divisor.html
   - [-] https://alozano.clas.uconn.edu/math5020-elliptic-curves/
