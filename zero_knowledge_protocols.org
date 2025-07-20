@@ -1,6 +1,96 @@
 #+STARTUP: overview
 #+latex_class_options: [14pt]
 
+* Binary encoding
+:PROPERTIES:
+:ID:       3e9b5d5a-afd3-46e9-a71f-78080a95338e
+:END:
+Binary to decimal (Big Endian, MSB):
+$1101_{2}$
+
+#+BEGIN_SRC sage :session . :exports both
+1*2^3 + 1*2^2 + 0*2^1 + 1*2^0
+
+bin(13)
+#+END_SRC
+
+#+RESULTS:
+: 13
+: '0b1101'
+
+$2^n$ requires $n+1$ bits to store.
+$2^{n-1}$ is a half of $2^{n}$ and requires $n$ bits to store.
+
+#+BEGIN_SRC sage :session . :exports both
+print(f"2^0: {bin(2^0)}, 2^1: {bin(2^1)}")
+print(f"2^1: {bin(2^1)}, 2^2: {bin(2^2)}")
+print(f"2^2: {bin(2^1)}, 2^3: {bin(2^3)}")
+print(f"2^3: {bin(2^1)}, 2^4: {bin(2^4)}")
+#+END_SRC
+
+#+RESULTS:
+: 2^0: 0b1, 2^1: 0b10
+: 2^1: 0b10, 2^2: 0b100
+: 2^2: 0b10, 2^3: 0b1000
+: 2^3: 0b10, 2^4: 0b10000
+
+$2^{n}-1$ requires $n$ bits to store.
+It is the maximum value we can store with $n$ bits, and all the bits are set to 1:
+
+#+BEGIN_SRC sage :session . :exports both
+# n=0
+print(f"2^0-1: {bin(2^0-1)}, 2^0: {bin(2^0)}")
+# n=1
+print(f"2^1-1: {bin(2^1-1)}, 2^1: {bin(2^1)}")
+# n=2
+print(f"2^2-1: {bin(2^2-1)}, 2^3-1: {bin(2^2)}")
+# n=3
+print(f"2^3-1: {bin(2^3-1)}, 2^3: {bin(2^3)}")
+# n=4
+print(f"2^4-1: {bin(2^4-1)}, 2^4: {bin(2^4)}")
+#+END_SRC
+
+#+RESULTS:
+: 2^0-1: 0b0, 2^0: 0b1
+: 2^1-1: 0b1, 2^1: 0b10
+: 2^2-1: 0b11, 2^3-1: 0b100
+: 2^3-1: 0b111, 2^3: 0b1000
+: 2^4-1: 0b1111, 2^4: 0b10000
+
+** Computing $\geq$ in binary
+Assume we are working with binary numbers of fixed size $n$ bits.
+$2^{n-1}$ is the midpoint, we can check the MSB bit of the number and tell if it's $\geq 2^{n-1}$ (if it's 1) or $< 2^{n-1}$ (if it's 0) :
+
+#+BEGIN_SRC sage :session . :exports both
+print(f"n=3:");
+print(f"{format(0, '#05b')}")
+print(f"{format(1, '#05b')}")
+print(f"{format(2, '#05b')}")
+print(f"{format(3, '#05b')}")
+print(f"{bin(2^2)} <- 2^(3-1)");
+print(f"{bin(5)}");
+print(f"{bin(6)}");
+print(f"{bin(7)} <- 2^(3)-1");
+#+END_SRC
+
+#+RESULTS:
+: n=3:
+: 0b000
+: 0b001
+: 0b010
+: 0b011
+: 0b100 <- 2^(3-1)
+: 0b101
+: 0b110
+: 0b111 <- 2^(3)-1
+
+*** Checking if $\mathrm{\Delta} \geq 0$
+If we compute $2${n-1}+\mathrm{\Delta}$ and look at the MSB of that sum.w
+If it's $1$ we know $\mathrm{\Delta} \geq 0$, if it's 0 $\mathrm{\Delta} < 0$.
+
+*** Checking if $u \geq v$
+If we compute $2${n-1}+\mathrm{u-v}$ and look at the MSB of that sum it tells us if $u \geq v$ (MSB is 1) or if $u < v$ (MSB is 0).
+
 * DONE Statements
 - In the formal language context *statements* provide membership claims.
  - *instances* are constructive proofs of the statements.
