@@ -301,6 +301,9 @@ $R(I;W) =  \begin{cases}
 \end{cases}$
 
 * DONE Rank-1 Quadratic Constraint Systems (R1CS)
+:PROPERTIES:
+:ID:       f092f456-50af-4be8-a07c-ea83cfeedf6c
+:END:
 
 =Definition: R1CS=
 
@@ -317,10 +320,10 @@ $(a_{0}^{k} + \sum_{j=1}^{n}a_{j}^{k} \cdot I_{j} + \sum_{j=1}^{m}a_{n+j}^{k} \c
 
 where:
 
-- $k$ is called the *number of constraints*.
 - Each equation is called a *constraint*.
+- $k$ is called the *number of constraints*.
 - If a pair of strings of field elements $(<I_1,\cdots I_n>;<W_1,\cdots,W_m>)$ satisfies these equations, $<I_1,\cdots,I_n>$ is called an *instance* and $<W_1,\cdots,W_m>$ is called a *witness* of the system.
-
+ - witness is a vector of size $m$
 ---
 
 *NOTE : R1CS in vector and matrix notation*
@@ -332,6 +335,34 @@ where:
 - $A,B,C$ are $(n+m+1) \times k$-dimensional matrices
 
 ---
+
+** DONE Example: $z=x \cdot y$
+We want to prove $41 \times 103 = 4223$.
+
+The witness vector is $\mathbf{x}=[1,z,x,y]$
+The matrices $\mathbf{A},\mathbf{B},\mathbf{C}$ have $m=4$ columns and $n=1$ rows each.
+
+#+BEGIN_SRC sage :session . :exports both
+import numpy as np
+
+# witness vector
+#              1  z     x   y
+x =  np.array([ 1, 4223, 41, 103])
+
+# coefficient matrices
+A = np.matrix([[0, 0,    1,  0]])
+B = np.matrix([[0, 0,    0,  1]])
+C = np.matrix([[0, 1,    0,  0]])
+
+# Multiplication `*` is element-wise (not matrix multiplication)
+# Result contains a bool indicating an element-wise indicator that the equality is true for that element.
+result = np.matmul(C, x) == np.matmul(A, x) * np.matmul(B, x)
+
+# check that every element-wise equality is true
+assert result.all(), "result contains an inequality"
+#+END_SRC
+
+#+RESULTS:
 
 ** DONE Example: R1CS for 3-factorization (Example 120 MoonMath)
 
