@@ -43,7 +43,7 @@ print(f"2^0-1: {bin(2^0-1)}, 2^0: {bin(2^0)}")
 # n=1
 print(f"2^1-1: {bin(2^1-1)}, 2^1: {bin(2^1)}")
 # n=2
-print(f"2^2-1: {bin(2^2-1)}, 2^3-1: {bin(2^2)}")
+print(f"2^2-1: {bin(2^2-1)}, 2^2: {bin(2^2)}")
 # n=3
 print(f"2^3-1: {bin(2^3-1)}, 2^3: {bin(2^3)}")
 # n=4
@@ -53,11 +53,11 @@ print(f"2^4-1: {bin(2^4-1)}, 2^4: {bin(2^4)}")
 #+RESULTS:
 : 2^0-1: 0b0, 2^0: 0b1
 : 2^1-1: 0b1, 2^1: 0b10
-: 2^2-1: 0b11, 2^3-1: 0b100
+: 2^2-1: 0b11, 2^2: 0b100
 : 2^3-1: 0b111, 2^3: 0b1000
 : 2^4-1: 0b1111, 2^4: 0b10000
 
-** Computing $\geq$ in binary
+** Example: Computing $\geq$ in binary
 Assume we are working with binary numbers of fixed size $n$ bits.
 $2^{n-1}$ is the midpoint, we can check the MSB bit of the number and tell if it's $\geq 2^{n-1}$ (if it's 1) or $< 2^{n-1}$ (if it's 0) :
 
@@ -363,7 +363,7 @@ assert result.all(), "result contains an inequality"
 #+END_SRC
 
 #+RESULTS:
-** IN-PROGRESS Example $r = x Example $r = x \cdot y \cdot z \cdot u$
+** DONE Example $r = x Example $r = x \cdot y \cdot z \cdot u$
 
 Each constraint can have only one multiplication (to be compatoble with the use of [[id:60a188c8-08e2-4fa5-a182-f9dccfafc64c][Bilinear Pairing]]:
 
@@ -406,6 +406,7 @@ assert result.all(), "result contains an inequality"
 #+RESULTS:
 
 ** TODO Example: $z = x \cdot y + 2$ (addition with a constant)
+- https://rareskills.io/post/rank-1-constraint-system#example-3-addition-with-a-constant:~:text=Example%203%3A-,Addition%20with%20a%20constant,-What%20if%20we
 
 ** DONE Example: R1CS for 3-factorization (Example 120 MoonMath)
 
@@ -893,7 +894,7 @@ $f_{3.fac} : \mathbb{F}_{13} \times \mathbb{F}_{13} \mathbb{F}_{13} \rightarrow 
 
 Using it we can describe the problem in the following way:
 
-"Given an instance $I_1 \in \mathbb{F}_{13}$ a valid witness consists of three values $W_1,W_2,W_3$ from \mathbb{F}_13 such that $f_3.fac(W_1,W_2,W_3)=I_1$ (valid witness is a preimage of $f_{3.fac}$ at the point I1)"
+"Given an instance $I_1 \in \mathbb{F}_{13}$ a valid witness consists of three values $W_1,W_2,W_3$ from $\mathbb{F}_13$ such that $f_3.fac(W_1,W_2,W_3)=I_1$ (valid witness is a preimage of $f_{3.fac}$ at the point I1)"
 
 This function can be transformed into an algebraic circuit over $\mathbb{F}_13$ as follows:
 

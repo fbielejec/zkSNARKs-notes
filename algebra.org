@@ -7,6 +7,7 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
+- [[#fundamental-theorem-of-algebra][Fundamental Theorem of Algebra]]
 - [[#group][Group]]
   - [[#additive-group][Additive Group]]
   - [[#multiplicative-group][Multiplicative Group]]
@@ -45,6 +46,17 @@
   - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
 :END:
+
+* TODO Fundamental Theorem of Algebra
+:PROPERTIES:
+:ID:       6f36e8fe-0917-4126-9542-28d9e102cc37
+:END:
+Also called d'Alembert's theorem or the d'Alembert-Gauss theorem.
+
+=Theorem=
+
+Every non-constant single-variable polynomial with complex coefficients has at least one complex root. 
+This includes polynomials with real coefficients, since every real number is a complex number with its imaginary part equal to zero.
 
 * TODO Group
 :PROPERTIES:
