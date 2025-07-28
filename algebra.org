@@ -145,6 +145,10 @@ F=GF(q)
 :END:
 https://en.wikipedia.org/wiki/Euler%27s_criterion
 * DONE Roots of unity
+:PROPERTIES:
+:ID:       4cd6c259-861b-4a9a-9513-3e835576728b
+:END:
+
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
 ** n-th Roots of Unity
