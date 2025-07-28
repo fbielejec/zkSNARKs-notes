@@ -28,10 +28,10 @@
 - [[#quadratic-residues-and-square-roots][Quadratic Residues and Square Roots]]
   - [[#example][Example]]
 - [[#eulers-criterion][Euler's criterion]]
-- [[#roots-of-unity][Roots of unity]]
-  - [[#n-th-roots-of-unity][n-th Roots of Unity]]
+- [[#roots-of-unity][Roots of Unity]]
+  - [[#roots-of-unity][Roots of Unity]]
   - [[#example][Example]]
-  - [[#primitive-n-th-roots-of-unity][Primitive n-th Roots of Unity]]
+  - [[#primitive-roots-of-unity][Primitive Roots of Unity]]
   - [[#example][Example]]
 - [[#eulers-totient-function][Euler's totient function]]
 - [[#fermats-little-theorem][Fermat's Little Theorem]]
@@ -55,7 +55,7 @@ Also called d'Alembert's theorem or the d'Alembert-Gauss theorem.
 
 =Theorem=
 
-Every non-constant single-variable polynomial with complex coefficients has at least one complex root. 
+Every non-constant single-variable polynomial with complex coefficients has at least one complex root.
 This includes polynomials with real coefficients, since every real number is a complex number with its imaginary part equal to zero.
 
 * TODO Group
@@ -144,14 +144,32 @@ F=GF(q)
 :ID:       c47a6a82-210a-4f26-b875-27f7ba758aaa
 :END:
 https://en.wikipedia.org/wiki/Euler%27s_criterion
-* DONE Roots of unity
+* DONE Roots of Unity
 :PROPERTIES:
 :ID:       4cd6c259-861b-4a9a-9513-3e835576728b
 :END:
 
 In the context of finite fields *roots of unity* are elements of the field that when raised to a certain power equal 1.
 
-** n-th Roots of Unity
+=General Definition: Roots of Unity=
+
+n-th root of unity in a field $\mathbb{F}$ is an element $w \in \mathbb{F}$ s.t.:
+
+$w^{n}=1$
+
+That is, it is a solution to the equation $x^{n}=1$.
+
+=General Definition: Prmitive Roots of Unity=
+
+A primitive n-th root of unity is a special n-th root of unity such that:
+
+$w^{n}=1 \quad \text{and } w^{k} \neq 1 \text { for any} 0<k<n$
+
+In other words $w$ generates all n-th roots of unity via it's powers.
+The set ${1,w,w^2,\ldots,w^{n-1}}$ forms a cyclic group of order $n$.
+
+** Roots of Unity
+
 =Definition=
 
 In a finite field $F_q$, the n-th roots of unity are the solutions to the equation:
@@ -233,7 +251,7 @@ f^3
 1
 #+end_example
 
-** Primitive n-th Roots of Unity
+** Primitive Roots of Unity
 =Definition=
 
 An element $\zeta$ in $\mathbb{F}_q$ is called a *primitive $n$-th root of unity* if it satisfies the following conditions:
