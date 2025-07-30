@@ -324,6 +324,7 @@ where:
 - $k$ is called the *number of constraints*.
 - If a pair of strings of field elements $(<I_1,\cdots I_n>;<W_1,\cdots,W_m>)$ satisfies these equations, $<I_1,\cdots,I_n>$ is called an *instance* and $<W_1,\cdots,W_m>$ is called a *witness* of the system.
  - witness is a vector of size $m$
+
 ---
 
 *NOTE : R1CS in vector and matrix notation*
@@ -363,7 +364,7 @@ assert result.all(), "result contains an inequality"
 #+END_SRC
 
 #+RESULTS:
-** DONE Example $r = x Example $r = x \cdot y \cdot z \cdot u$
+** DONE Example: $r = x \cdot y \cdot z \cdot u$
 
 Each constraint can have only one multiplication (to be compatoble with the use of [[id:60a188c8-08e2-4fa5-a182-f9dccfafc64c][Bilinear Pairing]]:
 

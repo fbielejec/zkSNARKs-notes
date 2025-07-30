@@ -42,6 +42,7 @@
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
+  - [[#schwartz-zippel-lemma][Schwartz-Zippel lemma]]
 - [[#homomorphism][Homomorphism]]
   - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
@@ -386,6 +387,10 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
+** TODO Schwartz-Zippel lemma
+:PROPERTIES:
+:ID:       e52ff81b-e1a8-4153-b8e7-710ab93f82d9
+:END:
 * Homomorphism
 :PROPERTIES:
 :ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2
