@@ -45,6 +45,7 @@
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
   - [[#schwartz-zippel-lemma][Schwartz-Zippel lemma]]
+    - [[#example][Example]]
 - [[#homomorphism][Homomorphism]]
   - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
@@ -416,7 +417,7 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
-** IN-PROGRESS Schwartz-Zippel lemma
+** Schwartz-Zippel lemma
 :PROPERTIES:
 :ID:       e52ff81b-e1a8-4153-b8e7-710ab93f82d9
 :END:
@@ -432,13 +433,22 @@ $Pr\{f(a_{1},a_{2}, \ldots, a_{n}) =0 \} \leq \frac{d}{|S|}$
 
 =Implications=
 
-- You can test any multivariate polynomial (arbitrarily complicated) and probabilistically determine if it's 0 everywhere (a 0-polynomial). 
+- You can test any multivariate polynomial (arbitrarily complicated) and probabilistically determine if it's 0 everywhere (a 0-polynomial).
   - Pick a random input, evaluate the polynomial. If it's non-zero, you are certain the polynomial is not a constant zero polynomial.
   - If it's 0, it might be by chance, but thanks to the S-Z lemma you can control the probability by testing with enough random inputs (you can make it arbitrarily small).
 - You can test if two polynomials are equal
   - Given a pair of polynomials $p_{1}(x)$ and $p_{2}(x)$ you can check if $p_{1}(x) \equiv p_2(x)$ by checking if $P(x)=p_{1}(x)-p_{2}(x) \equiv 0$. If so, you can be certain, up to the known probability, that they are equal.
+*** Example
+Consider the polynomial:
 
+$P(x_{1},x_{2})=(x-1)(x-2)$
 
+Let $s = {0,1,2,3}$, so $|S|=4$.
+Then the probabiity that $f(x_{1},x_{2})=0$ when $x_{1},x_{2} \in S$ are chosen at random is:
+
+$Pr\{f(x_{1},x_{2})=0\} \leq \frac{2}{4}=0.5$
+
+If you choose a bigger set (e.g. |S|=100) the probability of it being zero "by chance" drops to $2/100=0.02$.
 
 * Homomorphism
 :PROPERTIES:
