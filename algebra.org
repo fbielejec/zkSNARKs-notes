@@ -8,6 +8,7 @@
 :END:
 :CONTENTS:
 - [[#fundamental-theorem-of-algebra][Fundamental Theorem of Algebra]]
+  - [[#example][Example]]
 - [[#group][Group]]
   - [[#additive-group][Additive Group]]
   - [[#multiplicative-group][Multiplicative Group]]
@@ -48,16 +49,31 @@
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
 :END:
 
-* TODO Fundamental Theorem of Algebra
+* Fundamental Theorem of Algebra
 :PROPERTIES:
 :ID:       6f36e8fe-0917-4126-9542-28d9e102cc37
 :END:
 Also called d'Alembert's theorem or the d'Alembert-Gauss theorem.
 
 =Theorem=
-
-Every non-constant single-variable polynomial with complex coefficients has at least one complex root.
+Any polynomial of degree $n \geq 1$ with complex coefficients has exactly $n$ roots in the complex number system (counting multiplicities).
 This includes polynomials with real coefficients, since every real number is a complex number with its imaginary part equal to zero.
+
+=Implications=
+Over the complex numbers, every polynomial can be fully factored into linear terms:
+
+$P(x)=a_{n}(x-r_{1})(x-r_{2}) \cdot ldots \cdot (x-r_{n})$,
+
+where:
+- $r_{1}, \ldots, r_{n}$ are complex numbers (some possibly repeated)
+
+
+** Example
+Consider the polynomial:
+$P(x)=x^2+1$
+
+It has no real roots, but it has two complex roots:
+$x=i$ and $x=-i$
 
 * TODO Group
 :PROPERTIES:
@@ -391,6 +407,7 @@ The roots of a polynomial are of special interest with respect to its prime fact
 :PROPERTIES:
 :ID:       e52ff81b-e1a8-4153-b8e7-710ab93f82d9
 :END:
+
 * Homomorphism
 :PROPERTIES:
 :ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2

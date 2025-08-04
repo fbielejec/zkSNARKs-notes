@@ -366,11 +366,11 @@ assert result.all(), "result contains an inequality"
 #+RESULTS:
 ** DONE Example: $r = x \cdot y \cdot z \cdot u$
 
-Each constraint can have only one multiplication (to be compatoble with the use of [[id:60a188c8-08e2-4fa5-a182-f9dccfafc64c][Bilinear Pairing]]:
+Each constraint can have only one multiplication (to be compatible with the use of [[id:60a188c8-08e2-4fa5-a182-f9dccfafc64c][Bilinear Pairing]]:
 
 $\begin{cases}
 v_1= x \cdot y \\
-v_2=z \times u \\
+v_2=z \cdot u \\
 r = v_1 \cdot v_2
 \end{cases}$
 
