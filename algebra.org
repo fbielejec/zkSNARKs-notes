@@ -416,10 +416,29 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
-** TODO Schwartz-Zippel lemma
+** IN-PROGRESS Schwartz-Zippel lemma
 :PROPERTIES:
 :ID:       e52ff81b-e1a8-4153-b8e7-710ab93f82d9
 :END:
+
+=Lemma=
+
+Let $f(x_{1},x_{2}, \ldots, x_{n})$ be a non-zero polynomial over some field $F$, and suppose the total degree of $f$ is $d$.
+Let $S \subseteq F$ be a finite subset of a field, and suppose we choose values $a_{1},a_{2},\ldots, a_{n} \in S$ *uniformly at random*.
+
+Then:
+
+$Pr\{f(a_{1},a_{2}, \ldots, a_{n}) =0 \} \leq \frac{d}{|S|}$
+
+=Implications=
+
+- You can test any multivariate polynomial (arbitrarily complicated) and probabilistically determine if it's 0 everywhere (a 0-polynomial). 
+  - Pick a random input, evaluate the polynomial. If it's non-zero, you are certain the polynomial is not a constant zero polynomial.
+  - If it's 0, it might be by chance, but thanks to the S-Z lemma you can control the probability by testing with enough random inputs (you can make it arbitrarily small).
+- You can test if two polynomials are equal
+  - Given a pair of polynomials $p_{1}(x)$ and $p_{2}(x)$ you can check if $p_{1}(x) \equiv p_2(x)$ by checking if $P(x)=p_{1}(x)-p_{2}(x) \equiv 0$. If so, you can be certain, up to the known probability, that they are equal.
+
+
 
 * Homomorphism
 :PROPERTIES:
