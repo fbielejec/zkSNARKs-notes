@@ -44,8 +44,11 @@
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
-  - [[#schwartz-zippel-lemma][Schwartz-Zippel lemma]]
+  - [[#schwartz-zippel-lemma][Schwartz-Zippel Lemma]]
     - [[#example][Example]]
+    - [[#example-testing-for-polynomial-equality-or-intersection-using-s-z-lemma][Example: Testing for polynomial equality (or intersection) using S-Z Lemma]]
+    - [[#example-testing-polynomials-in-finite-fields][Example: Testing polynomials in finite fields]]
+    - [[#example-using-the-schwartz-zippel-lemma-to-test-if-two-vectors-are-equal][Example: Using the Schwartz-Zippel Lemma to test if two vectors are equal]]
 - [[#homomorphism][Homomorphism]]
   - [[#example-mathbbz-to-mathbbz_6-][Example: (\mathbb{Z},+) to (\mathbb{Z}_{6},+ )]]
   - [[#example-elliptic-curve-scalar-multiplication][Example: Elliptic Curve Scalar Multiplication]]
@@ -417,7 +420,7 @@ An *Irreducible polynomial* ss defined as a polynomial that cannot be factored i
 Points where a polynomial evaluates to zero are called roots of the polynomial.
 
 The roots of a polynomial are of special interest with respect to its prime factorization, since it can be shown that, for any given root $x_0$ of $P$, the polynomial $F(x) = (x - x_0)$ is a prime factor of $P$.
-** Schwartz-Zippel lemma
+** IN-PROGRESS Schwartz-Zippel Lemma
 :PROPERTIES:
 :ID:       e52ff81b-e1a8-4153-b8e7-710ab93f82d9
 :END:
@@ -438,6 +441,19 @@ $Pr\{f(a_{1},a_{2}, \ldots, a_{n}) =0 \} \leq \frac{d}{|S|}$
   - If it's 0, it might be by chance, but thanks to the S-Z lemma you can control the probability by testing with enough random inputs (you can make it arbitrarily small).
 - You can test if two polynomials are equal
   - Given a pair of polynomials $p_{1}(x)$ and $p_{2}(x)$ you can check if $p_{1}(x) \equiv p_2(x)$ by checking if $P(x)=p_{1}(x)-p_{2}(x) \equiv 0$. If so, you can be certain, up to the known probability, that they are equal.
+
+---
+
+*NOTE: Error Probability*
+
+When we evaluate at $k$ random points from $S$ the probability of missing a non-zero in all these $k$ tests is:
+
+$(\frac{d}{|S|})^{k}$.
+
+So by choosing $|S| >> d$ and repeating a few times we can get a high confidence.
+
+---
+
 *** Example
 Consider the polynomial:
 
@@ -450,6 +466,39 @@ $Pr\{f(x_{1},x_{2})=0\} \leq \frac{2}{4}=0.5$
 
 If you choose a bigger set (e.g. |S|=100) the probability of it being zero "by chance" drops to $2/100=0.02$.
 
+*** Example: Testing for polynomial equality (or intersection) using S-Z Lemma
+
+Consider two polynomials:
+
+$p_{1}(x,y)=x^2+2xy+y^2$
+$p_{2}(x,y)=(x+y)^2$
+
+We want to test if $p_{1} \equiv p_{2}$.
+We compute:
+
+$P(x,y)=p_{1}(x,y)-p_{2}(x,y)$
+
+By the [[id:6f36e8fe-0917-4126-9542-28d9e102cc37][Fundamental Theorem of Algebra]] $P(x)$ has $d=max(d_{1},d_{2})$ roots, where:
+- $d_{1}$ is the degree of $p_{1}(x)$ and
+- $d_{2}$ is the degree of $p_{2}(x)$.
+
+This is the same as saying that $p_{1}$ and $p_{2}$ have $d$ points of intersection.
+
+We evaluate P(x,y) at randomly chosen point $(x,y) \in S^2$, where $S=\{1,2,3,4,5\}$.
+We draw $(x=3,y=4)$:
+
+$p_{1}(3,4)-p_{2}(3,4)=25-25=0$
+
+We draw a second point: $(x=2,y=2)$:
+
+$p_{1}(3,4)-p_{2}(3,4)=16-16=0$
+
+- with a probaility $(\frac{d}{|S|})^{k}=(\frac{2}{5})^{2}=0.16$ $p_{1}(x) \neq p_{2}(x)$ and we randomly found one of the $d$ points where they intersect.
+- with a probability of $1-(\frac{d}{|S|})^{k}=(\frac{2}{5})^{2}=1-0.16=0.84$ we can say these two polynomials are equal.
+- we can keep repeating the test, increasing our confidence that these two polynomials are equal
+
+*** TODO Example: Testing polynomials in finite fields
+*** TODO Example: Using the Schwartz-Zippel Lemma to test if two vectors are equal
 * Homomorphism
 :PROPERTIES:
 :ID:       f46d0e1d-b074-47cc-a6a5-95bd89a16be2
