@@ -8,7 +8,8 @@
 :END:
 :CONTENTS:
 - [[#fundamental-theorem-of-algebra][Fundamental Theorem of Algebra]]
-  - [[#example][Example]]
+  - [[#example-n2][Example $n=2$]]
+  - [[#example-n3][Example $n=3$]]
 - [[#group][Group]]
   - [[#additive-group][Additive Group]]
   - [[#multiplicative-group][Multiplicative Group]]
@@ -68,12 +69,24 @@ where:
 - $r_{1}, \ldots, r_{n}$ are complex numbers (some possibly repeated)
 
 
-** Example
+** Example $n=2$
 Consider the polynomial:
 $P(x)=x^2+1$
 
 It has no real roots, but it has two complex roots:
 $x=i$ and $x=-i$
+** Example $n=3$
+Now let's consider a cubic polynomial:
+
+$P(x)=x^3-3x+2$
+
+We know it has exactly 3 roots. We can factor it:
+
+$P(x)=(x-1)^{2} \cdot (x+2)$
+
+The roots (counting multiplicities) are:
+- $x=1$ with multiplicity 2.
+- $x=-2$ (singel root).
 
 * TODO Group
 :PROPERTIES:
