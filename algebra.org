@@ -39,6 +39,7 @@
 - [[#fermats-little-theorem][Fermat's Little Theorem]]
   - [[#example][Example]]
 - [[#lagranges-theorem][Lagrange's theorem]]
+- [[#lagrange-interpolation][Lagrange interpolation]]
 - [[#polynomials][Polynomials]]
   - [[#bezouts-identity][Bezout's identity]]
   - [[#polynomial-factorization][Polynomial factorization]]
@@ -383,6 +384,10 @@ $\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]$
 
 - Equivalent theorem in the context Elliptic Curves is here: [[id:2a523cd8-b0c4-481c-92b4-cddc426df3c2][Lagrange's theorem for Elliptic Curves]].
 
+* TODO Lagrange interpolation
+:PROPERTIES:
+:ID:       1bd5b2b4-0532-40fa-9bf9-d46112d6de3f
+:END:
 * IN-PROGRESS Polynomials
 ** TODO Bezout's identity
 :PROPERTIES:
