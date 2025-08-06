@@ -40,6 +40,7 @@
   - [[#example][Example]]
 - [[#lagranges-theorem][Lagrange's theorem]]
 - [[#lagrange-interpolation][Lagrange interpolation]]
+  - [[#example][Example]]
 - [[#polynomials][Polynomials]]
   - [[#bezouts-identity][Bezout's identity]]
   - [[#polynomial-factorization][Polynomial factorization]]
@@ -384,10 +385,55 @@ $\left[ H \right] \hspace{.5em} \text{divides} \hspace{.5em} \left[ G \right]$
 
 - Equivalent theorem in the context Elliptic Curves is here: [[id:2a523cd8-b0c4-481c-92b4-cddc426df3c2][Lagrange's theorem for Elliptic Curves]].
 
-* TODO Lagrange interpolation
+* IN-PROGRESS Lagrange interpolation
 :PROPERTIES:
 :ID:       1bd5b2b4-0532-40fa-9bf9-d46112d6de3f
 :END:
+
+=Definition=
+
+Lagrange interpolation is a method of constructing a polynomial that passes through a given set of points.
+
+Given a set of $n+1$ points $(x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)$ the interpolating polynomial $P(x)$ of degree at most $n$ is constructed as follows:
+
+$P(x) = \sum_{i=0}^{n} y_i L_i(x)$
+
+where:
+- $L_i(x)$ is the Lagrange basis polynomial s.t.:
+- $L_i(x) = \prod_{\substack{0 \leq j \leq n \\ j \neq i}} \frac{x - x_j}{x_i - x_j}$
+
+=Properties=
+
+- *Degree*: The degree of the interpolating polynomial is at most $n$.
+- *Uniqueness*: Given $n+1$ distinct points, the Lagrange interpolation produces a unique polynomial of degree at most $n$ that passes through all these points.
+
+** IN-PROGRESS Example
+#+BEGIN_SRC sage :session . :exports both
+# real numbers
+FR = RationalField()
+R.<x> = PolynomialRing(FR)
+
+x1 = [1, 2, 3, 4]
+y = [4, 8, 2, 1]
+
+p1 = R.lagrange_polynomial(zip(x1,y))
+
+x2 = [5,6,7,8]
+p2 = R.lagrange_polynomial(zip(x2,y))
+
+#p1.divide(p2)
+p1
+
+# remainder polynomial
+(_, rem) = p1.quo_rem(p2)
+rem
+
+#+END_SRC
+
+#+RESULTS:
+: 5/2*x^3 - 20*x^2 + 93/2*x - 25
+: 30*x^2 - 280*x + 666
+
 * IN-PROGRESS Polynomials
 ** TODO Bezout's identity
 :PROPERTIES:
