@@ -417,29 +417,21 @@ R.<x> = PolynomialRing(FR)
 def division(dividend, divisor):
     return (dividend._maxima_().divide(divisor).sage())
 
-x1 = [1, 2, 3,]
+x = [1, 2, 3,]
 y = [4, 8, 2]
 
-p1 = R.lagrange_polynomial(zip(x1,y))
+p = R.lagrange_polynomial(zip(x1,y))
+p
 
-x2 = [5,6,7]
-p2 = R.lagrange_polynomial(zip(x2,y))
-
-print(f"p1: {p1}");
-print(f"p2: {p2}");
-
-# remainder polynomial of p1 / p2
-(q, rem) = p1.quo_rem(p2)
-print(f"p1 / p2 = {rem}");
-
-q*p2 + rem == p1
-
+p(x[0]) == y[0]
+p(x[1]) == y[1]
+p(x[2]) == y[2]
 #+END_SRC
 
 #+RESULTS:
-: p1: -5*x^2 + 19*x - 10
-: p2: -5*x^2 + 59*x - 166
-: p1 / p2 = -40*x + 156
+: -5*x^2 + 19*x - 10
+: True
+: True
 : True
 
 * IN-PROGRESS Polynomials
