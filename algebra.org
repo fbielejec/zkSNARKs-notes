@@ -43,6 +43,7 @@
   - [[#example][Example]]
 - [[#polynomials][Polynomials]]
   - [[#bezouts-identity][Bezout's identity]]
+  - [[#polynomial-division][Polynomial division]]
   - [[#polynomial-factorization][Polynomial factorization]]
   - [[#irreducible-polynomial][Irreducible polynomial]]
   - [[#roots-of-the-polynomial][Roots of the polynomial]]
@@ -413,32 +414,69 @@ where:
 FR = RationalField()
 R.<x> = PolynomialRing(FR)
 
-x1 = [1, 2, 3, 4]
-y = [4, 8, 2, 1]
+def division(dividend, divisor):
+    return (dividend._maxima_().divide(divisor).sage())
+
+x1 = [1, 2, 3,]
+y = [4, 8, 2]
 
 p1 = R.lagrange_polynomial(zip(x1,y))
 
-x2 = [5,6,7,8]
+x2 = [5,6,7]
 p2 = R.lagrange_polynomial(zip(x2,y))
 
-#p1.divide(p2)
-p1
+print(f"p1: {p1}");
+print(f"p2: {p2}");
 
-# remainder polynomial
-(_, rem) = p1.quo_rem(p2)
-rem
+# remainder polynomial of p1 / p2
+(q, rem) = p1.quo_rem(p2)
+print(f"p1 / p2 = {rem}");
+
+q*p2 + rem == p1
 
 #+END_SRC
 
 #+RESULTS:
-: 5/2*x^3 - 20*x^2 + 93/2*x - 25
-: 30*x^2 - 280*x + 666
+: p1: -5*x^2 + 19*x - 10
+: p2: -5*x^2 + 59*x - 166
+: p1 / p2 = -40*x + 156
+: True
 
 * IN-PROGRESS Polynomials
 ** TODO Bezout's identity
 :PROPERTIES:
 :ID:       d65be3c6-88b2-4c93-9ba5-f1551ba8a8c0
 :END:
+** IN-PROGRESS Polynomial division
+:PROPERTIES:
+:ID:       360dc303-5304-458a-a08e-2d6b1d5bba53
+:END:
+
+- [ ] TODO : long division howto (by hand)
+
+#+BEGIN_SRC sage :session . :exports both
+# real numbers
+FR = RationalField()
+R.<x> = PolynomialRing(FR)
+
+def division(dividend, divisor):
+    return (dividend._maxima_().divide(divisor).sage())
+
+P = x^2+2*x-1
+Q = x+1
+
+# long division
+(quo, rem) = P.quo_rem(Q)
+Q*quo + rem == P
+
+# same as
+division(P,Q)
+#+END_SRC
+
+#+RESULTS:
+: True
+: [x + 1, -2]
+
 ** Polynomial factorization
 
 =Definition=
