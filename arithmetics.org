@@ -9,6 +9,7 @@
 :CONTENTS:
 - [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
   - [[#example][Example]]
+  - [[#example-2-public-key-cryptography][Example 2: Public Key Cryptography]]
 - [[#greatest-common-divisor-gcd][Greatest Common Divisor (GCD)]]
 - [[#coprime-integers][Coprime integers]]
 - [[#cofactors][Cofactors]]
@@ -70,6 +71,12 @@ $1200=2^{4} \cdot 3^{1} \cdot 5^{2} = (2\cdot 2\cdot 2\cdot 2) \cdot 3 \cdot (5\
 The theorem says two things about this example:
 - 1200 can be represented as a product of primes 2,3 and 5.
 - no matter how this is done, there will always be exactly four 2s, one 3, two 5s and *no other primes in the product*.
+** TODO Example 2: Public Key Cryptography
+- https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+
+#+BEGIN_SRC sage :session . :exports both
+
+#+END_SRC
 
 * TODO Greatest Common Divisor (GCD)
 :PROPERTIES:

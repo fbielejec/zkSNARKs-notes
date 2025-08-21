@@ -93,7 +93,7 @@ $P(x)=(x-1)^{2} \cdot (x+2)$
 
 The roots (counting multiplicities) are:
 - $x=1$ with multiplicity 2.
-- $x=-2$ (singel root).
+- $x=-2$ (single root).
 
 * TODO Group
 :PROPERTIES:
@@ -413,9 +413,6 @@ where:
 # real numbers
 FR = RationalField()
 R.<x> = PolynomialRing(FR)
-
-def division(dividend, divisor):
-    return (dividend._maxima_().divide(divisor).sage())
 
 x = [1, 2, 3,]
 y = [4, 8, 2]
