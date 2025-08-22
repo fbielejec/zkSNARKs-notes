@@ -110,6 +110,7 @@ What is the GCD of 39 and 27?
 - In every step we move everythign the left (throwing away A)
 - stop condition is the Remainder being 0
   - result is then stored in B
+- algorithm runs in $\mathcal{0}(log(A+B))$
 
 ---
 
