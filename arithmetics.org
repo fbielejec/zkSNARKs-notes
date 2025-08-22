@@ -97,20 +97,22 @@ Coprime integers are pairs of integers that do not have any common factor other 
 :END:
 What is the GCD of 39 and 27?
 
-|  A |   B | R                           |
-|----+-----+-----------------------------|
-| 39 |  27 | 12 = 39 - floor(39/27) * 27 |
-| 27 |  12 | 3 = 27 - floor(27/12) * 12  |
-| 12 | *3* | 0 = 12 - floor(12/3) * 12   |
+|  A |   B | R                                     |
+|----+-----+---------------------------------------|
+| 39 |  27 | 12 = 39 - floor(39/27) * 27 (39 % 27) |
+| 27 |  12 | 3 = 27 - floor(27/12) * 12 (27 % 12)  |
+| 12 | *3* | 0 = 12 - floor(12/3) * 12  (12 % 3)   |
 
 ---
 
 *NOTES*
 
+- algorithm will work even if we switch A and B 
+  - 27 % 37 = 27 so we just have one more step to do in this case
 - In every step we move everythign the left (throwing away A)
 - stop condition is the Remainder being 0
   - result is then stored in B
-- algorithm runs in $\mathcal{0}(log(A+B))$
+- algorithm runs in $\mathcal{O}(log(A+B))$
 
 ---
 
