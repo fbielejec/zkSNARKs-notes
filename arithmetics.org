@@ -91,7 +91,28 @@ Coprime integers are pairs of integers that do not have any common factor other 
 :PROPERTIES:
 :ID:       5cf1c4ca-35a9-425c-8fe9-ccdbd78d7d4d
 :END:
-* TODO Euclidean Algorithm
+* DONE Euclidean Algorithm
+:PROPERTIES:
+:ID:       43e6617a-26c8-4c42-be27-4836ebc46a30
+:END:
+What is the GCD of 39 and 27?
+
+|  A |   B | R                           |
+|----+-----+-----------------------------|
+| 39 |  27 | 12 = 39 - floor(39/27) * 27 |
+| 27 |  12 | 3 = 27 - floor(27/12) * 12  |
+| 12 | *3* | 0 = 12 - floor(12/3) * 12   |
+
+---
+
+*NOTES*
+
+- In every step we move everythign the left (throwing away A)
+- stop condition is the Remainder being 0
+  - result is then stored in B
+
+---
+
 * TODO Extended Euclidean Algorithm
 :PROPERTIES:
 :ID:       9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0
