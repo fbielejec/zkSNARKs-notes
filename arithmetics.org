@@ -11,6 +11,7 @@
   - [[#example][Example]]
   - [[#example-2-public-key-cryptography][Example 2: Public Key Cryptography]]
 - [[#greatest-common-divisor-gcd][Greatest Common Divisor (GCD)]]
+- [[#least-common-multiple-lcm][Least Common Multiple (LCM)]]
 - [[#coprime-integers][Coprime integers]]
 - [[#cofactors][Cofactors]]
 - [[#euclidean-algorithm][Euclidean Algorithm]]
@@ -78,10 +79,38 @@ The theorem says two things about this example:
 
 #+END_SRC
 
-* TODO Greatest Common Divisor (GCD)
+* DONE Greatest Common Divisor (GCD)
 :PROPERTIES:
 :ID:       0877b2d8-5757-46d5-b2db-f95628b0ccea
 :END:
+See [[id:43e6617a-26c8-4c42-be27-4836ebc46a30][Euclidean Algorithm]]
+* IN-PROGRESS Least Common Multiple (LCM)
+:PROPERTIES:
+:ID:       04ef82e7-e828-4fb4-a64d-ae8f62d0b902
+:END:
+
+The least common multiple of two numbers is the smallest number that is a multiple of both of them.
+
+=Example=
+
+LCM of 8 and 10:
+
+- Multiples of 8:
+  | 8 | 16 | 24 | 32 | *40* | 48 | 56 | 64 | 72 | *80* |
+- Multiples of 10:
+  | 10 | 20 | 30 | *40* | 50 | 60 | 70 | *80* | 90 |
+
+LCM of 8 and 10 is 80
+
+=Computing LCM=
+
+LCM of $n$ and $m$ can be found using the formula:
+
+$\frac{n \time m}{GCD(n,m)}$
+
+where:
+ - GCD is the [[id:0877b2d8-5757-46d5-b2db-f95628b0ccea][Greatest Common Divisor (GCD)]] of $n$ and $m$.
+
 * Coprime integers
 :PROPERTIES:
 :ID:       91547919-6be2-47a2-b684-672779b56bc5
