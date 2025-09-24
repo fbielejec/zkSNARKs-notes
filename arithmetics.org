@@ -11,6 +11,7 @@
   - [[#trial-division][Trial division]]
   - [[#primality-test][Primality test]]
   - [[#integer-factorization][Integer factorization]]
+    - [[#integer-factorization-in-rust][Integer factorization in Rust]]
 - [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
   - [[#example][Example]]
   - [[#example-2-public-key-cryptography][Example 2: Public Key Cryptography]]
@@ -47,7 +48,7 @@ See [[id:18588d33-4340-4099-84c5-4453f5a021e3][Primality test]]
 :ID:       18588d33-4340-4099-84c5-4453f5a021e3
 :END:
 
-Simplest primality test is [[id:18588d33-4340-4099-84c5-4453f5a021e3][Primality test]]:
+Simplest primality test is [[id:15d47020-a0dd-492e-81fd-4522db26c9eb][Trial division]]:
 - Given an input number $n$ check whether it is divisible by any prime number between $2$ and $\sqrt{n}$ (i.e. whether the division leaves no remainder).
 - if so, then $n$ is composite, else it is [[id:169e79b1-7a9d-41a9-bd03-5536cead4f5b][prime]].
 - for any divisor $p \geq \sqrt{n}$ there must be another divisor $n/p \leq \sqrt{n}$, therefore looking for prime divisors at most $\sqrt{n}$ is sufficient.
@@ -71,7 +72,7 @@ products past $10 \times 10$ are the reverse of products that appear earlier, so
 Integer factorization is the decomposition of a positive integer into a product of integers.
 Every positive integer greater than 1 is either the product of two or more integer factors greater than 1, in which case it is a composite number, or it is not, in which case it is a [[id:169e79b1-7a9d-41a9-bd03-5536cead4f5b][Prime number]].
 
-Simplest method to factorize an small integer is a [[id:18588d33-4340-4099-84c5-4453f5a021e3][trial division]]:
+Simplest method to factorize a small integer is a [[id:18588d33-4340-4099-84c5-4453f5a021e3][trial division]]:
 - checking if the number is divisible by prime numbers $2, 3, 5, \ldots \sqrt{n}$.
 - each time a factor is found checking whether it is prime.
 
@@ -82,6 +83,47 @@ Simplest method to factorize an small integer is a [[id:18588d33-4340-4099-84c5-
 When the numbers are sufficiently large, no efficient non-quantum integer factorization algorithm is known.
 
 ---
+
+#+BEGIN_SRC
+algorithm trial-division is
+    input: Integer n to be factored
+    output: List F of prime factors of n
+
+    P <- set of all primes n <= sqrt(n)
+    F <- empty list of factors
+
+    for each prime p in P do
+        while n mod p is 0
+            Add factor p to list F
+            n <- n/p
+
+    if F is empty  (Original n is prime?)
+        Add factor n to list F
+#+END_SRC
+*** Integer factorization in Rust
+#+BEGIN_SRC rustic
+fn factorize(n: i32) -> Vec<i32> {
+    let sqrt_n = (n as f32).sqrt() as i32;
+
+    let mut factors = vec![];
+    // we only need to test up to sqrt(n)
+    for factor in 2..=sqrt_n {
+        // found an integer factor
+        if n % factor == 0 {
+            // since a = fac1 * fac2 we can record two factors
+            factors.push(factor);
+            factors.push(n / factor);
+        }
+    }
+   factors
+}
+
+let n = 16;
+println!("factors of {n}: {:?}", factorize(n))
+#+END_SRC
+
+#+RESULTS:
+: factors of 16: [2, 8, 4, 4]
 
 * DONE Fundamental Theorem of Arithmetic
 :PROPERTIES:
