@@ -8,7 +8,7 @@
 :END:
 :CONTENTS:
 - [[#prime-numbers][Prime numbers]]
-  - [[#trail-division][Trail division]]
+  - [[#trial-division][Trial division]]
   - [[#primality-test][Primality test]]
   - [[#integer-factorization][Integer factorization]]
 - [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
@@ -37,7 +37,7 @@
 :PROPERTIES:
 :ID:       169e79b1-7a9d-41a9-bd03-5536cead4f5b
 :END:
-** Trail division
+** Trial division
 :PROPERTIES:
 :ID:       15d47020-a0dd-492e-81fd-4522db26c9eb
 :END:
