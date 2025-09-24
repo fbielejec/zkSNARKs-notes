@@ -7,6 +7,10 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
+- [[#prime-numbers][Prime numbers]]
+  - [[#trail-division][Trail division]]
+  - [[#primality-test][Primality test]]
+  - [[#integer-factorization][Integer factorization]]
 - [[#fundamental-theorem-of-arithmetic][Fundamental Theorem of Arithmetic]]
   - [[#example][Example]]
   - [[#example-2-public-key-cryptography][Example 2: Public Key Cryptography]]
@@ -28,6 +32,56 @@
 - [[#additional][Additional]]
   - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
+
+* IN-PROGRESS Prime numbers
+:PROPERTIES:
+:ID:       169e79b1-7a9d-41a9-bd03-5536cead4f5b
+:END:
+** Trail division
+:PROPERTIES:
+:ID:       15d47020-a0dd-492e-81fd-4522db26c9eb
+:END:
+See [[id:18588d33-4340-4099-84c5-4453f5a021e3][Primality test]]
+** IN-PROGRESS Primality test
+:PROPERTIES:
+:ID:       18588d33-4340-4099-84c5-4453f5a021e3
+:END:
+
+Simplest primality test is [[id:18588d33-4340-4099-84c5-4453f5a021e3][Primality test]]:
+- Given an input number $n$ check whether it is divisible by any prime number between $2$ and $\sqrt{n}$ (i.e. whether the division leaves no remainder).
+- if so, then $n$ is composite, else it is [[id:169e79b1-7a9d-41a9-bd03-5536cead4f5b][prime]].
+- for any divisor $p \geq \sqrt{n}$ there must be another divisor $n/p \leq \sqrt{n}$, therefore looking for prime divisors at most $\sqrt{n}$ is sufficient.
+
+=Example=
+
+Let n = 100. It's divisors are:
+1, 2, 4, 5, 10, 20, 25, 50, 100
+
+When all possible divisors up to n are testes, some will be discovered twice:
+
+$1 \times 100$, $2 \times 50$, $4 \times 25$, $5 \times 20$, $\mathbf{10 \times 10}$, $20 \times 5$, $24 \times 4$, $50 \times 2$, $100 \times 1$
+
+products past $10 \times 10$ are the reverse of products that appear earlier, so the algorithm need only search for divisors less than or equal to $\sqrt{n}$.
+
+** IN-PROGRESS Integer factorization
+:PROPERTIES:
+:ID:       2e449eb2-5045-46ca-aa94-d850f1cfa906
+:END:
+
+Integer factorization is the decomposition of a positive integer into a product of integers.
+Every positive integer greater than 1 is either the product of two or more integer factors greater than 1, in which case it is a composite number, or it is not, in which case it is a [[id:169e79b1-7a9d-41a9-bd03-5536cead4f5b][Prime number]].
+
+Simplest method to factorize an small integer is a [[id:18588d33-4340-4099-84c5-4453f5a021e3][trial division]]:
+- checking if the number is divisible by prime numbers $2, 3, 5, \ldots \sqrt{n}$.
+- each time a factor is found checking whether it is prime.
+
+---
+
+*NOTE*
+
+When the numbers are sufficiently large, no efficient non-quantum integer factorization algorithm is known.
+
+---
 
 * DONE Fundamental Theorem of Arithmetic
 :PROPERTIES:
