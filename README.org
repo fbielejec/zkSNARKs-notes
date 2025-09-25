@@ -9,13 +9,14 @@
 #+INCLUDE: playground.org
 
 * Table of Contents
-| file                                 | Description                                               |
-|--------------------------------------+-----------------------------------------------------------|
-| [[file:arithmetics.org][Arithmetic prerequisites]]             | Preliminary definitions                                   |
-| [[file:algebra.org][Algebra prerequisites]]                | Finite fields, prime fields, field extensions             |
-| [[file:elliptic_curves.org][Elliptic curves]]                      | Everything EC up to EC pairings                           |
-| [[file:pairings.org][PrerequisitesElliptic Curve Pairings]] | Everything you need to compute the Weil and Tate pairings |
-| [[file:hashing.org][Hashing]]                              | From Hashing to groups to hashing to elliptic curves      |
-| [[file:polynomial_commitments.org][Polynomial Commitments]]               | Hashing, Merkle trees, KZG, ...                           |
-| [[file:zero_knowledge_protocols.org][ZK Protocols]]                         | Statements, circuit languages                             |
-| [[file:playground.org][Playground]]                           | Sage playground                                           |
+| file                    | Description                                               |
+|-------------------------+-----------------------------------------------------------|
+| [[file:arithmetics.org][Arithmetics]]             | Preliminary definitions                                   |
+| [[file:algebra.org][Algebra ]]                | Finite fields, prime fields, field extensions             |
+| [[file:combinatorics.ors][Combinatorics]]           | Combinatorics and probability theory                      |
+| [[file:elliptic_curves.org][Elliptic curves]]         | Everything EC up to EC pairings                           |
+| [[file:pairings.org][Elliptic Curve Pairings]] | Everything you need to compute the Weil and Tate pairings |
+| [[file:hashing.org][Hashing]]                 | From Hashing to groups to hashing to elliptic curves      |
+| [[file:polynomial_commitments.org][Polynomial Commitments]]  | Hashing, Merkle trees, KZG, ...                           |
+| [[file:zero_knowledge_protocols.org][ZK Protocols]]            | Statements, circuit languages                             |
+| [[file:playground.org][Playground]]              | Sage playground                                           |

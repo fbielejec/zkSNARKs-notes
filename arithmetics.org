@@ -222,7 +222,7 @@ Coprime integers are pairs of integers that do not have any common factor other 
 :END:
 What is the GCD of 39 and 27?
 
-|  A |   B | R                                     |
+|  A |   B | Remainder                             |
 |----+-----+---------------------------------------|
 | 39 |  27 | 12 = 39 - floor(39/27) * 27 (39 % 27) |
 | 27 |  12 | 3 = 27 - floor(27/12) * 12 (27 % 12)  |
