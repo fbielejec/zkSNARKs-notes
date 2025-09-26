@@ -190,7 +190,38 @@ The exhaustive search through all the permutattions can be represented as a n-ar
    a          b           c
  / | \     /  | \       / | \
 a  b  c    a  b  c     a  b  c
-** TODO Permutations without repetitions
+** IN-PROGRESS Permutations without repetitions
 :PROPERTIES:
 :ID:       f9cc2064-0225-47e7-ade0-70ad721622f7
 :END:
+- Arranging distinct objects where order matters and each object can be used only once-
+- If $n$ total objects have $k_1$ of one kind, $k_2$ of another etc, the number of permutations is:
+$\frac{n!}{k_{1}!\cdot k_{2}! \ldots}$
+
+=Example=
+
+There are 3!=6 permutations of distinct integers 1,2,3
+All of the permutations are:
+
+#+BEGIN_SRC rustic
+let a = [1,2,3];
+let n = a.len();
+
+for i in 0..n {
+    for j in 0..n {
+        for k in 0..n {
+            if i != j && j != k && i != k {
+                println!("{},{},{}", a[i], a[j], a[k]);
+            }
+        }
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+: 1,2,3
+: 1,3,2
+: 2,1,3
+: 2,3,1
+: 3,1,2
+: 3,2,1
