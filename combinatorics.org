@@ -3,13 +3,14 @@
 :ID:       b378a169-4180-440d-bfe0-0f4d76082fe1
 :END:
 - [ ] https://www.statlect.com/mathematical-tools/combinations#:~:text=Number%20of%20combinations%20with%20repetition
-
-The number of possible combinations with repetition is:
+- combinations are unordered selections where the order of items does not matter.
+- The number of possible combinations of $k$ out of $n$ with repetition is:
 
 $C^{'}_{n,k}= \begin{pmatrix}n+k-1 \\ k\end{pmatrix} = \frac{(n+k-1)!}{(n-1)!k!}$
 
 =Example=
-Ordering three scoops of ice cream, choosing among four flavours: chocolate, pistachio, strawberry and vanilla.
+
+Ordering three scoops of ice cream ($k=3$), choosing among four flavours: chocolate, pistachio, strawberry and vanilla ($n=4$).
 It is possible to order two scoops of the same flavour. How many possible choices are there?
 
 #+BEGIN_SRC rustic
@@ -58,5 +59,98 @@ total: 20
 For n=4, k=3:
 
 $C^{'}_{n,k} = \frac{(4+3-1)!}{(4-1)!3!}=20$
+** IN-PROGRESS Permutations
+- Permutations are ordered arrangements where the sequence of items matters
+- The number of possible permutations of $k$ out of $n$ is:
 
-** IN-PROGRESS Enumerating all choices
+$P_{n,k}=n^{k}$
+
+=Example=
+
+All the possible 3 letter strings that can be built from the letters "a", "b", "c" and "d".
+
+#+BEGIN_SRC rustic
+let letters = ['a', 'b', 'c', 'd'];
+
+let n = letters.len();
+
+let mut total = 0;
+for i in 0..n {
+    for j in 0..n {
+        for k in 0..n {
+            println!("{}{}{}", letters[i], letters[j], letters[k]);
+            total += 1;
+        }
+    }
+}
+println!("total: {total}");
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+aaa
+aab
+aac
+aad
+aba
+abb
+abc
+abd
+aca
+acb
+acc
+acd
+ada
+adb
+adc
+add
+baa
+bab
+bac
+bad
+bba
+bbb
+bbc
+bbd
+bca
+bcb
+bcc
+bcd
+bda
+bdb
+bdc
+bdd
+caa
+cab
+cac
+cad
+cba
+cbb
+cbc
+cbd
+cca
+ccb
+ccc
+ccd
+cda
+cdb
+cdc
+cdd
+daa
+dab
+dac
+dad
+dba
+dbb
+dbc
+dbd
+dca
+dcb
+dcc
+dcd
+dda
+ddb
+ddc
+ddd
+total: 64
+#+end_example
