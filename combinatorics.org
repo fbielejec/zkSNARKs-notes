@@ -154,3 +154,22 @@ ddc
 ddd
 total: 64
 #+end_example
+
+=Example=
+
+For simplicity let's assume k=2 long strings and n=3 letters: "a", "b" and "c".
+The exhaustive search through all the permutattions can be represented as a n-ary tree, with the root being the empty string, each child having 3 children and depth of the tree being 2:
+
+              ""
+            / |  \
+           /  |   \
+          /   |    \
+         /    |     \
+        /     |      \
+       /      |       \
+      /       |        \
+     /        |         \
+    /         |          \
+   a          b           c
+ / | \     /  | \       / | \
+a  b  c    a  b  c     a  b  c
