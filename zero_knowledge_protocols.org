@@ -1221,6 +1221,69 @@ Then the *Quadratic Arithmetic Program (QAP)* associated with the R1CS $R$ is th
 
 $QAP(R)=\{ T \in \mathbb{F}[x], \{ A_j,B_j,C_j \in \mathbb{F}[x] \}_{j=0}^{n+m} \}$
 
+* IN-PROGRESS Sum-Check Protocol
+- https://risencrypto.github.io/Sumcheck/
+#+BEGIN_SRC sage :session . :exports both
+# P : I know how many combinations of x1,x2,x3,x4 satisfy this boolean circuit:
+# (x1 & x2) & (x3 | x4)
+F97 = GF(97)
+R97.<x1,x2,x3,x4> = PolynomialRing(F97)
+# the arithmetization of the  boolean circuit
+g = R97((1-x1)*x2*((x3+x4)-x3*x4))
+
+u = 0
+for a1 in [0,1]:
+    for a2 in [0,1]:
+        for a3 in [0,1]:
+            for a4 in [0,1]:
+                u = u + g(a1,a2,a3,a4)
+u
+
+# P creates a univariate polynomial in x1, created by summing g in all variables except x1 (i.e. keeping x1 free):
+g1 = R97(0)
+for a2 in [0,1]:
+    for a3 in [0,1]:
+        for a4 in [0,1]:
+           g1 = g1 + g(x2=a2, x3=a3, x4=a4)
+g1
+
+# V checks the one summation which was omitted by P while creating g1
+# Doing that omitted summation should result in u
+u == g1(x1=0) + g1(x1=1)
+
+# V picks random number r1 \in F97 and sends it to P
+r1 = F97.random_element()
+
+# P keeps x1 = r1 and creates next univariate polynomial g2 keeping x2 free and send it to V:
+g2 = R97(0)
+for a3 in [0,1]:
+  for a4 in [0,1]:
+    g2 = g2 + g(x1=r1, x3=a3, x4=a4)
+g2
+
+# V checks if g(x1=r1) == g2(x2=0) + g2(x2=1)
+g1(r1,x2,x3,x4) == g2(x2=0) + g2(x2=1)
+
+# V picks random number r2 \in F97 and sends it to P
+r2 = F97.random_element()
+
+g3 = R97(0)
+for a4 in [0,1]:
+  g3 = g3 + g(x1=r1, x2=r2, x4=a4)
+g3
+
+#g2()
+
+#+END_SRC
+
+#+RESULTS:
+: 3
+: -3*x1 + 3
+: True
+: -4*x2
+: True
+: 15*x3 + 15
+
 * TODO Groth16
 * TODO PLONK
 - [ ] https://www.cryptologie.net/article/527/understanding-plonk/

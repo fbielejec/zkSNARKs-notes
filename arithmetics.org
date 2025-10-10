@@ -7,6 +7,8 @@
 :TOC:      :include all :ignore this
 :END:
 :CONTENTS:
+- [[#set-theory][Set Theory]]
+  - [[#bijection][Bijection]]
 - [[#prime-numbers][Prime numbers]]
   - [[#trial-division][Trial division]]
   - [[#primality-test][Primality test]]
@@ -33,6 +35,22 @@
 - [[#additional][Additional]]
   - [[#chain-rule-differentiation][Chain rule differentiation]]
 :END:
+
+* IN-PROGRESS Set Theory
+** Bijection
+:PROPERTIES:
+:ID:       702af2c7-7c8c-431c-852b-6dc74dc3ad94
+:END:
+
+=Definition=
+
+A bijection (or bijective function), is a function between two sets such that each element of the second set (the codomain) is the image of exactly one element of the first set (the domain).
+In other words it is a one-to-one correspondence.
+
+A function is bijective if it is *invertible*; that is, a function $f: X \rightarrow Y$ is bijective if there exists a function $g: Y \rightarrow X$ s.t.
+
+$\forall x \in X \hspace g(f(x))=x$ and
+$\forall y \in Y \hspace f(g(y))=y$
 
 * IN-PROGRESS Prime numbers
 :PROPERTIES:

@@ -2,3 +2,54 @@
 ** TODO Pedersen hashes
 * TODO Hashing into modular arithmetic
 * TODO Hashing to elliptic curves
+* IN-PROGRESS Sponge Construction
+:PROPERTIES:
+:ID:       58b8c8e6-638b-4235-bd03-71ceb4986c24
+:END:
+
+** IN-PROGRESS Notation
+- Bitstrings
+
+#+BEGIN_SRC sage :session . :exports both
+# additive group of Z mod 2
+Z2=Zmod(2)
+[x for x in Z2]
+
+Z2.unit_group() # multiplicative group mod 7
+[x for x in Z2.unit_group()]
+#+END_SRC
+
+#+RESULTS:
+: [0, 1]
+: Trivial Abelian group
+: [1]
+
+** IN-PROGRESS Padding
+
+#+BEGIN_SRC sage :session . :exports both
+def keccak_padding(data, r):
+    # Convert data to bits
+    bit_data = ''.join(format(byte, '08b') for byte in data)
+
+    # Append '1' and '0's until length is a multiple of r
+    padded_data = bit_data + '1'  # Append a single '1'
+    while (len(padded_data) + 1) % r != 0:  # Ensure divisible by r after padding
+        padded_data += '0'  # Append '0's
+
+    # Append the last '1' to finalize the padding
+    padded_data += '1'  # Here the final '1' indicates end of padding
+    return padded_data
+
+r = 64  # Rate part of Keccak in bits
+data = bytes("HELLO", 'utf-8') # 40 bits
+
+padded_data = keccak_padding(data, r)
+
+print(f"Padded Data (in bits): {padded_data}")
+print(f"Padded Data Length: {len(padded_data)} bits")
+#+END_SRC
+
+#+RESULTS:
+: Padded Data (in bits): 0100100001000101010011000100110001001111100000000000000000000001
+: Padded Data Length: 64 bits
+
