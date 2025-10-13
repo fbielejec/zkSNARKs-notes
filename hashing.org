@@ -52,4 +52,55 @@ print(f"Padded Data Length: {len(padded_data)} bits")
 #+RESULTS:
 : Padded Data (in bits): 0100100001000101010011000100110001001111100000000000000000000001
 : Padded Data Length: 64 bits
+* IN-PROGRESS Keccak256
+:PROPERTIES:
+:ID:       f4589c6e-721b-4eed-9126-b5429ab5c3eb
+:END:
+** Leaf hashing
+#+BEGIN_SRC sage :session . :exports both
+import sha3
 
+# Create a SHA3-256 hash object
+keccak = sha3.keccak_256()
+
+# Data to hash
+data = b"bar"
+
+# Update the hash object with the data
+keccak.update(data)
+
+# Get the hexadecimal digest
+hash_value = keccak.hexdigest()
+print(f"Keccak Hash: {hash_value}")
+#+END_SRC
+
+#+RESULTS:
+: Keccak Hash: 435cd288e3694b535549c3af56ad805c149f92961bf84a1c647f7d86fc2431b4
+
+* IN-PROGRESS Merkle trees
+:PROPERTIES:
+:ID:       1957dc5a-6259-4b4a-b1d9-0a04eb48466a
+:END:
+** Parent hashing
+#+BEGIN_SRC sage :session . :exports both
+import sha3
+
+def leaf_hash(data):
+  keccak = sha3.keccak_256()
+  keccak.update(data)
+  return keccak.digest()
+
+left_data = b"foo"
+left_hash = leaf_hash(left_data)
+
+right_data = b"bar"
+right_hash = leaf_hash(right_data)
+
+parent_data = left_hash + right_hash
+parent_hash = leaf_hash(parent_data)
+
+print(f"Keccak Hash: {parent_hash.hex()}")
+#+END_SRC
+
+#+RESULTS:
+: Keccak Hash: 744766909640c85c19ca00139e7af3c5d9cb8dbfbc6635812eedc4e3cbf4fce6
