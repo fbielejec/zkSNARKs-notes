@@ -26,6 +26,7 @@
 - [[#modular-arithmetic][Modular arithmetic]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
+  - [[#residue-remainder][Residue (remainder)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
     - [[#example-crt][Example: CRT]]
   - [[#remainder-classes][Remainder Classes]]
@@ -295,11 +296,8 @@ which is the same as writing:
 $a \hspace{.5em} \text{mod m} \equiv b \hspace{.5em} \text{mod m }$
 
 It is an equivalence relation that is compatible with the operations of addition, subtraction, and multiplication
-
 ** DONE Example: clock (example 8 MoonMath)
-
 #+BEGIN_SRC sage :session . :exports both
-
 # starting at 5 and adding 12 we are at 5 again (as on the clock face)
 (5 + 12) % 12
 
@@ -314,6 +312,21 @@ It is an equivalence relation that is compatible with the operations of addition
 : [5, 5, 5, 5]
 : 5
 : 5
+** Residue (remainder)
+:PROPERTIES:
+:ID:       8828f755-d71b-4977-9efd-87847e6967bd
+:END:
+$11 = 4 \cdot 2 + 3$
+
+where:
+- $3$ is the remainder (modular remainder)
+
+which is the same as writing:
+
+$11 \equiv 3 \quad \text{(mod 4)}$
+
+where:
+- $3$ is the residue (modular remainder)
 ** DONE Chinese Remainder Theorem
 :PROPERTIES:
 :ID:       454687bb-fa64-44d6-8f94-109611459f29
