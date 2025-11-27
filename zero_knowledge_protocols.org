@@ -1232,7 +1232,7 @@ $QAP(R)=\{ T \in \mathbb{F}[x], \{ A_j,B_j,C_j \in \mathbb{F}[x] \}_{j=0}^{n+m} 
 # (x1 & x2) & (x3 | x4)
 F97 = GF(97)
 R97.<x1,x2,x3,x4> = PolynomialRing(F97)
-# the arithmetization of the  boolean circuit
+# the arithmetization of the boolean circuit
 g = R97((1-x1)*x2*((x3+x4)-x3*x4))
 
 u = 0
@@ -1284,9 +1284,9 @@ g3
 : 3
 : -3*x1 + 3
 : True
-: -4*x2
+: 23*x2
 : True
-: 15*x3 + 15
+: -6*x3 - 6
 
 * TODO Groth16
 * TODO PLONK

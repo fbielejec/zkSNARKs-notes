@@ -24,9 +24,9 @@
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#extended-euclidean-algorithm][Extended Euclidean Algorithm]]
 - [[#modular-arithmetic][Modular arithmetic]]
+  - [[#modulus-remainder-reside][Modulus, remainder, reside]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
-  - [[#residue-remainder][Residue (remainder)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
     - [[#example-crt][Example: CRT]]
   - [[#remainder-classes][Remainder Classes]]
@@ -279,6 +279,87 @@ println!("{}", gcd(39, 27));
 :ID:       9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0
 :END:
 * IN-PROGRESS Modular arithmetic
+** IN-PROGRESS Modulus, remainder, reside
+:PROPERTIES:
+:ID:       8828f755-d71b-4977-9efd-87847e6967bd
+:END:
+
+- *Residue* is the result of a modulus operation in modular arithmetic
+- *Remainder*: The amount "left over" after a division, calculated using truncation (rounding towards zero).
+- *Modulus*: A value in a congruence system (see clock arithmetic example), calculated using flooring (rounding towards negative infinity).
+
+Let' slook ath the divison of 11 by 4:
+
+$11 = 4 \cdot 2 + 3$
+
+which is the same as writing:
+
+$11 \equiv 3 \quad \text{(mod 4)}$
+
+where:
+- $11$ is the dividend (the number being divided)
+- $4$ is the divisor (the number you are dividing by)
+- $2$ is the quotient (the integer part of the result of the division, %/% in R)
+- $3$ is the remainder (the modulus, (%% in R))
+
+---
+
+*NOTE*
+
+Modulus and the remainder are same for positive numbers but give different result in case of negative numbers.
+The sign of the reminder operation result matches the sign of the dividend.
+The result of the modulus operation is always non-negative and less than the divisor. It wraps around like a clock.
+
+---
+
+=Remainder (Truncation Division)=
+
+The remainder operation truncates the quotient towards zero. It effectively chops off the decimal part.
+
+Example: a = 13, b = 5
+
+13 / 5 = 2.6
+
+Truncate .6 -> q = 2
+
+Remainder r = a - b * q = 13 - 5 * 2 = 3
+
+Result: 13 % 5 = 3
+
+Example: a = -13, b = 5
+
+-13 / 5 = -2.6
+
+Truncate .6 -> q = -2
+
+Remainder r = a - b * q = -13 - (5 * -2) = -13 + 10 = -3
+
+Result: -13 % 5 = -3
+
+=Modulus (Floor Division)=
+
+The modulus operation finds the floor of the quotient (rounds down to the nearest integer towards negative infinity).
+
+Example: a = 13, b = 5
+
+13 / 5 = 2.6
+
+Floor of 2.6 -> q = 2
+
+Modulus r = a - b * q = 13 - 5 * 2 = 3
+
+Result: 13 mod 5 = 3
+
+Example: a = -13, b = 5
+
+-13 / 5 = -2.6
+
+Floor of -2.6 -> q = -3
+
+Modulus r = a - b * q = -13 - (5 * -3) = -13 + 15 = 2
+
+Result: -13 mod 5 = 2
+
 ** DONE Congruence (modular arithmetic)
 :PROPERTIES:
 :ID:       6f034760-16d2-491c-bfce-b9626d770d33
@@ -312,21 +393,6 @@ It is an equivalence relation that is compatible with the operations of addition
 : [5, 5, 5, 5]
 : 5
 : 5
-** Residue (remainder)
-:PROPERTIES:
-:ID:       8828f755-d71b-4977-9efd-87847e6967bd
-:END:
-$11 = 4 \cdot 2 + 3$
-
-where:
-- $3$ is the remainder (modular remainder)
-
-which is the same as writing:
-
-$11 \equiv 3 \quad \text{(mod 4)}$
-
-where:
-- $3$ is the residue (modular remainder)
 ** DONE Chinese Remainder Theorem
 :PROPERTIES:
 :ID:       454687bb-fa64-44d6-8f94-109611459f29
