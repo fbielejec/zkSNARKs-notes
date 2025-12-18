@@ -1,7 +1,7 @@
 #+STARTUP: overview
 #+latex_class_options: [14pt]
 
-* Binary encoding
+* Binary to decimal conversion
 :PROPERTIES:
 :ID:       3e9b5d5a-afd3-46e9-a71f-78080a95338e
 :END:
