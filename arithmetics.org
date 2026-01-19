@@ -24,7 +24,7 @@
 - [[#euclidean-algorithm][Euclidean Algorithm]]
 - [[#extended-euclidean-algorithm][Extended Euclidean Algorithm]]
 - [[#modular-arithmetic][Modular arithmetic]]
-  - [[#modulus-remainder-reside][Modulus, remainder, reside]]
+  - [[#modulus-remainder-reside-][Modulus, remainder, reside [/]​]]
   - [[#congruence-modular-arithmetic][Congruence (modular arithmetic)]]
   - [[#example-clock-example-8-moonmath][Example: clock (example 8 MoonMath)]]
   - [[#chinese-remainder-theorem][Chinese Remainder Theorem]]
@@ -279,11 +279,12 @@ println!("{}", gcd(39, 27));
 :ID:       9f4c15da-f06b-4c87-8ebc-acb9d25f9fe0
 :END:
 * IN-PROGRESS Modular arithmetic
-** IN-PROGRESS Modulus, remainder, reside
+** IN-PROGRESS Modulus, remainder, reside [/]
 :PROPERTIES:
 :ID:       8828f755-d71b-4977-9efd-87847e6967bd
 :END:
 
+- [ ] REDO THIS PART, describe modulo, modulus, remainder (e..g Rust has remiander, not modulus), floor and ceiling division
 - *Residue* is the result of a modulus operation in modular arithmetic
 - *Remainder*: The amount "left over" after a division, calculated using truncation (rounding towards zero).
 - *Modulus*: A value in a congruence system (see clock arithmetic example), calculated using flooring (rounding towards negative infinity).
